@@ -1,0 +1,60 @@
+
+/************* Colors & Page-related settings *******************/
+.header{
+  background-image:url('../images/banner-web.jpg');
+}
+.navbar{
+  background-color: #9893C2;
+}
+.navbar a{
+  background-color: #575086;
+}
+.navbar a:hover{
+  background-color: #B2AEC6;
+}
+.page{
+  background-color: #E6DCF9;
+}
+.footer{
+  background-color: #3D3852;
+}
+.text{
+  background-color: #FFFFFF;
+  border: 2px solid #050336;
+}
+.text h1, .text h2{
+  color: #050336;
+}
+.text h3, .text h4, .text h5{
+  color: #050336;
+}
+
+/************** Main Page classes ********************/
+
+.text td{
+  width: 30%;
+  text-align: center;
+}
+.text td a{
+  text-decoration:none;
+  color:black;
+}
+.text td a:hover{
+  text-decoration:underline;
+}
+.text img{
+  width:50%;
+}
+.text table{
+  background-color: white;
+  border-collapse: collapse;
+  font-size:16px;
+}
+.text .label{
+  background-color: #CCC2E0;
+}
+.text .me{
+  width:35%;
+  margin: 0 30%;
+  float:center;
+}
