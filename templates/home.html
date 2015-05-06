@@ -1,0 +1,53 @@
+{% extends "main.html" %} <!-- which extends 'main.html' -->
+
+{% block style %}
+    <link href="../static/css/style-home.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+
+    <div class="bacheca shadow2"> <!-- Bacheca -->
+      <div class="bachtitle">
+        <h1>Ultime Notizie e Avvisi</h1>
+      </div>
+      <div class="postside">
+	  
+        <div class="post">
+	  <p class="date">3 Aprile 2015</p>
+  	  <h3> Notizia di esempio </h3>
+	  <p> Anche oggi abbiamo fatto una bella gita e ci siamo divertiti un sacco!
+	  C'e' il sole ed e bello andare in montagna a divertirsi.
+	  Ecco anche le foto, cosi la prossima volta venite anche voi.
+	  <a href="notizia-esempio.html"> Leggi Tutto...</a>
+	  </p>
+	  <img alt="Foto1" title="Foto1" src="static/images/box-rifugio.jpg">
+	  <img alt="Foto1" title="Foto1" src="static/images/ita-flag.gif">
+	</div>
+	<div class="post">
+  	  <h3> Notizia di esempio </h3>
+	</div>
+	<div class="post">
+  	  <h3> Notizia di esempio </h3>
+	</div>
+	<div class="post">
+  	  <h3> Notizia di esempio </h3>
+	</div>
+	
+      </div><!-- closes postside -->
+      
+      <div class="noteside">
+	<div class="note">
+	  <p>Buone Vacanze dal CAI di Sovico!</p>
+	</div>
+	<div class="note">
+	  <p>Nota di esempio</p>
+	</div>
+	<div class="note">
+	  <p>Nota di esempio</p>
+	</div>
+	
+      </div><!-- closes noteside -->
+
+    </div><!-- closes bacheca -->
+
+{% endblock %}
