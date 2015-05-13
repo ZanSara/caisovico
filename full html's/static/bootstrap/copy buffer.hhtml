@@ -1,0 +1,65 @@
+<!-- Rifugio Box -->
+        <div id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab">
+              <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  <p>Rifugio</p>
+                </a>
+              </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="Rifugio">
+              <div id="boxrifugio" class=" nomar nopad panel-body">
+                <div class="nomar nopad sidemenu">
+                  <ul class="glassitem nomar nopad">
+                    <li><a href="#">Apertura</a></li>
+                    <li><a href="#">Informazioni</a></li>
+                    <li><a href="#">Mappe</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Sezione Box -->
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+              <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <p>Sezione</p>
+                </a>
+              </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Sezione">
+              <div id="boxsezione" class=" nomar nopad panel-body">
+                <div class="nomar nopad sidemenu">
+                  <ul class="glassitem nomar nopad">
+                    <li><a href="#">Giorni di Apertura</a></li>
+                    <li><a href="#">Il Consiglio</a></li>
+                  </ul>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          <!-- Programmi Box -->
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingThree">
+              <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  <p>Programmi</p>
+                </a>
+              </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Programmi">
+              <div id="boxprogrammi"class="nomar nopad panel-body">
+                <div class="nomar nopad sidemenu">
+                  <ul class="glassitem nomar nopad">
+                    <li><a href="#">Gite</a></li>
+                    <li><a href="#">Escursioni</a></li>
+                    <li><a href="#">Attivita'</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>

@@ -1,0 +1,127 @@
+
+/************* Colors & Page-related settings *******************/
+.header{
+  background-image:url('../images/banner-home.jpg');
+}
+.navbar{
+  background-color: #0048FF;
+}
+.navbar a{
+  background-color: #00246B;
+}
+.navbar a:hover{
+  background-color: #1E90FF;
+}
+.page{
+  background-color: #C4EEEA;
+}
+.footer{
+  background-color:#23417B;
+}
+
+
+/**************** Bacheca classes ********************/
+.bacheca{
+  position:relative;
+  float:right;
+  width:60%;
+  height:auto;
+  margin: 30px 1%;
+  padding: 0;
+  background-color:#EED2A0 ;
+  border: 15px solid #81522C;
+}
+.bacheca h1{
+  position:relative;
+  color: black;
+  font-size: 26px;
+  text-align: center;
+  background-color:white;
+  padding: 20px;
+  margin: 5px 30px;
+  border-bottom: 3px solid #bbb;
+  border-right: 3px solid #bbb;
+  border-top: 3px solid #FFFFFF;
+  border-left: 3px solid #FFFFFF;
+}
+.bachtitle{
+  background:#EED2A0;
+  margin:0;
+  padding: 10px;
+}
+.postside{
+  position:relative;
+  float:left;
+  width:63%;
+  height:100%;
+  margin:0 0 10px 10px ;
+  padding:0;
+}
+.noteside{
+  position:relative;
+  float:right;
+  width:33%;
+  height:100%;
+  margin:0 10px 10px 0;
+  padding:0;
+}
+.post{
+  margin: 20px 8px;
+  padding:20px;
+  background-color:white;
+  border-bottom: 3px solid #bbb;
+  border-right: 3px solid #bbb;
+}
+.post img{
+  width:40%;
+  height: auto;
+  display:inline;
+  margin: 10px;  
+}
+.post a{
+  color: blue;
+  font-size: 16px;
+}
+.date{
+  text-align: right;
+  font-style: italic;
+}
+.note{
+  margin: 20px 8px;
+  padding:20px;
+  background-color:#FFEE70;
+  border-bottom: 3px solid #bbb;
+  border-right: 3px solid #bbb;
+  border-top: 3px solid #FFFFFF;
+  border-left: 3px solid #FFFFFF;
+}
+.note p{
+  font-size: 20px;
+  font-style: italic;
+  line-height:200%;
+}
+.news{
+  width: 85%;
+  float:center;
+  margin: 5% 20px;
+  padding: 20px;
+  background-color:white;
+  border-bottom: 3px solid #bbb;
+  border-right: 3px solid #bbb;
+}
+.news h2{
+  text-align:center;
+}
+.news h5{
+  font-weight:none;
+  font-style:italic;
+  text-align:right;
+}
+.news img{
+  margin:0;
+  width: 80%;
+}
+.news .label{
+  margin: 10px;
+  font-style: italic;
+}

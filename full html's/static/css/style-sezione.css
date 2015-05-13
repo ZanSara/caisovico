@@ -1,0 +1,82 @@
+
+/************* Colors & Page-related settings *******************/
+.header{
+  background-image:url('../images/banner-sez.jpg');
+}
+.navbar{
+  background-color:#FF4D00;
+}
+.navbar a{
+  background-color: #B32600;
+}
+.navbar a:hover{
+  background-color: #FF200A;
+}
+.page{
+  background-color: #FFD085;
+}
+.footer{
+  background-color: #9E4000;
+}
+.text{
+  background-color: #FFFFFF;
+  border: 2px solid #66000C;
+}
+.text h1, .text h2{
+  color: #92000A;
+}
+.text h3, .text h4, .text h5{
+  color: #92000A;
+}
+
+/************** Main Page classes ********************/
+
+.text h5{
+  margin: 0 20px;
+}
+
+.text img{
+  width: 40%;
+  float:right;
+}
+
+.text table{
+  width: 100%;
+  margin: 0;
+  padding: 0 20px 20px 20px;
+}
+
+.text td{
+  text-align: left;
+  padding: 10px;
+  background-color:#F2F2F2;
+  vertical-align: center;
+}
+
+.text table tr td:first-child {
+  width:40%;
+  background-color:#DCDCDB;
+  font-weight:bold;
+}
+
+.center {
+  list-style:none;
+  text-align:center;
+}
+.center li{
+  width:90%;
+  background-color:#E6E6E5;
+  padding:1px;
+  margin:2px;
+}
+
+.insurance li{
+  font-size:14px;
+  line-height:140%;
+  padding: 0 10px;
+  margin: 5px 0;
+}
+.text .nested{
+  margin: 5px 40px;
+  list-style: circle;
+}
