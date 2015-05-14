@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <title>CAI Sovico</title>
 
-    <link href="../static/css/style-general.css" rel="stylesheet">
-    <link href="../{{ url_for_css }}" rel="stylesheet">
+    <link href="/static/css/style-general.css" rel="stylesheet">
+    <link href="{{ url_for_css }}" rel="stylesheet">
     {% if bootstrap %}
-    <link href="../static/css/carousel-bootstrap.css" rel="stylesheet">
+    <link href="/static/css/carousel-bootstrap.css" rel="stylesheet">
     {% endif %}
 
 
@@ -20,7 +20,7 @@
     <div class="main">   <!--Useful only to keep the footer in the right place... :/-->
     <!-- Header -->
     <div class="header">
-      <a href="/"><img class="shadow2" alt="Home Banner CAI Sovico" title="Home CAI Sovico" src="../static/images/banner.png"></a>
+      <a href="/"><img class="shadow2" alt="Home Banner CAI Sovico" title="Home CAI Sovico" src="/static/images/banner.png"></a>
       <nav class="navbar shadow2">
 	<ul class="navmenu">
 	  <li><a href="/">HOME</a></li>
@@ -50,8 +50,8 @@
 
 
 	{% if bootstrap %}
-    <script src="../static/javascript/jquery-1.11.2.min.js"></script><!-- required for Bootstrap-->
-    <script src="../static/javascript/bootstrap.js"></script>
+    <script src="/static/javascript/jquery-1.11.2.min.js"></script><!-- required for Bootstrap-->
+    <script src="/static/javascript/bootstrap.js"></script>
 	{% endif %}
 
   </body>

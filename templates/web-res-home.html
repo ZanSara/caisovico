@@ -1,0 +1,27 @@
+{% extends "base/main.html" %}
+
+{% block body %}
+<div class="text">
+    <a href="/pannello/area-riservata"><h1>Area Riservata</h1></a>
+    
+    {% block content %}
+    <table class="index">
+        <tbody>
+          <tr>
+            <td><a href="area-riservata/upload/news">Carica Notizia</a></td>
+            <td><a href="area-riservata/manage/news">Modifica Notizie</a></td>
+          </tr>
+          <tr>
+            <td><a href="area-riservata/upload/note">Carica Nota</a></td>
+            <td><a href="area-riservata/manage/note">Modifica Nota</a></td>
+          </tr>
+          <tr>
+            <td><a href="area-riservata/upload/doc">Carica Documento</a></td>
+            <td><a href="area-riservata/manage/doc">Modifica Documento</a></td>
+          </tr>
+        </tbody>
+    </table>
+	{% endblock content %}
+    
+</div>
+{% endblock body %}

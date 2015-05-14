@@ -1,0 +1,57 @@
+{% extends "web-res-home.html" %}
+
+{% block content %}
+
+    {% if upload=='fail' %}
+        <p class="failure">{{ msg }}</p>
+    {% elif upload=='success' %}
+        <p class="success">{{ msg }}</p>
+    {% endif %}
+
+    <h2>Upload</h2>
+
+    <div class="box">
+    {% if obj=='news' or obj=='note' or obj=='doc' %}
+        <form method=POST enctype=multipart/form-data>
+
+        {% if obj=='news' %}
+        <h3>Titolo</h3>
+            <input name='titolo' type="text" placeholder="Titolo...">
+        <h3>Data</h3>
+            <input name="checkin" id="datepickin" class="form-control myform" placeholder="Check In"/>
+        <h3>Testo</h3>
+            <textarea name='testo' placeholder="Testo..." rows="10" cols="50"></textarea>
+        <h3>Carica foto</h3>
+            <p><input name='foto1' type='file'><br><input name='descrizione1' type='text' placeholder="Descrizione..."></p>
+            <p><input name='foto2' type='file'><br><input name='descrizione2' type='text' placeholder="Descrizione..."></p>
+            <p><input name='foto3' type='file'><br><input name='descrizione3' type='text' placeholder="Descrizione..."></p>
+            <p><input name='foto4' type='file'><br><input name='descrizione4' type='text' placeholder="Descrizione..."></p>
+            <p><input name='foto5' type='file'><br><input name='descrizione5' type='text' placeholder="Descrizione..."></p>
+            
+        {% elif obj=='note' %}
+        <h3>Testo della Nota</h3>
+            <textarea name='testo' placeholder="Testo..." rows="10" cols="50"></textarea>
+
+        {% elif obj=='doc' %}
+        <h3>Carica File</h3>
+            <input name='file1' type='file'>
+
+        {% endif %}
+            <input class='button' type=submit value=Upload>
+        </form>	
+    {% else %}
+        <h1>ERRORE</h1>
+    {% endif %}
+    </div>
+
+
+    {% if obj=='news' %}
+    <script type="text/javascript" src="/static/javascript/datepickr.min.js"></script>
+    <script type="text/javascript">
+        new datepickr('datepick', {
+            'dateFormat': 'Y/m/d'
+        });
+    </script>
+    {% endif %}
+    
+{% endblock %}

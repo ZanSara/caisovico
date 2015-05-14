@@ -31,21 +31,71 @@
 
 /************** Main Page classes ********************/
 
-.text td{
+.box{
+  text-align:center;
+  border: 4px dotted #050336;
+  float:center;
+  margin: 10% 20% ;
+}
+form input{
+    width: 70%;
+}
+form .button{
+    margin: 10px;
+}
+
+.index{
+    text-align: left;
+    width: 90%;
+    margin: 20px;
+    padding: 5px;
+}
+.index tr{
+    margin:30px;
+}
+.index td{
+    font-size:16px;
+    font-family:arial, verdana, sans-serif;
+    line-height: 250%;
+    position:relative;
+    padding: 5px;
+    text-align: center;
+    background-color: #685194;
+}
+.index td:hover{
+  background-color:#977BD1;
+}
+.index a{
+  color: #FFFFFF;
+  font-weight:bold;
+  text-decoration:none;
+}
+.index a:hover{
+  text-decoration:underline;
+}
+
+.text a{
+    text-decoration:none;
+}
+.text a h1:hover{
+    text-decoration:underline;
+}
+
+.strip td{
   width: 30%;
   text-align: center;
 }
-.text td a{
+.strip td a{
   text-decoration:none;
   color:black;
 }
-.text td a:hover{
+.strip td a:hover{
   text-decoration:underline;
 }
 .text img{
   width:50%;
 }
-.text table{
+.strip{
   background-color: white;
   border-collapse: collapse;
   font-size:16px;
