@@ -1,0 +1,11 @@
+<html>
+<head></head>
+<body>
+    <h1>{{titolo}}</h1>
+    <p>{{testo}}</p>
+    {% for pic in pics %}
+        <p>{{ pic[1] }}</p>
+        <img src="/uploads/{{ pic[0] }}" alt="PROBLEM">
+    {% endfor %}
+</body>
+</html>

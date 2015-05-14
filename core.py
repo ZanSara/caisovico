@@ -1,14 +1,10 @@
-from flask import Flask, request, url_for, redirect, send_from_directory
+from flask import Flask, request, session, abort, url_for, redirect, send_from_directory
 from jinja2 import Environment, PackageLoader
 from werkzeug import secure_filename
-import sqlite3
-import json
-import os
+from config import UPLOAD_FOLDER, ALLOWED_EXTENSIONS, DATABASE_PATH
+from session import login, logout
+import sqlite3, json, os
 
-
-UPLOAD_FOLDER = 'uploads'
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'tiff'])
-DATABASE_PATH = 'base.sqlite'
 
 env = Environment(loader=PackageLoader('core', '/templates'))
 
@@ -174,33 +170,49 @@ def static_file(filename):
 	return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
+
+
+
 @app.route("/pannello/area-riservata/login", methods=["GET", "POST"])
 def weblogin():
 	var = style("webmaster")
-
-	if request.method == "GET":
-		template = env.get_template("web-res-login.html")
-		var["login"]=1
-		return template.render(var)
-		
+				
 	if request.method == "POST":
-		print request.form["user"]
-		print request.form["password"]
 		log = login(request.form["user"], request.form["password"])
-		if not log:
-			var['msg'] = "Username o password scorretti!"
+		if log:
+			var['msg'] = log
 			template = env.get_template("web-res-login.html")
 			return template.render(var)
 		else:
 			return redirect(url_for('webres'))
-		return ":/"
+
+	template = env.get_template("web-res-login.html")
+	return template.render(var)
+	
+
+@app.route("/pannello/area-riservata/logout", methods=["GET"])
+def weblogout():
+	if not session.get('logged_in'):
+		return redirect(url_for('weblogin'))
+		
+	var = style("webmaster")
+	
+	log = logout()
+	if log:
+		var['msg'] = log
+		template = env.get_template("web-res-login.html")
+		return template.render(var)
+	else:
+		return redirect(url_for('weblogin'))
+
 
 
 
 @app.route("/pannello/area-riservata", methods=["GET", "POST"])
 def webres():
-#	if not session.get('logged_in'):
-#		login()	
+	if not session.get('logged_in'):
+		return redirect(url_for('weblogin'))
+		
 	var = style("webmaster")
 	template = env.get_template("web-res-home.html")
 	return template.render(var)
@@ -209,8 +221,9 @@ def webres():
 
 @app.route("/pannello/area-riservata/upload/<obj>", methods=["GET", "POST"])
 def webupload(obj):
-#	if not session.get('logged_in'):
-#		login()	
+	if not session.get('logged_in'):
+		redirect(url_for('weblogin'))
+
 	var = style("webmaster")
 	var['obj']=obj
 	
@@ -249,8 +262,9 @@ def webupload(obj):
 			pic_list = json.dumps(full)  # Per decodificare, json.load(jsonyfied_var)
 			cursor.execute("INSERT INTO news (title, text, pics) VALUES (?, ?, ?)", [title, text, pic_list])
 			conn.commit()
-			
-			var["upload"]='success'
+			conn.close()
+			var["upload_success"]='success'
+			var['msg']="Upload completato con successo"
 			template = env.get_template("web-res-upload.html")
 			return template.render(var)
 			
@@ -262,10 +276,18 @@ def webupload(obj):
 			cursor.execute("INSERT INTO notes VALUE ?", text)
 			conn.commit()
 			conn.close()
+			var["upload_success"]='success'
+			var['msg']="Upload completato con successo"
+			template = env.get_template("web-res-upload.html")
+			return template.render(var)
+
 			
 	template = env.get_template("web-res-upload.html")
 	return template.render(var)
 	
+
+
+
 
 	
 #*** ERROR HANDLERS ****************

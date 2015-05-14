@@ -1,16 +1,17 @@
 {% extends "web-res-home.html" %}
 
 {% block content %}
-<div class="box">
+<div class="boxlog" style="text-align:center;">
 	<form method=POST enctype=multipart/form-data>
-		<h3 style>Login</h3>
-			<p>Username:<br>
+		<h2 style>Login</h2>
+            {% if msg %}
+                <p style="text-align:center;color:red">{{ msg }}</p>
+            {% endif %}
+        
 			<input name="user" type=text placeholder="Username">
-			<p>Password:<br>
 			<input name="password" type=password placeholder="Password">
-			<br>			
-			<input type=submit value=Upload>
-			</p>
+            
+			<input class='button' type=submit value=Login>
 	</form>
 </div>
 {% endblock %}

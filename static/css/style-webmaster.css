@@ -31,27 +31,72 @@
 
 /************** Main Page classes ********************/
 
-.box{
+.boxlog{
+  overflow:hidden;
   text-align:center;
   border: 4px dotted #050336;
-  float:center;
-  margin: 10% 20% ;
+  margin-top: 0;
+  margin-left:20%;
+  margin-bottom: 10%;
+  margin-right: 20% ;
+  padding-top: 0;
+  padding-left:10px;
+  padding-bottom: 10px;
+  padding-right: 10px ;
 }
-form input{
-    width: 70%;
+
+.boxup{
+  overflow:hidden;
+  border: 4px dotted #050336;
+  margin-top: 0;
+  margin-left:5%;
+  margin-bottom: 10%;
+  margin-right: 5% ;
 }
-form .button{
+
+input[type="text"], input[type="datetime"], input[type="password"], textarea{
+    border : 1px solid #cccccc;
+    font-family:sans-serif;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+input[type="submit"]{
     margin: 10px;
+}
+form .title{
+    width: 90%;
+    font-size:25px;
+    float:center;
+    text-align:center;
+}
+form .data{
+    font-size:14px;
+    font-style: italic;
+    width:45%;
+    margin-right:5%;
+}
+form .textfield{
+    font-family:sans-serif;
+    width:90%;
+    height:160px;
+}
+form .caption{
+    font-size:14px;
+    width:90%;
+}
+form .nota{
+    font-size:18px;
+    font-family:sans-serif;
+    width:40%;
+    height:108px;
 }
 
 .index{
-    text-align: left;
+    position:relative;
+    float:center;
+    margin:5%;
     width: 90%;
-    margin: 20px;
     padding: 5px;
-}
-.index tr{
-    margin:30px;
 }
 .index td{
     font-size:16px;
@@ -78,6 +123,26 @@ form .button{
     text-decoration:none;
 }
 .text a h1:hover{
+    text-decoration:underline;
+}
+
+.flatbtn{
+    color: #FFFFFF;
+    font-weight:bold;
+    text-decoration:none;
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-left:10%;
+    padding-right:10%;
+    margin-top:10px;
+    margin-bottom:10px;
+    font-size:16px;
+    font-family:arial, verdana, sans-serif;
+    text-align: center;
+    background-color: #685194;
+}
+.flatbtn:hover{
+    background-color:#977BD1;
     text-decoration:underline;
 }
 

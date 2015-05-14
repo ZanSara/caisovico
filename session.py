@@ -1,12 +1,24 @@
-	
-# PLACEHOLDER!!! Ci devo mettere un vero login qui
-def login(user, pwd):
-	if user=="me" and pwd=="you":
-		return 1
-	return 0
-	
 
-# PLACEHOLDER!!! Ci devo mettere un vero logout qui
+from flask import session
+from config import DATABASE_PATH
+import sqlite3
+
+
+def login(name, passw):
+    conn = sqlite3.connect(DATABASE_PATH)
+    with conn:
+        user = list(conn.execute("SELECT * FROM users WHERE username = ?", ([name])))
+        if user:
+            if user[0][1] != passw:       # Suppose that I will get only one user with this username
+                return "Invalid password"
+            session["logged_in"] = True
+            session["username"] = user[0][0]
+            return
+        return "Invalid username"
+
+
 def logout():
-	#session.pop("logged_in", None)
-	return 0
+    if not session.pop("logged_in", None):
+        return "Errore durante il logout."
+    return
+

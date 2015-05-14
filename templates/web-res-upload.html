@@ -2,42 +2,48 @@
 
 {% block content %}
 
-    {% if upload=='fail' %}
-        <p class="failure">{{ msg }}</p>
-    {% elif upload=='success' %}
-        <p class="success">{{ msg }}</p>
+    <h2>Upload</h2>
+    
+    {% if upload_fail %}
+        <p style="text-align:center;color:red">{{ msg }}</p>
+    {% elif upload_success %}
+        <p style="text-align:center;color:green">{{ msg }}</p>
     {% endif %}
 
-    <h2>Upload</h2>
-
-    <div class="box">
+    <div class="boxup">
     {% if obj=='news' or obj=='note' or obj=='doc' %}
         <form method=POST enctype=multipart/form-data>
 
-        {% if obj=='news' %}
-        <h3>Titolo</h3>
-            <input name='titolo' type="text" placeholder="Titolo...">
-        <h3>Data</h3>
-            <input name="checkin" id="datepickin" class="form-control myform" placeholder="Check In"/>
-        <h3>Testo</h3>
-            <textarea name='testo' placeholder="Testo..." rows="10" cols="50"></textarea>
-        <h3>Carica foto</h3>
-            <p><input name='foto1' type='file'><br><input name='descrizione1' type='text' placeholder="Descrizione..."></p>
-            <p><input name='foto2' type='file'><br><input name='descrizione2' type='text' placeholder="Descrizione..."></p>
-            <p><input name='foto3' type='file'><br><input name='descrizione3' type='text' placeholder="Descrizione..."></p>
-            <p><input name='foto4' type='file'><br><input name='descrizione4' type='text' placeholder="Descrizione..."></p>
-            <p><input name='foto5' type='file'><br><input name='descrizione5' type='text' placeholder="Descrizione..."></p>
-            
-        {% elif obj=='note' %}
-        <h3>Testo della Nota</h3>
-            <textarea name='testo' placeholder="Testo..." rows="10" cols="50"></textarea>
 
-        {% elif obj=='doc' %}
+      {% if obj=='news' %}
+        <div style="text-align:right;">
+            <input class='data' id="datepick" type="datetime" placeholder="Data..."/>
+        </div>
+        <div style="text-align:center;">
+            <input class="title" name='titolo' type="text" placeholder="Titolo...">
+            <textarea class='textfield' type="text" name='testo' placeholder="Testo..."></textarea>
+        </div>
+        <h3>Foto:</h3>
+            <p><input name='foto1' type='file'><br><input class='caption' name='descrizione1' type='text' placeholder="Descrizione..."></p>
+            <p><input name='foto2' type='file'><br><input class='caption' name='descrizione2' type='text' placeholder="Descrizione..."></p>
+            <p><input name='foto3' type='file'><br><input class='caption' name='descrizione3' type='text' placeholder="Descrizione..."></p>
+            <p><input name='foto4' type='file'><br><input class='caption' name='descrizione4' type='text' placeholder="Descrizione..."></p>
+            <p><input name='foto5' type='file'><br><input class='caption' name='descrizione5' type='text' placeholder="Descrizione..."></p>
+            
+      {% elif obj=='note' %}
+        <div style="text-align:center;">
+        <h3>Nota:</h3>
+            <textarea class='nota' type="text" name='testo' placeholder="Testo..."></textarea>
+        </div>
+      {% elif obj=='doc' %}
+        <div style="text-align:center;">
         <h3>Carica File</h3>
             <input name='file1' type='file'>
-
-        {% endif %}
+        </div>
+      {% endif %}
+          <div style="text-align:center;">
             <input class='button' type=submit value=Upload>
+          </div>
         </form>	
     {% else %}
         <h1>ERRORE</h1>
@@ -46,6 +52,7 @@
 
 
     {% if obj=='news' %}
+    <link href="/static/css/datepickr.css" rel="stylesheet">
     <script type="text/javascript" src="/static/javascript/datepickr.min.js"></script>
     <script type="text/javascript">
         new datepickr('datepick', {
