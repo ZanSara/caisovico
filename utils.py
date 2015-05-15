@@ -1,7 +1,7 @@
 
 from flask import session
 from config import DATABASE_PATH
-import sqlite3
+import sqlite3, datetime
 
 
 def login(name, passw):
@@ -22,3 +22,12 @@ def logout():
         return "Errore durante il logout."
     return
 
+
+
+def datepick_to_datetime(data):
+	""" Convert the date format given by datepickr (string) into the dataINT format """
+	if str(data).count("/") != 2:
+		raise ValueError("Date is malformed")
+	d = data.split("/")
+	print d
+	return datetime.datetime(int(d[2]), int(d[1]), int(d[0]))

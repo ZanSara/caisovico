@@ -2,8 +2,8 @@ from flask import Flask, request, session, abort, url_for, redirect, send_from_d
 from jinja2 import Environment, PackageLoader
 from werkzeug import secure_filename
 from config import UPLOAD_FOLDER, ALLOWED_EXTENSIONS, DATABASE_PATH
-from session import login, logout
-import sqlite3, json, os
+from utils import login, logout, datepick_to_datetime
+import sqlite3, json, os, datetime
 
 
 env = Environment(loader=PackageLoader('core', '/templates'))
@@ -226,13 +226,17 @@ def webupload(obj):
 
 	var = style("webmaster")
 	var['obj']=obj
+	template = env.get_template("web-res-upload.html")
 	
 	# Bozza hardcodata - RIMEDIARE!
 	if request.method == 'POST':
+		var["upload_fail"] = 'fail'
+		var['msg']="Upload non riuscito. Riprova o contatta il webmaster."
 		
 		if obj=="news":
 			title = request.form['titolo']
 			text = request.form['testo']
+			date = request.form['data']
 			file1 = request.files['foto1']
 			file2 = request.files['foto2']
 			file3 = request.files['foto3']
@@ -243,49 +247,66 @@ def webupload(obj):
 			cap3 = request.form['descrizione3']
 			cap4 = request.form['descrizione4']
 			cap5 = request.form['descrizione5']
-			# Database call HERE
+			# Database call HERE - make it better please
 			conn = sqlite3.connect(DATABASE_PATH)
-			cursor = conn.cursor()
-			pics, caps = [], []
-			# Se non trova il file, il bottone non funziona
-			for fil in [file1, file2, file3, file4, file5]:
-				if fil: #and allowed_file(fil.filename):
-					filename = secure_filename(fil.filename)
-					fil.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-					pics.append(filename)
-			for cap in [cap1, cap2, cap3, cap4, cap5]:
-				if cap:
-					caps.append(cap)
-				else:
-					caps.append(' ')
-			full = zip(pics, caps)
-			pic_list = json.dumps(full)  # Per decodificare, json.load(jsonyfied_var)
-			cursor.execute("INSERT INTO news (title, text, pics) VALUES (?, ?, ?)", [title, text, pic_list])
-			conn.commit()
+			with conn:
+				cursor = conn.cursor()
+				pics, caps = [], []
+				for fil in [file1, file2, file3, file4, file5]:
+					if fil: #and allowed_file(fil.filename):
+						filename = secure_filename(fil.filename)
+						fil.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+						pics.append(filename)
+				for cap in [cap1, cap2, cap3, cap4, cap5]:
+					if cap:
+						caps.append(cap)
+					else:
+						caps.append(' ')
+				full = zip(pics, caps)
+				pic_list = json.dumps(full)  # Per decodificare, json.load(jsonyfied_var)
+				cursor.execute("INSERT INTO news (data, title, text, pics) VALUES (?, ?, ?, ?)", [datepick_to_datetime(date), title, text, pic_list])
+				conn.commit()
+				var['upload_fail'] = 0
+				var["upload_success"] = 'success'
+				var['msg'] = "Upload completato con successo"
 			conn.close()
-			var["upload_success"]='success'
-			var['msg']="Upload completato con successo"
-			template = env.get_template("web-res-upload.html")
 			return template.render(var)
 			
 		if obj=='note':
 			text = request.form['testo']
-			# Database call HERE
 			conn = sqlite3.connect(DATABASE_PATH)
 			cursor = conn.cursor()
-			cursor.execute("INSERT INTO notes VALUE ?", text)
-			conn.commit()
+			with conn:
+				cursor.execute("INSERT INTO notes VALUES (null, ?)", [text])
+				conn.commit()
+				var['upload_fail'] = 0
+				var["upload_success"] = 'success'
+				var['msg']="Upload completato con successo"
 			conn.close()
-			var["upload_success"]='success'
-			var['msg']="Upload completato con successo"
-			template = env.get_template("web-res-upload.html")
 			return template.render(var)
 
-			
+		if obj=='doc':
+			fil = request.files['doc']
+			if fil: #and allowed_file(fil.filename):
+				filename = secure_filename(fil.filename)
+				if os.path.join(app.config['UPLOAD_FOLDER'], filename).isfile():
+					print 'OVERWRITING!!'
+				fil.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+			conn = sqlite3.connect(DATABASE_PATH)
+			cursor = conn.cursor()
+			with conn:
+				cursor.execute("INSERT INTO docs VALUES (null, ?)", [json.dumps(filename)])
+				conn.commit()
+				var["upload_fail"] = 0
+				var["upload_success"] = 'success'
+				var['msg'] = "Upload completato con successo"
+			conn.close()
+			return template.render(var)
+
+	
 	template = env.get_template("web-res-upload.html")
 	return template.render(var)
 	
-
 
 
 

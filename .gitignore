@@ -1,3 +1,4 @@
 *.pyc
 altro
 static/bootstrap
+uploads/*.*

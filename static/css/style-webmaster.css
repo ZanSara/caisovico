@@ -44,6 +44,15 @@
   padding-bottom: 10px;
   padding-right: 10px ;
 }
+.boxlog input[type="text"], .boxlog input[type="password"]{
+    display:block;
+    font-size:18px;
+    width:50%;
+    margin:auto;
+    margin-top:10px;
+    margin-bottom:0;
+
+}
 
 .boxup{
   overflow:hidden;
@@ -59,9 +68,6 @@ input[type="text"], input[type="datetime"], input[type="password"], textarea{
     font-family:sans-serif;
     margin-top:10px;
     margin-bottom:10px;
-}
-input[type="submit"]{
-    margin: 10px;
 }
 form .title{
     width: 90%;
@@ -91,6 +97,29 @@ form .nota{
     height:108px;
 }
 
+.buttonstyle{
+    display:block;
+    width:25%;
+    color: #FFFFFF;
+    font-size:16px;
+    font-weight:bold;
+    line-height:150%;
+    text-decoration:none;
+    font-family:arial, verdana, sans-serif;
+    text-align: center;
+    background-color: #685194;
+    padding: 15px 10%;
+    margin: 15px auto;
+    border:none;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+}
+.buttonstyle:hover{
+  background-color:#977BD1;
+}
+
+
 .index{
     position:relative;
     float:center;
@@ -105,10 +134,10 @@ form .nota{
     position:relative;
     padding: 5px;
     text-align: center;
-    background-color: #685194;
+    background-color: #423189;
 }
 .index td:hover{
-  background-color:#977BD1;
+  background-color: #644EC1;
 }
 .index a{
   color: #FFFFFF;
@@ -123,26 +152,6 @@ form .nota{
     text-decoration:none;
 }
 .text a h1:hover{
-    text-decoration:underline;
-}
-
-.flatbtn{
-    color: #FFFFFF;
-    font-weight:bold;
-    text-decoration:none;
-    padding-top:10px;
-    padding-bottom:10px;
-    padding-left:10%;
-    padding-right:10%;
-    margin-top:10px;
-    margin-bottom:10px;
-    font-size:16px;
-    font-family:arial, verdana, sans-serif;
-    text-align: center;
-    background-color: #685194;
-}
-.flatbtn:hover{
-    background-color:#977BD1;
     text-decoration:underline;
 }
 
