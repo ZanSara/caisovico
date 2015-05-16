@@ -2,7 +2,7 @@ from flask import Flask, request, session, abort, url_for, redirect, send_from_d
 from jinja2 import Environment, PackageLoader
 from werkzeug import secure_filename
 from config import UPLOAD_FOLDER, ALLOWED_EXTENSIONS, DATABASE_PATH
-from utils import login, logout, datepick_to_datetime
+from utils import login, logout, datepick_to_datetime, allowed_file, set_to_string, get_extension
 import sqlite3, json, os, datetime
 
 
@@ -159,18 +159,11 @@ def webmaster():
 
 # ************ Reserved Area *******************************************
 
-def allowed_file(filename):
-	""" Checks for the file extension to be one of the allowed ones """
-	return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
-
 	
 @app.route('/uploads/<filename>')
 def static_file(filename):
 	""" Serves static files """
 	return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
-
-
 
 
 @app.route("/pannello/area-riservata/login", methods=["GET", "POST"])
@@ -194,17 +187,13 @@ def weblogin():
 def weblogout():
 	if not session.get('logged_in'):
 		return redirect(url_for('weblogin'))
-		
 	var = style("webmaster")
-	
 	log = logout()
 	if log:
 		var['msg'] = log
 		template = env.get_template("web-res-login.html")
 		return template.render(var)
-	else:
-		return redirect(url_for('weblogin'))
-
+	return redirect(url_for('weblogin'))
 
 
 
@@ -212,7 +201,6 @@ def weblogout():
 def webres():
 	if not session.get('logged_in'):
 		return redirect(url_for('weblogin'))
-		
 	var = style("webmaster")
 	template = env.get_template("web-res-home.html")
 	return template.render(var)
@@ -232,25 +220,24 @@ def webupload(obj):
 	if request.method == 'POST':
 		var["upload_fail"] = 'fail'
 		var['msg']="Upload non riuscito. Riprova o contatta il webmaster."
-		
-		if obj=="news":
-			title = request.form['titolo']
-			text = request.form['testo']
-			date = request.form['data']
-			file1 = request.files['foto1']
-			file2 = request.files['foto2']
-			file3 = request.files['foto3']
-			file4 = request.files['foto4']
-			file5 = request.files['foto5']
-			cap1 = request.form['descrizione1']
-			cap2 = request.form['descrizione2']
-			cap3 = request.form['descrizione3']
-			cap4 = request.form['descrizione4']
-			cap5 = request.form['descrizione5']
-			# Database call HERE - make it better please
-			conn = sqlite3.connect(DATABASE_PATH)
-			with conn:
-				cursor = conn.cursor()
+		conn = sqlite3.connect(DATABASE_PATH)
+		with conn:
+			cursor = conn.cursor()
+			
+			if obj=="news":
+				title = request.form['titolo']
+				text = request.form['testo']
+				date = request.form['data']
+				file1 = request.files['foto1']
+				file2 = request.files['foto2']
+				file3 = request.files['foto3']
+				file4 = request.files['foto4']
+				file5 = request.files['foto5']
+				cap1 = request.form['descrizione1']
+				cap2 = request.form['descrizione2']
+				cap3 = request.form['descrizione3']
+				cap4 = request.form['descrizione4']
+				cap5 = request.form['descrizione5']
 				pics, caps = [], []
 				for fil in [file1, file2, file3, file4, file5]:
 					if fil: #and allowed_file(fil.filename):
@@ -269,41 +256,43 @@ def webupload(obj):
 				var['upload_fail'] = 0
 				var["upload_success"] = 'success'
 				var['msg'] = "Upload completato con successo"
-			conn.close()
-			return template.render(var)
-			
-		if obj=='note':
-			text = request.form['testo']
-			conn = sqlite3.connect(DATABASE_PATH)
-			cursor = conn.cursor()
-			with conn:
+				conn.close()
+				return template.render(var)
+				
+			if obj=='note':
+				text = request.form['testo']
 				cursor.execute("INSERT INTO notes VALUES (null, ?)", [text])
 				conn.commit()
 				var['upload_fail'] = 0
 				var["upload_success"] = 'success'
 				var['msg']="Upload completato con successo"
-			conn.close()
-			return template.render(var)
+				conn.close()
+				return template.render(var)
 
-		if obj=='doc':
-			fil = request.files['doc']
-			if fil: #and allowed_file(fil.filename):
-				filename = secure_filename(fil.filename)
-				if os.path.join(app.config['UPLOAD_FOLDER'], filename).isfile():
-					print 'OVERWRITING!!'
-				fil.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-			conn = sqlite3.connect(DATABASE_PATH)
-			cursor = conn.cursor()
-			with conn:
-				cursor.execute("INSERT INTO docs VALUES (null, ?)", [json.dumps(filename)])
-				conn.commit()
-				var["upload_fail"] = 0
-				var["upload_success"] = 'success'
-				var['msg'] = "Upload completato con successo"
-			conn.close()
-			return template.render(var)
+			if obj=='doc':
+				fil = request.files['doc']
+				if fil:
+					if not allowed_file(fil.filename):
+						var['msg'] = "Upload fallito! Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS))
+						return template.render(var)
+					print allowed_file(fil.filename)
+					filename = secure_filename(fil.filename)
+					
+					filename = 'FileUploaded{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-4], get_extension(filename))
+					i = 0
+					while os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'], '{0}-{1}'.format(str(i), filename))):	
+						i += 1
+					filename = '{0}-{1}'.format(str(i), filename)
+					fil.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+					cursor.execute("INSERT INTO docs VALUES (null, ?)", [json.dumps(filename)])
+					conn.commit()
+					var["upload_fail"] = 0
+					var["upload_success"] = 'success'
+					var['msg'] = "Upload completato con successo"
+					conn.close()
+				return template.render(var)
 
-	
+	print 'FileUploaded{0}'.format(str(datetime.datetime.now())).translate(None, '.:- ')[:-4]
 	template = env.get_template("web-res-upload.html")
 	return template.render(var)
 	

@@ -1,6 +1,6 @@
 
 from flask import session
-from config import DATABASE_PATH
+from config import DATABASE_PATH, ALLOWED_EXTENSIONS
 import sqlite3, datetime
 
 
@@ -31,3 +31,19 @@ def datepick_to_datetime(data):
 	d = data.split("/")
 	print d
 	return datetime.datetime(int(d[2]), int(d[1]), int(d[0]))
+
+
+def allowed_file(filename):
+	""" Checks for the file extension to be one of the allowed ones """
+	return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+def set_to_string(myset):
+    mystring = ''
+    for item in list(myset):
+        mystring = '{0} {1},'.format(mystring, item)
+    return mystring[1:-1]
+        
+def get_extension(filename):
+    return filename.rsplit('.', 1)[1]
+    
+    
