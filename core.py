@@ -6,7 +6,7 @@ from flask import Flask, request, session, abort, url_for, redirect, send_from_d
 from jinja2 import Environment, PackageLoader
 from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, ALLOWED_EXTENSIONS, DATABASE_PATH
 from utils import login, logout
-from database import load_news, load_note, load_doc
+from database import load_news, load_note, load_doc, load_lista
 import sqlite3, os
 
 
@@ -213,32 +213,33 @@ def webres():
 
 @app.route("/pannello/area-riservata/upload/<obj>", methods=["GET", "POST"])
 def webupload(obj):
-	if not session.get('logged_in'):
-		redirect(url_for('weblogin'))
-		
-	var = style("webmaster")
-	var['obj'] = obj
-	template = env.get_template("web-res-upload.html")
-	
-	if request.method == 'POST':
-		var["upload_fail"] = 'fail'
-		var['msg']="Upload non riuscito. Riprova o contatta il webmaster."
-		conn = sqlite3.connect(DATABASE_PATH)
-		with conn:
-			cursor = conn.cursor()
-			if obj=="news":
-				var = load_news(request, var, cursor, app)
-			elif obj=='note':
-				var = load_note(request, var, cursor, app)
-			elif obj=='doc':
-				var = load_doc(request, var, cursor, app)
-		conn.commit()
-		conn.close()
+    if not session.get('logged_in'):
+        redirect(url_for('weblogin'))
+        
+    var = style("webmaster")
+    var['obj'] = obj
+    var['item_text'] = ''
+    template = env.get_template("web-res-upload.html")
 
-	return template.render(var)
+    if request.method == 'POST':
+        var["upload_fail"] = 'fail'
+        var['msg']="Upload non riuscito. Riprova o contatta il webmaster."
+        conn = sqlite3.connect(DATABASE_PATH)
+        with conn:
+            cursor = conn.cursor()
+            if obj=="news":
+                var = load_news(request, var, cursor, app)
+            elif obj=='note':
+                var = load_note(request, var, cursor, app)
+            elif obj=='doc':
+                var = load_doc(request, var, cursor, app)
+        conn.commit()
+        conn.close()
+
+    return template.render(var)
 	
 	
-@app.route("/pannello/area-riservata/manage/<obj>", methods=["GET", "POST"])
+@app.route("/pannello/area-riservata/manage/<obj>", methods=["GET"])
 def webmanage(obj):
 	if not session.get('logged_in'):
 		redirect(url_for('weblogin'))
@@ -246,14 +247,22 @@ def webmanage(obj):
 	var = style("webmaster")
 	var['obj'] = obj
 	template = env.get_template("web-res-manage-main.html")
+	
+	conn = sqlite3.connect(DATABASE_PATH)
+	with conn:
+		cursor = conn.cursor()
+		var['lista'] = load_lista(obj, cursor)
+	conn.commit()
+	conn.close()
 
-
-	var['lista'] = [ u'ciao', u'hello', u'ça va', u'добро утро', u'你好吗']
-	var['lista'] = [ {'id': 1, 'date':'today',  'title': u'ciao'},
-					 {'id': 2, 'date':'tooday',  'title': u'hello'}, 
-					 {'id': 3, 'date':'toooday',  'title': u'ça va'},
-					 {'id': 4, 'date':'tooooday',  'title': u'добро утро'},
-					 {'id': 5, 'date':'tday',  'title': u'你好吗'}  ]
+	
+	
+	
+	#var['lista'] = [ {'id': 1, 'date':'today',  'title': u'ciao'},
+	#				 {'id': 2, 'date':'tooday',  'title': u'hello'}, 
+	#				 {'id': 3, 'date':'toooday',  'title': u'ça va'},
+	#				 {'id': 4, 'date':'tooooday',  'title': u'добро утро'},
+	#				 {'id': 5, 'date':'tday',  'title': u'你好吗'}  ]
 
 	return template.render(var)
 	

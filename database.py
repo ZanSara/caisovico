@@ -78,4 +78,23 @@ def load_doc(request, var, cursor, app):
     var["upload_success"] = 'success'
     var['msg'] = "Upload completato con successo"
     return var
+    
+    
 
+def load_lista(obj, cursor):
+    lista = []
+    if obj=='news':
+        for item in cursor.execute("SELECT id, data, title FROM news").fetchall():
+            lista.append( {'id':item[0], 'data':item[1], 'title':item[2]  } )
+    if obj=='note':
+        for item in cursor.execute("SELECT id, text FROM notes").fetchall(): 
+            lista.append( {'id':item[0], 'title':item[1] } )
+    if obj=='doc':
+        for item in cursor.execute("SELECT id, name FROM docs").fetchall(): 
+            lista.append( {'id':item[0], 'title':item[1] } )
+            
+    print lista 
+    if lista == []:
+        lista = [{'id':0, 'date':'', 'title':'Errore durante il caricamento della lista.<br>Riprova o contatta il webmaster.'}]
+    return lista
+    

@@ -12,7 +12,6 @@ body{
 .page{
   margin: 0% 10%;
   padding: 0px;
-  float:center;
   overflow:hidden;
 }
 .main{
@@ -43,7 +42,6 @@ body{
   padding: 0 20px;
   width:90%;
   position:relative;
-  float:center;
   margin: 0 20px;
 }
 .slideshow img{

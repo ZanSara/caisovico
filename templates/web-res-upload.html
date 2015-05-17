@@ -18,11 +18,11 @@
 
       {% if obj=='news' %}
         <div style="text-align:right;">
-            <input class='data' name="data" id="datepick" type="text" placeholder="Data..."/>
+            <input class='data' name="data" id="datepick" value='{{ item_data }}' type="text" placeholder="Data..."/>
         </div>
         <div style="text-align:center;">
-            <input class="title" name='titolo' type="text" placeholder="Titolo...">
-            <textarea class='textfield' type="text" name='testo' placeholder="Testo..."></textarea>
+            <input class="title" name='titolo' value='{{ item_title }}' type="text" placeholder="Titolo...">
+            <textarea class='textfield' type="text" name='testo' placeholder="Testo...">{{ item_text }}</textarea>
         </div>
         <h3>Foto:</h3>
             <p><input name='foto1' type='file'><br><input class='caption' name='descrizione1' type='text' placeholder="Descrizione..."></p>
