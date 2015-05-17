@@ -39,7 +39,10 @@
       {% elif obj=='doc' %}
         <div style="text-align:center;">
         <h3>Carica File</h3>
-            <input name='doc' type='file'>
+            <p>
+            <input name='doc' type='file'><br>
+            <input name='descrizione' type='text' placeholder='Titolo del documento...'>
+            </p>
         </div>
       {% endif %}
             <input class='buttonstyle' type=submit value=Upload>

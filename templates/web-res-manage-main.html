@@ -1,0 +1,58 @@
+{% extends "web-res-home.html" %}
+
+{% block content %}
+
+    <h2>Modifica</h2>
+    
+    {% if upload_fail %}
+        <p style="text-align:center;color:red">{{ msg }}</p>
+    {% endif %}
+    {% if upload_success %}
+        <p style="text-align:center;color:green">{{ msg }}</p>
+    {% endif %}
+
+    <!-- IE Compatibility for row altenrate colors (?)
+    
+    <style type="text/css">
+      tr:nth-child(2n) {
+             background-color: #FFEBCD;
+        }
+    </style>   -->
+    
+
+<form method=POST enctype=multipart/form-data>
+    <table class='list'>
+      <tbody>
+        
+      {% for item in lista %}
+        <tr>
+            <td>
+                {% if obj=='news' %}
+                <a href='news/{{ item.id }}'>               
+                    <td style='text-align:left'>{{ item.title }}</td>
+                    <td style='text-align:right'>{{ item.date }}</td>
+                </a>
+                    
+                {% elif obj=='news' %}
+                <a href='news/{{ item.id }}'>               
+                    <td style='text-align:left'>{{ item.title }}</td>
+                </a>
+                {% elif obj=='news' %}
+                <a href='news/{{ item.id }}'>               
+                    <td style='text-align:left'>{{ item.title }}</td>
+                </a>
+                    
+                {% endif %}
+            </td>
+        </tr>
+      {% endfor %} 
+      </tbody>
+    </table>
+    
+    
+   <input class='buttonstyle' type=submit value=Modifica>
+    
+</form>
+
+
+{% endblock %}

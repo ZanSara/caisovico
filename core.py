@@ -1,9 +1,13 @@
+  #!/usr/local/bin/python
+  # -*- coding: utf-8 -*-
+  # The above is needed to set the correct encoding, see https://www.python.org/dev/peps/pep-0263/
+
 from flask import Flask, request, session, abort, url_for, redirect, send_from_directory
 from jinja2 import Environment, PackageLoader
-from werkzeug import secure_filename
 from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, ALLOWED_EXTENSIONS, DATABASE_PATH
-from utils import login, logout, datepick_to_datetime, allowed_file, set_to_string, get_extension
-import sqlite3, json, os, datetime
+from utils import login, logout
+from database import load_news, load_note, load_doc
+import sqlite3, os
 
 
 env = Environment(loader=PackageLoader('core', '/templates'))
@@ -159,7 +163,6 @@ def webmaster():
 
 
 # ************ Reserved Area *******************************************
-
 	
 @app.route('/uploads/<filename>')
 def static_file(filename):
@@ -224,80 +227,36 @@ def webupload(obj):
 		with conn:
 			cursor = conn.cursor()
 			if obj=="news":
-				var = load_news(request, conn, var)
+				var = load_news(request, var, cursor, app)
 			elif obj=='note':
-				var = load_note(request, conn, var)
+				var = load_note(request, var, cursor, app)
 			elif obj=='doc':
-				var = load_doc(request, conn, var)
+				var = load_doc(request, var, cursor, app)
 		conn.commit()
 		conn.close()
 
-	template = env.get_template("web-res-upload.html")
 	return template.render(var)
 	
-
-
-def load_news(request, cursor, var):
-	title = request.form['titolo']
-	text = request.form['testo']
-	date = request.form['data']
-	if not title:
-		var['msg'] = "Impossibile caricare una notizia senza titolo"
-		return var
-	if not text:
-		var['msg'] = "Impossibile caricare una notizia senza testo"
-		return var
-		
-	photo = []
-	caps = []
-	for i in xrange(1, 5):
-		if request.files['foto{0}'.format(i)]:
-			photo.append(request.files['foto{0}'.format(i)])
-			caps.append(request.form['descrizione{0}'.format(i)])
-			
-	paths = []
-	for f in photo:
-		if f:
-			if not allowed_file(f.filename):
-				var['msg'] = "Attenzione! Le foto non possono essere caricate.<br>Controlla le estensioni! Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS))
-				return var
-			filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(f.filename)))
-			f.save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
-			paths.append(filename)
-					
-	cursor.execute("INSERT INTO news (data, title, text, pics) VALUES (?, ?, ?, ?)", [datepick_to_datetime(date), title, text, json.dumps(zip(paths, caps))])
-	# Per decodificare, json.load(jsonyfied_var)
-	var['upload_fail'] = 0
-	var["upload_success"] = 'success'
-	var['msg'] = "Upload completato con successo"
-	return var
 	
-def load_note(request, cursor, var):
-	text = request.form['testo']
-	if not text:
-		var['msg'] = "Impossibile caricare una nota vuota"
-		return var
-	cursor.execute("INSERT INTO notes VALUES (null, ?)", [text])
-	var['upload_fail'] = 0
-	var["upload_success"] = 'success'
-	var['msg'] = "Upload completato con successo"
-	return var
+@app.route("/pannello/area-riservata/manage/<obj>", methods=["GET", "POST"])
+def webmanage(obj):
+	if not session.get('logged_in'):
+		redirect(url_for('weblogin'))
+		
+	var = style("webmaster")
+	var['obj'] = obj
+	template = env.get_template("web-res-manage-main.html")
 
-def load_doc(request, cursor, var):
-	fil = request.files['doc']
-	if not fil:
-		var['msg'] = "Nessun file selezionato"
-		return var
-	if not allowed_file(fil.filename):
-		var['msg'] = "Upload fallito! Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS))
-		return var
-	filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(fil.filename)))
-	fil.save(os.path.join(app.config['UPLOAD_FOLDER_DOCS'], filename))
-	cursor.execute("INSERT INTO docs VALUES (null, ?)", [json.dumps(filename)])
-	var["upload_fail"] = 0
-	var["upload_success"] = 'success'
-	var['msg'] = "Upload completato con successo"
-	return var
+
+	var['lista'] = [ u'ciao', u'hello', u'ça va', u'добро утро', u'你好吗']
+	var['lista'] = [ {'id': 1, 'date':'today',  'title': u'ciao'},
+					 {'id': 2, 'date':'tooday',  'title': u'hello'}, 
+					 {'id': 3, 'date':'toooday',  'title': u'ça va'},
+					 {'id': 4, 'date':'tooooday',  'title': u'добро утро'},
+					 {'id': 5, 'date':'tday',  'title': u'你好吗'}  ]
+
+	return template.render(var)
+	
 
 	
 #*** ERROR HANDLERS ****************
