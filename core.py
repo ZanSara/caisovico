@@ -1,7 +1,7 @@
 from flask import Flask, request, session, abort, url_for, redirect, send_from_directory
 from jinja2 import Environment, PackageLoader
 from werkzeug import secure_filename
-from config import UPLOAD_FOLDER, ALLOWED_EXTENSIONS, DATABASE_PATH
+from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, ALLOWED_EXTENSIONS, DATABASE_PATH
 from utils import login, logout, datepick_to_datetime, allowed_file, set_to_string, get_extension
 import sqlite3, json, os, datetime
 
@@ -9,7 +9,8 @@ import sqlite3, json, os, datetime
 env = Environment(loader=PackageLoader('core', '/templates'))
 
 app = Flask(__name__, static_folder="static")
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOAD_FOLDER_DOCS'] = UPLOAD_FOLDER_DOCS
+app.config['UPLOAD_FOLDER_PICS'] = UPLOAD_FOLDER_PICS
 
 app.secret_key = ".ASF\x89m\x14\xc9s\x94ff\xfaq\xca}h\xe1/\x1f3\x1dFxj\xdc\xf0\xf9"
 
@@ -211,93 +212,92 @@ def webres():
 def webupload(obj):
 	if not session.get('logged_in'):
 		redirect(url_for('weblogin'))
-
+		
 	var = style("webmaster")
-	var['obj']=obj
+	var['obj'] = obj
 	template = env.get_template("web-res-upload.html")
 	
-	# Bozza hardcodata - RIMEDIARE!
 	if request.method == 'POST':
 		var["upload_fail"] = 'fail'
 		var['msg']="Upload non riuscito. Riprova o contatta il webmaster."
 		conn = sqlite3.connect(DATABASE_PATH)
 		with conn:
 			cursor = conn.cursor()
-			
 			if obj=="news":
-				title = request.form['titolo']
-				text = request.form['testo']
-				date = request.form['data']
-				file1 = request.files['foto1']
-				file2 = request.files['foto2']
-				file3 = request.files['foto3']
-				file4 = request.files['foto4']
-				file5 = request.files['foto5']
-				cap1 = request.form['descrizione1']
-				cap2 = request.form['descrizione2']
-				cap3 = request.form['descrizione3']
-				cap4 = request.form['descrizione4']
-				cap5 = request.form['descrizione5']
-				pics, caps = [], []
-				for fil in [file1, file2, file3, file4, file5]:
-					if fil: #and allowed_file(fil.filename):
-						filename = secure_filename(fil.filename)
-						fil.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-						pics.append(filename)
-				for cap in [cap1, cap2, cap3, cap4, cap5]:
-					if cap:
-						caps.append(cap)
-					else:
-						caps.append(' ')
-				full = zip(pics, caps)
-				pic_list = json.dumps(full)  # Per decodificare, json.load(jsonyfied_var)
-				cursor.execute("INSERT INTO news (data, title, text, pics) VALUES (?, ?, ?, ?)", [datepick_to_datetime(date), title, text, pic_list])
-				conn.commit()
-				var['upload_fail'] = 0
-				var["upload_success"] = 'success'
-				var['msg'] = "Upload completato con successo"
-				conn.close()
-				return template.render(var)
-				
-			if obj=='note':
-				text = request.form['testo']
-				cursor.execute("INSERT INTO notes VALUES (null, ?)", [text])
-				conn.commit()
-				var['upload_fail'] = 0
-				var["upload_success"] = 'success'
-				var['msg']="Upload completato con successo"
-				conn.close()
-				return template.render(var)
+				var = load_news(request, conn, var)
+			elif obj=='note':
+				var = load_note(request, conn, var)
+			elif obj=='doc':
+				var = load_doc(request, conn, var)
+		conn.commit()
+		conn.close()
 
-			if obj=='doc':
-				fil = request.files['doc']
-				if fil:
-					if not allowed_file(fil.filename):
-						var['msg'] = "Upload fallito! Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS))
-						return template.render(var)
-					print allowed_file(fil.filename)
-					filename = secure_filename(fil.filename)
-					
-					filename = 'FileUploaded{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-4], get_extension(filename))
-					i = 0
-					while os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'], '{0}-{1}'.format(str(i), filename))):	
-						i += 1
-					filename = '{0}-{1}'.format(str(i), filename)
-					fil.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-					cursor.execute("INSERT INTO docs VALUES (null, ?)", [json.dumps(filename)])
-					conn.commit()
-					var["upload_fail"] = 0
-					var["upload_success"] = 'success'
-					var['msg'] = "Upload completato con successo"
-					conn.close()
-				return template.render(var)
-
-	print 'FileUploaded{0}'.format(str(datetime.datetime.now())).translate(None, '.:- ')[:-4]
 	template = env.get_template("web-res-upload.html")
 	return template.render(var)
 	
 
 
+def load_news(request, cursor, var):
+	title = request.form['titolo']
+	text = request.form['testo']
+	date = request.form['data']
+	if not title:
+		var['msg'] = "Impossibile caricare una notizia senza titolo"
+		return var
+	if not text:
+		var['msg'] = "Impossibile caricare una notizia senza testo"
+		return var
+		
+	photo = []
+	caps = []
+	for i in xrange(1, 5):
+		if request.files['foto{0}'.format(i)]:
+			photo.append(request.files['foto{0}'.format(i)])
+			caps.append(request.form['descrizione{0}'.format(i)])
+			
+	paths = []
+	for f in photo:
+		if f:
+			if not allowed_file(f.filename):
+				var['msg'] = "Attenzione! Le foto non possono essere caricate.<br>Controlla le estensioni! Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS))
+				return var
+			filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(f.filename)))
+			f.save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
+			paths.append(filename)
+					
+	cursor.execute("INSERT INTO news (data, title, text, pics) VALUES (?, ?, ?, ?)", [datepick_to_datetime(date), title, text, json.dumps(zip(paths, caps))])
+	# Per decodificare, json.load(jsonyfied_var)
+	var['upload_fail'] = 0
+	var["upload_success"] = 'success'
+	var['msg'] = "Upload completato con successo"
+	return var
+	
+def load_note(request, cursor, var):
+	text = request.form['testo']
+	if not text:
+		var['msg'] = "Impossibile caricare una nota vuota"
+		return var
+	cursor.execute("INSERT INTO notes VALUES (null, ?)", [text])
+	var['upload_fail'] = 0
+	var["upload_success"] = 'success'
+	var['msg'] = "Upload completato con successo"
+	return var
+
+def load_doc(request, cursor, var):
+	fil = request.files['doc']
+	if not fil:
+		var['msg'] = "Nessun file selezionato"
+		return var
+	if not allowed_file(fil.filename):
+		var['msg'] = "Upload fallito! Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS))
+		return var
+	filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(fil.filename)))
+	fil.save(os.path.join(app.config['UPLOAD_FOLDER_DOCS'], filename))
+	cursor.execute("INSERT INTO docs VALUES (null, ?)", [json.dumps(filename)])
+	var["upload_fail"] = 0
+	var["upload_success"] = 'success'
+	var['msg'] = "Upload completato con successo"
+	return var
 
 	
 #*** ERROR HANDLERS ****************

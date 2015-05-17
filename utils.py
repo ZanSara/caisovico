@@ -29,13 +29,12 @@ def datepick_to_datetime(data):
 	if str(data).count("/") != 2:
 		raise ValueError("Date is malformed")
 	d = data.split("/")
-	print d
 	return datetime.datetime(int(d[2]), int(d[1]), int(d[0]))
 
 
 def allowed_file(filename):
 	""" Checks for the file extension to be one of the allowed ones """
-	return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def set_to_string(myset):
     mystring = ''
@@ -44,6 +43,6 @@ def set_to_string(myset):
     return mystring[1:-1]
         
 def get_extension(filename):
-    return filename.rsplit('.', 1)[1]
+    return filename.rsplit('.', 1)[1].lower()
     
     
