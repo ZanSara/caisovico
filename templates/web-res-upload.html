@@ -29,6 +29,9 @@
             <textarea class='textfield' type="text" name='testo' placeholder="Testo...">{{ item.content }}</textarea>
         </div>
         <h3>Foto:</h3>
+        {% if item %}
+        <p>ATTENZIONE! Non caricare nuove foto dove vedi la descrizione, a meno che tu non voglia sostituirle!</p>
+        {% endif %}
             <p><input name='foto1' value='{{ item.foto1 }}' type='file'><br><input class='caption' name='descrizione1' type='text' value='{{ item.desc1 }}' placeholder="Descrizione..."></p>
             <p><input name='foto2' type='file'><br><input class='caption' name='descrizione2' type='text' placeholder="Descrizione..."></p>
             <p><input name='foto3' type='file'><br><input class='caption' name='descrizione3' type='text' placeholder="Descrizione..."></p>
@@ -42,10 +45,17 @@
         </div>
       {% elif obj=='doc' %}
         <div style="text-align:center;">
-        <h3>Carica File</h3>
+        <h3>Documento:</h3>
             <p>
-            <input name='doc' type='file'><br>
-            <input name='descrizione' type='text' value='{{ item.content }}' placeholder='Titolo del documento...'>
+            {% if item %}
+            CANCELLA il documento vecchio e sostituiscilo con:<br>
+            {% endif %}
+            <input name='doc' type='file'>
+            {% if item %}
+            <br><br>OPPURE<br><br>
+            CAMBIA IL NOME del vecchio documento con:<br>
+            {% endif %}
+            <input name='descrizione' type='text' value='{{ item.title }}' placeholder='Titolo del documento...'>
             </p>
         </div>
       {% endif %}

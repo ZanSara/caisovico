@@ -8,10 +8,10 @@ from config import ALLOWED_EXTENSIONS
 import sqlite3, json, os, datetime
   
 
-  
-# *********** UPLOAD ***************************************************
 
-def load_news(request, var, cursor, app):
+# *********** NEWS Management ******************************************
+
+def load_news(request, var):
     title = request.form['titolo']
     text = request.form['testo']
     date = request.form['data']
@@ -32,36 +32,71 @@ def load_news(request, var, cursor, app):
             photo.append(request.files['foto{0}'.format(i)])
             caps.append(request.form['descrizione{0}'.format(i)])
             
-    paths = []
     for f in photo:
         if f:
             if not allowed_file(f.filename):
                 var['msg'] = "Attenzione! Le foto non possono essere caricate.<br>Controlla le estensioni! Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS))
                 return var
+    var['item'] = {'title':title, 'date':datepick_to_datetime(date), 'content':text, 'caps':caps, 'photo':photo}            
+    return var
+    
+    
+def upload_news(request, var, cursor, app):
+    var = load_news(request, var)
+    item = var['item']
+    
+    if var['item']:
+        paths = []
+        for f in item['photo']:
             filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(f.filename)))
             f.save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
             paths.append(filename)
-                    
-    cursor.execute("INSERT INTO news (data, title, text, pics) VALUES (?, ?, ?, ?)", [datepick_to_datetime(date), title, text, json.dumps(zip(paths, caps))])
-    var['upload_fail'] = 0
-    var["upload_success"] = 'success'
-    var['msg'] = "Upload completato con successo"
+        pics = json.dumps(zip(paths, item['caps']))
+        cursor.execute("INSERT INTO news (data, title, text, pics) VALUES (?, ?, ?, ?)", [item['date'], item['title'], item['content'], pics])
+        
+        var['item'] = { 'title':item['title'], 'date':item['date'], 'content':item['content'], 'pics':pics }
+        var['upload_fail'] = 0
+        var["upload_success"] = 'success'
+        var['msg'] = "Upload completato con successo"
     return var
+
+def update_news(request, var, cursor, app, id):
+    pass
     
+# *********** NOTES Management *****************************************  
     
-def load_note(request, var, cursor, app):
+def load_note(request, var):
     text = request.form['testo']
     if not text:
         var['msg'] = "Impossibile caricare una nota vuota"
-        return var
-    cursor.execute("INSERT INTO notes VALUES (null, ?)", [text])
-    var['upload_fail'] = 0
-    var["upload_success"] = 'success'
-    var['msg'] = "Upload completato con successo"
+        return var 
+    var['item'] = {'content': text }
+    return var 
+    
+def upload_note(request, var, cursor):
+    var = load_note(request, var)
+    if var['item']:
+        item = var['item']
+        cursor.execute("INSERT INTO notes VALUES (null, ?)", [item['content']])
+        var['upload_fail'] = 0
+        var["upload_success"] = 'success'
+        var['msg'] = "Upload completato con successo"
     return var
 
+def update_note(request, var, cursor, id):
+    var = load_note(request, var)
+    if var['item']:
+        item = var['item']
+        cursor.execute("UPDATE notes SET text = ? WHERE id = ?", [item['content'], id])
+        var['upload_fail'] = 0
+        var["upload_success"] = 'success'
+        var['msg'] = "Upload completato con successo"
+    return var
+    
 
-def load_doc(request, var, cursor, app):
+# *********** DOCS Management ******************************************
+
+def load_doc(request, var):
     name = request.form['descrizione']
     f = request.files['doc']
     if not name:
@@ -73,15 +108,38 @@ def load_doc(request, var, cursor, app):
     if not allowed_file(f.filename):
         var['msg'] = "Upload fallito! Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS))
         return var
-    filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(f.filename)))
-    f.save(os.path.join(app.config['UPLOAD_FOLDER_DOCS'], filename))
-    cursor.execute("INSERT INTO docs (name, path) VALUES (?, ?)", [name, json.dumps(filename)])
-    var["upload_fail"] = 0
-    var["upload_success"] = 'success'
-    var['msg'] = "Upload completato con successo"
+    var['item'] = {'title':name, 'file': f}
     return var
-    
-    
+  
+def upload_doc(request, var, cursor, app):
+    var = load_doc(request, var)
+    if var['item']:
+        item = var['item']
+        filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(item['file'].filename)))
+        item['file'].save(os.path.join(app.config['UPLOAD_FOLDER_DOCS'], filename))
+        cursor.execute("INSERT INTO docs (name, path) VALUES (?, ?)", [item['title'], json.dumps(filename)])
+        var["upload_fail"] = 0
+        var["upload_success"] = 'success'
+        var['msg'] = "Upload completato con successo"
+    return var
+ 
+def update_doc(request, var, cursor, app, id):
+    var = load_doc(request, var)
+    if var['item']:
+        item = var['item']
+        if item['file']:
+            filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(item['file'].filename)))
+            item['file'].save(os.path.join(app.config['UPLOAD_FOLDER_DOCS'], filename))
+            cursor.execute("UPDATE docs SET path=? WHERE id = ?", [json.dumps(filename), id])
+        cursor.execute("UPDATE docs SET name=? WHERE id = ?", [item['title'], id])
+        var['upload_fail'] = 0
+        var["upload_success"] = 'success'
+        var['msg'] = "Upload completato con successo"
+    return var
+ 
+
+ 
+# *********** Others ***************************************************
 
 def load_lista(obj, cursor):
     lista = []
@@ -101,7 +159,7 @@ def load_lista(obj, cursor):
 
 def retrieve_item(obj, id, cursor):
     if obj=='news':
-        row = cursor.execute("SELECT * FROM news WHERE id == ?", id).fetchone()
+        row = cursor.execute("SELECT * FROM news WHERE id == ?", [id]).fetchone()
         data = datetime_to_datepick(row[1])
         item = {'data':data, 'title':row[2], 'content':row[3]}
         print item
@@ -109,11 +167,11 @@ def retrieve_item(obj, id, cursor):
         print item_foto
        
     if obj=='note':
-        row = cursor.execute("SELECT * FROM notes WHERE id == ?", id).fetchone()
+        row = cursor.execute("SELECT * FROM notes WHERE id == ?", [id]).fetchone()
         item = {'content':row[1]}
         
     if obj=='doc':
-        row = cursor.execute("SELECT * FROM docs WHERE id == ?", id).fetchone()
-        item = {'content':row[1]}
+        row = cursor.execute("SELECT * FROM docs WHERE id == ?", [id]).fetchone()
+        item = {'title':row[1], 'path':row[2]}
     
     return item

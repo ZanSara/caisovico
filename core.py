@@ -6,7 +6,7 @@ from flask import Flask, request, session, abort, url_for, redirect, send_from_d
 from jinja2 import Environment, PackageLoader
 from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, ALLOWED_EXTENSIONS, DATABASE_PATH
 from utils import login, logout
-from database import load_news, load_note, load_doc, load_lista, retrieve_item
+from database import upload_news, upload_note, upload_doc, load_lista, retrieve_item, update_news, update_note, update_doc
 import sqlite3, os
 
 
@@ -229,11 +229,11 @@ def webupload(obj):
         with conn:
             cursor = conn.cursor()
             if obj=="news":
-                var = load_news(request, var, cursor, app)
+                var = upload_news(request, var, cursor, app)
             elif obj=='note':
-                var = load_note(request, var, cursor, app)
+                var = upload_note(request, var, cursor)
             elif obj=='doc':
-                var = load_doc(request, var, cursor, app)
+                var = upload_doc(request, var, cursor, app)
         conn.commit()
         conn.close()
 
@@ -247,7 +247,7 @@ def webmanage(obj):
         
     var = style("webmaster")
     var['obj'] = obj
-    var['item'] = {'data':'', 'title':'', 'content':'' }
+    var['item'] = {}
     template = env.get_template("web-res-manage-main.html")
     
     conn = sqlite3.connect(DATABASE_PATH)
@@ -281,11 +281,11 @@ def webmodify(obj, id):
         with conn:
             cursor = conn.cursor()
             if obj=="news":
-                var = load_news(request, var, cursor, app)
+                var = update_news(request, var, cursor, app, id)
             elif obj=='note':
-                var = load_note(request, var, cursor, app)
+                var = update_note(request, var, cursor, id)
             elif obj=='doc':
-                var = load_doc(request, var, cursor, app)
+                var = update_doc(request, var, cursor, app, id)
         conn.commit()
         conn.close()
 
