@@ -7,7 +7,7 @@
     
     <div class='pseudotable'>
       {% for item in lista %}
-        <a href='#'>
+        <a href='{{ obj }}/{{ item.id }}'>
           <div class='pseudorow'>
             {% if obj=='news' %}
               <p class='tabletitle'>{{ item.title }}</p>
