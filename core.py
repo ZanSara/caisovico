@@ -6,7 +6,7 @@ from flask import Flask, request, session, abort, url_for, redirect, send_from_d
 from jinja2 import Environment, PackageLoader
 from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, ALLOWED_EXTENSIONS, DATABASE_PATH
 from utils import login, logout
-from database import upload_news, upload_note, upload_doc, load_lista, retrieve_item, update_news, update_note, update_doc
+from database import upload_news, upload_note, upload_doc, load_lista, retrieve_item, update_news, update_newspics, update_note, update_doc
 import sqlite3, os
 
 
@@ -219,7 +219,6 @@ def webupload(obj):
 
     var = style("webmaster")
     var['obj'] = obj
-    var['item'] = {}
     template = env.get_template("web-res-upload.html")
 
     if request.method == 'POST':
@@ -235,6 +234,7 @@ def webupload(obj):
             elif obj=='doc':
                 var = upload_doc(request, var, cursor, app)
         conn.commit()
+        var['id'] = cursor.lastrowid
         conn.close()
 
     return template.render(var)
@@ -287,22 +287,38 @@ def webmodify(obj, id):
             elif obj=='doc':
                 var = update_doc(request, var, cursor, app, id)
         conn.commit()
+        var['item'] = retrieve_item(obj, id, cursor)    # Ensures that the data has actually been written
         conn.close()
+        
 
     return template.render(var)
     
 
+@app.route("/pannello/area-riservata/manage/<obj>/<id>/<path>", methods=["GET", "POST"])
+def weupdatepics(obj, id, path):
+    if not session.get('logged_in'):
+        redirect(url_for('weblogin'))
+    var = style("webmaster")
+    
+    conn = sqlite3.connect(DATABASE_PATH)
+    with conn:
+        cursor = conn.cursor()
+        var = update_newspics(request, var, cursor, app, id, path)
+       
+   
+    
+    var['obj'] = obj
+    var['id'] = id
+    template = env.get_template("web-res-manage-photos.html")
 
 
+    return template.render(var)
 
-
-
-
-
-
-
-
-
+    
+    
+    
+    
+    
     
 #*** ERROR HANDLERS ****************
 #@app.errorhandler(404)

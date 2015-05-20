@@ -25,43 +25,80 @@ def load_news(request, var):
         var['msg'] = "Impossibile caricare una notizia senza testo"
         return var
         
-    photo = []
-    caps = []
-    for i in xrange(1, 5):
+    photo, caps = [], []
+    for i in xrange(1, 6):
         if request.files['foto{0}'.format(i)]:
             photo.append(request.files['foto{0}'.format(i)])
+            if not request.form['descrizione{0}'.format(i)]:
+                var['msg'] = "Inserire la descrizione della foto numero {0}".format(i)
+                return var
             caps.append(request.form['descrizione{0}'.format(i)])
             
     for f in photo:
-        if f:
-            if not allowed_file(f.filename):
-                var['msg'] = "Attenzione! Le foto non possono essere caricate.<br>Controlla le estensioni! Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS))
-                return var
-    var['item'] = {'title':title, 'date':datepick_to_datetime(date), 'content':text, 'caps':caps, 'photo':photo}            
+        if not allowed_file(f.filename):
+            var['msg'] = "Attenzione! Le foto non possono essere caricate.<br>Controlla le estensioni! Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS))
+            return var
+    var['item'] = {'title':title, 'date':datepick_to_datetime(date), 'content':text, 'caps':caps, 'photos':photo}            
     return var
     
+def load_newspics(request, var):
+    name = request.form['descrizione']
+    f = request.files['foto']
+    if not name:
+        var['msg'] = "Inserire una descrizione per la foto"
+        return var
+    if not f:
+        var['msg'] = "Nessuna foto selezionato"
+        return var
+    if not allowed_file(f.filename):
+        var['msg'] = "Upload fallito! Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS))
+        return var
+    var['item'] = {'title':name, 'file': f}
+    return var
     
 def upload_news(request, var, cursor, app):
     var = load_news(request, var)
-    item = var['item']
-    
     if var['item']:
+        item = var['item']
         paths = []
-        for f in item['photo']:
+        for f in item['photos']:
             filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(f.filename)))
             f.save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
             paths.append(filename)
-        pics = json.dumps(zip(paths, item['caps']))
-        cursor.execute("INSERT INTO news (data, title, text, pics) VALUES (?, ?, ?, ?)", [item['date'], item['title'], item['content'], pics])
+        pics = zip(paths, item['caps'])
+        cursor.execute("INSERT INTO news (data, title, text, pics) VALUES (?, ?, ?, ?)", [item['date'], item['title'], item['content'], json.dumps(pics)])
         
+        pics = [{'path': pic[0], 'title':pic[1]} for pic in pics]
         var['item'] = { 'title':item['title'], 'date':item['date'], 'content':item['content'], 'pics':pics }
         var['upload_fail'] = 0
         var["upload_success"] = 'success'
         var['msg'] = "Upload completato con successo"
     return var
 
+
 def update_news(request, var, cursor, app, id):
-    pass
+    var = load_news(request, var)
+    if var['item']:
+        item = var['item']
+        cursor.execute("UPDATE news SET data=?, title=?, text=? WHERE id = ?", [item['date'], item['title'], item['content'], id])
+        # Photos can be managed separately
+        var['upload_fail'] = 0
+        var["upload_success"] = 'success'
+        var['msg'] = "Upload completato con successo"
+    return var
+
+def update_newspics(request, var, cursor, app, id, path):
+    new_item = load_newspics(request, var)      # Loads the new photo
+    old_item = retrieve_item(obj, id, cursor)['pics']   # Retrieve the old list of photos for that news
+    if path == 'add':
+        var['new'] = True
+        old_item['pics'].append({'path':filename, 'title':ph[1]})
+    else:
+        var['new'] = False
+        
+        
+    return var    
+        
     
 # *********** NOTES Management *****************************************  
     
@@ -111,6 +148,7 @@ def load_doc(request, var):
     var['item'] = {'title':name, 'file': f}
     return var
   
+  
 def upload_doc(request, var, cursor, app):
     var = load_doc(request, var)
     if var['item']:
@@ -122,6 +160,7 @@ def upload_doc(request, var, cursor, app):
         var["upload_success"] = 'success'
         var['msg'] = "Upload completato con successo"
     return var
+ 
  
 def update_doc(request, var, cursor, app, id):
     var = load_doc(request, var)
@@ -160,18 +199,17 @@ def load_lista(obj, cursor):
 def retrieve_item(obj, id, cursor):
     if obj=='news':
         row = cursor.execute("SELECT * FROM news WHERE id == ?", [id]).fetchone()
-        data = datetime_to_datepick(row[1])
-        item = {'data':data, 'title':row[2], 'content':row[3]}
-        print item
-        item_foto = json.loads(str(row[4]))
-        print item_foto
+        photos = json.loads(str(row[4]))
+        item = {'id':id, 'date':datetime_to_datepick(row[1]), 'title':row[2], 'content':row[3], 'pics': [ {'path':ph[0], 'title':ph[1]} for ph in photos] }
+        if len(photos) < 5:
+            item['addphoto'] = True
        
     if obj=='note':
         row = cursor.execute("SELECT * FROM notes WHERE id == ?", [id]).fetchone()
-        item = {'content':row[1]}
+        item = {'id':id, 'content':row[1]}
         
     if obj=='doc':
         row = cursor.execute("SELECT * FROM docs WHERE id == ?", [id]).fetchone()
-        item = {'title':row[1], 'path':row[2]}
+        item = {'id':id, 'title':row[1], 'path':row[2]}
     
     return item

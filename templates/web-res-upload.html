@@ -22,22 +22,39 @@
 
       {% if obj=='news' %}
         <div style="text-align:right;">
-            <input class='data' name="data" id="datepick" value='{{ item.data }}' type="text" placeholder="Data..."/>
+            <input class='data' name="data" id="datepick" value='{{ item.date }}' type="text" placeholder="Data..."/>
         </div>
         <div style="text-align:center;">
             <input class="title" name='titolo' value='{{ item.title }}' type="text" placeholder="Titolo...">
             <textarea class='textfield' type="text" name='testo' placeholder="Testo...">{{ item.content }}</textarea>
         </div>
         <h3>Foto:</h3>
-        {% if item %}
-        <p>ATTENZIONE! Non caricare nuove foto dove vedi la descrizione, a meno che tu non voglia sostituirle!</p>
-        {% endif %}
-            <p><input name='foto1' value='{{ item.foto1 }}' type='file'><br><input class='caption' name='descrizione1' type='text' value='{{ item.desc1 }}' placeholder="Descrizione..."></p>
+        {% if item.pics %}
+            <p>Clicca sulla foto da modificare o rimuovere:</p>
+            <div class='pseudotable'>
+              {% for photo in item.pics %}
+                <a href='{{item.id}}/{{ photo.path[4:-4] }}'>
+                  <div class='pseudorow'>
+                      <p class='tabletitle'{% if message %} style='text-align:center;color:red' {% endif %}>{{ photo.title }}</p>
+                  </div>
+                </a>
+              {% endfor %}
+              {% if item.addphoto %}
+                <a href='{{item.id}}/add'>
+                  <div class='pseudorow'>
+                      <p class='tabletitle'style='font-style:italic;' > -- Aggiungi Foto --</p>
+                  </div>
+                </a>
+               {% endif %}
+            </div>        
+        {% else %}
+            <p><input name='foto1' type='file'><br><input class='caption' name='descrizione1' type='text' placeholder="Descrizione..."></p>
             <p><input name='foto2' type='file'><br><input class='caption' name='descrizione2' type='text' placeholder="Descrizione..."></p>
             <p><input name='foto3' type='file'><br><input class='caption' name='descrizione3' type='text' placeholder="Descrizione..."></p>
             <p><input name='foto4' type='file'><br><input class='caption' name='descrizione4' type='text' placeholder="Descrizione..."></p>
             <p><input name='foto5' type='file'><br><input class='caption' name='descrizione5' type='text' placeholder="Descrizione..."></p>
-            
+        {% endif %}   
+        
       {% elif obj=='note' %}
         <div style="text-align:center;">
         <h3>Nota:</h3>
@@ -65,7 +82,7 @@
         <h1>ERRORE</h1>
     {% endif %}
     </div>
-
+    <a href='/pannello/area-riservata/manage/{{ obj }}'><button class='backbuttonstyle'>Indietro</button></a>
 
     {% if obj=='news' %}
     <link href="/static/css/datepickr.css" rel="stylesheet">

@@ -1,0 +1,40 @@
+{% extends "web-res-home.html" %}
+
+{% block content %}
+
+    <h2>Foto</h2>
+        
+    {% if upload_fail %}
+        <p style="text-align:center;color:red">{{ msg }}</p>
+    {% endif %}
+    {% if upload_success %}
+        <p style="text-align:center;color:green">{{ msg }}</p>
+    {% endif %}
+    
+    
+    <div class='boxup'>
+    {% if new %}
+        <h3>Aggiungi la nuova foto:</h3>
+        <form method=POST enctype=multipart/form-data>
+            <p><input name='foto' type='file'><br><input class='caption' name='descrizione' type='text' placeholder="Descrizione..."></p>
+            <input class='buttonstyle' type='submit' value='Upload'>
+        </form>
+    {% else %}
+      <h3>Foto da modificare:</h3>
+      <img src="/uploads/photos/{{ item.path }}" title="{{ item.title }}" alt="Si è verificato un errore. Per favore premi il bottone 'Indietro' e contatta il webmaster prima di proseguire.">
+      <p>Descrizione: " {{ item.title }} "</p>
+      <p>Sostituisci la foto:</p>
+        <form method=POST enctype=multipart/form-data>
+            <input name='foto' type='file'>
+            <input class='buttonstyle' type='submit' value='Upload'>
+      <p>Cambia la didascalia:</p>
+            <input class='caption' name='descrizione' type='text' placeholder="Descrizione...">
+            <input class='buttonstyle' type='submit' value='Upload'>
+        </form>
+      
+    {% endif %} 
+    </div>
+    
+    <a href='../{{ id }}'><button class='backbuttonstyle'>Indietro</button></a>
+
+{% endblock %}
