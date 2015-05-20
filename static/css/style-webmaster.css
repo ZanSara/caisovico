@@ -61,6 +61,12 @@
   margin-bottom: 10%;
   margin-right: 5% ;
 }
+hr{
+    border:none;
+    border-bottom: 4px dotted black;
+    width:90%;
+    margin: 30px;
+}
 
 input[type="text"], input[type="datetime"], input[type="password"], textarea{
     border : 1px solid #cccccc;

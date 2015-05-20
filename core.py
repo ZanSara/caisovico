@@ -6,7 +6,7 @@ from flask import Flask, request, session, abort, url_for, redirect, send_from_d
 from jinja2 import Environment, PackageLoader
 from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, ALLOWED_EXTENSIONS, DATABASE_PATH
 from utils import login, logout
-from database import upload_news, upload_note, upload_doc, load_lista, retrieve_item, update_news, update_newspics, update_note, update_doc
+from database import upload_news, upload_note, upload_doc, load_lista, retrieve_item, update_news, update_newspics, update_note, retrieve_photo
 import sqlite3, os
 
 
@@ -167,10 +167,12 @@ def webmaster():
 
 # ************ Reserved Area *******************************************
     
-@app.route('/uploads/<filename>')
-def static_file(filename):
+@app.route('/uploads/<folder>/<filename>')
+def static_file(folder, filename):
     """ Serves static files """
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    if folder=='photos':
+        return send_from_directory(app.config['UPLOAD_FOLDER_PICS'], filename)
+    return send_from_directory(app.config['UPLOAD_FOLDER_DOCS'], filename)
 
 
 @app.route("/pannello/area-riservata/login", methods=["GET", "POST"])
@@ -227,7 +229,7 @@ def webupload(obj):
 
     if request.method == 'POST':
         var["upload"] = 'fail'
-        var['msg']="Upload non riuscito. Riprova o contatta il webmaster."
+        var['msg'] = u"Upload non riuscito. Riprova o contatta il webmaster."
         conn = sqlite3.connect(DATABASE_PATH)
         with conn:
             cursor = conn.cursor()
@@ -279,8 +281,8 @@ def webmodify(obj, id):
     conn.close()
         
     if request.method=='POST':
-        var["upload_fail"] = 'fail'
-        var['msg']="Upload non riuscito. Riprova o contatta il webmaster."
+        var["upload"] = 'fail'
+        var['msg'] = u"Upload non riuscito. Riprova o contatta il webmaster."
         conn = sqlite3.connect(DATABASE_PATH)
         with conn:
             cursor = conn.cursor()
@@ -298,26 +300,49 @@ def webmodify(obj, id):
     return template.render(var)
     
 
-@app.route("/pannello/area-riservata/manage/<obj>/<id>/<path>", methods=["GET", "POST"])
-def weupdatepics(obj, id, path):
+@app.route("/pannello/area-riservata/manage/news/<id>/pics/<index>", methods=["GET", "POST"])
+def weupdatepics(id, index):
     if not session.get('logged_in'):
         redirect(url_for('weblogin'))
     var = style("webmaster")
     
+    var['obj'] = 'news'
+    var['id'] = id
+    var['item'] = {}
+    template = env.get_template("web-res-manage-photos.html")
+    
+    if index=="add":
+        var['new'] = True
+        # var['index'] is left undefined
+    else:
+        var['new'] = False
+        index = int(index)
+        var['index'] = index
+    
     conn = sqlite3.connect(DATABASE_PATH)
     with conn:
         cursor = conn.cursor()
-        var = update_newspics(request, var, cursor, app, id, path)
-       
-   
-    
-    var['obj'] = obj
-    var['id'] = id
-    template = env.get_template("web-res-manage-photos.html")
+        if request.method=="POST":
+            var = update_newspics(request, var, cursor, app, id)
+            conn.commit()
+        
+        if var['new'] == False:    
+            photo = retrieve_photo(id, var['index'], cursor)
+            if not photo:
+                var['upload'] = 'fail'
+                var['msg'] = u"Errore durante il caricamento della foto."
+                return template.render(var)
+            var['item'] = photo
 
-
+    conn.close()    
     return template.render(var)
-
+    
+    
+    
+    
+    
+    
+    
     
     
     

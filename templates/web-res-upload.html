@@ -33,14 +33,14 @@
             <p>Clicca sulla foto da modificare o rimuovere:</p>
             <div class='pseudotable'>
               {% for photo in item.pics %}
-                <a href='{{item.id}}/{{ photo.path[4:-4] }}'>
+                <a href='{{ item.id }}/pics/{{ photo.id }}'>
                   <div class='pseudorow'>
                       <p class='tabletitle'{% if message %} style='text-align:center;color:red' {% endif %}>{{ photo.title }}</p>
                   </div>
                 </a>
               {% endfor %}
               {% if item.addphoto %}
-                <a href='{{item.id}}/add'>
+                <a href='{{item.id}}/pics/add'>
                   <div class='pseudorow'>
                       <p class='tabletitle'style='font-style:italic;' > -- Aggiungi Foto --</p>
                   </div>

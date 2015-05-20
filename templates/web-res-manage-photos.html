@@ -4,37 +4,43 @@
 
     <h2>Foto</h2>
         
-    {% if upload_fail %}
+    {% if upload=='fail' %}
         <p style="text-align:center;color:red">{{ msg }}</p>
     {% endif %}
-    {% if upload_success %}
+    {% if upload=='success' %}
         <p style="text-align:center;color:green">{{ msg }}</p>
     {% endif %}
     
     
-    <div class='boxup'>
+    <div class='boxup' style='text-align:center;'>
+
     {% if new %}
         <h3>Aggiungi la nuova foto:</h3>
         <form method=POST enctype=multipart/form-data>
             <p><input name='foto' type='file'><br><input class='caption' name='descrizione' type='text' placeholder="Descrizione..."></p>
             <input class='buttonstyle' type='submit' value='Upload'>
         </form>
+
     {% else %}
-      <h3>Foto da modificare:</h3>
-      <img src="/uploads/photos/{{ item.path }}" title="{{ item.title }}" alt="Si è verificato un errore. Per favore premi il bottone 'Indietro' e contatta il webmaster prima di proseguire.">
-      <p>Descrizione: " {{ item.title }} "</p>
-      <p>Sostituisci la foto:</p>
+      <h3>Foto selezionata:</h3>
+      <img style="border:1px solid black;"  src="/uploads/photos/{{ item[0] }}" title="{{ item[1] }}" alt="ERRORE: Foto mancante. Contatta il webmaster.">
+      <p>" {{ item[1] }} "</p>
+      
+      <hr>
+      <h4>Se vuoi sostituire la foto:</h4>
         <form method=POST enctype=multipart/form-data>
             <input name='foto' type='file'>
             <input class='buttonstyle' type='submit' value='Upload'>
-      <p>Cambia la didascalia:</p>
-            <input class='caption' name='descrizione' type='text' placeholder="Descrizione...">
+        
+      <hr>
+      <h4>Se vuoi cambiare la didascalia:
+            <input class='caption' name='descrizione' type='text' placeholder="Descrizione..."></h4>
             <input class='buttonstyle' type='submit' value='Upload'>
         </form>
       
     {% endif %} 
     </div>
     
-    <a href='../{{ id }}'><button class='backbuttonstyle'>Indietro</button></a>
+    <a href='../../{{ id }}'><button class='backbuttonstyle'>Indietro</button></a>
 
 {% endblock %}
