@@ -9,10 +9,10 @@
     {% endif %}
     
     
-    {% if upload_fail %}
+    {% if upload=='fail' %}
         <p style="text-align:center;color:red">{{ msg }}</p>
     {% endif %}
-    {% if upload_success %}
+    {% if upload=='success' %}
         <p style="text-align:center;color:green">{{ msg }}</p>
     {% endif %}
 
@@ -82,7 +82,7 @@
         <h1>ERRORE</h1>
     {% endif %}
     </div>
-    <a href='/pannello/area-riservata/manage/{{ obj }}'><button class='backbuttonstyle'>Indietro</button></a>
+    <a href='/pannello/area-riservata'><button class='backbuttonstyle'>Indietro</button></a>
 
     {% if obj=='news' %}
     <link href="/static/css/datepickr.css" rel="stylesheet">

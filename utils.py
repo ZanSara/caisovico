@@ -41,8 +41,6 @@ def datetime_to_datepick(data):
     d = data.split("-")
     return '/'.join([d[2], d[1], d[0]])
 
-
-
 def allowed_file(filename):
     """ Checks for the file extension to be one of the allowed ones """
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS

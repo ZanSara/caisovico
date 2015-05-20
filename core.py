@@ -32,15 +32,18 @@ def style(style):
         var["url_for_css"] = "/static/css/style-rifugio.css"
         
     elif style=="programmi":
-        var = {"sidebar":["base/boxprog.html", "base/boxrif.html", "base/boxsez.html", "base/boxweb.html"]};
+        var = {"sidebar":["base/boxrif.html", "base/boxprog.html", "base/boxsez.html", "base/boxweb.html"]};
+        #var = {"sidebar":["base/boxprog.html", "base/boxrif.html", "base/boxsez.html", "base/boxweb.html"]};
         var["url_for_css"] = "/static/css/style-programmi.css"
         
     elif style=="sezione":
-        var = {"sidebar":["base/boxsez.html", "base/boxrif.html", "base/boxprog.html", "base/boxweb.html"]};
+        var = {"sidebar":["base/boxrif.html", "base/boxprog.html", "base/boxsez.html", "base/boxweb.html"]};
+        #var = {"sidebar":["base/boxsez.html", "base/boxrif.html", "base/boxprog.html", "base/boxweb.html"]};
         var["url_for_css"] = "/static/css/style-sezione.css"
         
     elif style=="webmaster":
-        var = {"sidebar":["base/boxweb.html", "base/boxrif.html", "base/boxprog.html", "base/boxsez.html"]};
+        var = {"sidebar":["base/boxrif.html", "base/boxprog.html", "base/boxsez.html", "base/boxweb.html"]};
+        #var = {"sidebar":["base/boxweb.html", "base/boxrif.html", "base/boxprog.html", "base/boxsez.html"]};
         var["url_for_css"] = "/static/css/style-webmaster.css"
 
     return var;
@@ -220,9 +223,10 @@ def webupload(obj):
     var = style("webmaster")
     var['obj'] = obj
     template = env.get_template("web-res-upload.html")
+    var['item'] = {}
 
     if request.method == 'POST':
-        var["upload_fail"] = 'fail'
+        var["upload"] = 'fail'
         var['msg']="Upload non riuscito. Riprova o contatta il webmaster."
         conn = sqlite3.connect(DATABASE_PATH)
         with conn:
@@ -234,7 +238,7 @@ def webupload(obj):
             elif obj=='doc':
                 var = upload_doc(request, var, cursor, app)
         conn.commit()
-        var['id'] = cursor.lastrowid
+        var['item'] = {}    # To avoid the user believing he is modifying the newly-updated data, while he's writing a new one.
         conn.close()
 
     return template.render(var)

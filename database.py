@@ -70,8 +70,7 @@ def upload_news(request, var, cursor, app):
         
         pics = [{'path': pic[0], 'title':pic[1]} for pic in pics]
         var['item'] = { 'title':item['title'], 'date':item['date'], 'content':item['content'], 'pics':pics }
-        var['upload_fail'] = 0
-        var["upload_success"] = 'success'
+        var["upload"] = 'success'
         var['msg'] = "Upload completato con successo"
     return var
 
@@ -82,8 +81,7 @@ def update_news(request, var, cursor, app, id):
         item = var['item']
         cursor.execute("UPDATE news SET data=?, title=?, text=? WHERE id = ?", [item['date'], item['title'], item['content'], id])
         # Photos can be managed separately
-        var['upload_fail'] = 0
-        var["upload_success"] = 'success'
+        var["upload"] = 'success'
         var['msg'] = "Upload completato con successo"
     return var
 
@@ -115,8 +113,7 @@ def upload_note(request, var, cursor):
     if var['item']:
         item = var['item']
         cursor.execute("INSERT INTO notes VALUES (null, ?)", [item['content']])
-        var['upload_fail'] = 0
-        var["upload_success"] = 'success'
+        var["upload"] = 'success'
         var['msg'] = "Upload completato con successo"
     return var
 
@@ -125,8 +122,7 @@ def update_note(request, var, cursor, id):
     if var['item']:
         item = var['item']
         cursor.execute("UPDATE notes SET text = ? WHERE id = ?", [item['content'], id])
-        var['upload_fail'] = 0
-        var["upload_success"] = 'success'
+        var["upload"] = 'success'
         var['msg'] = "Upload completato con successo"
     return var
     
@@ -156,8 +152,7 @@ def upload_doc(request, var, cursor, app):
         filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(item['file'].filename)))
         item['file'].save(os.path.join(app.config['UPLOAD_FOLDER_DOCS'], filename))
         cursor.execute("INSERT INTO docs (name, path) VALUES (?, ?)", [item['title'], json.dumps(filename)])
-        var["upload_fail"] = 0
-        var["upload_success"] = 'success'
+        var["upload"] = 'success'
         var['msg'] = "Upload completato con successo"
     return var
  
@@ -171,8 +166,7 @@ def update_doc(request, var, cursor, app, id):
             item['file'].save(os.path.join(app.config['UPLOAD_FOLDER_DOCS'], filename))
             cursor.execute("UPDATE docs SET path=? WHERE id = ?", [json.dumps(filename), id])
         cursor.execute("UPDATE docs SET name=? WHERE id = ?", [item['title'], id])
-        var['upload_fail'] = 0
-        var["upload_success"] = 'success'
+        var["upload"] = 'success'
         var['msg'] = "Upload completato con successo"
     return var
  

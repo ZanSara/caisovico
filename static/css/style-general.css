@@ -117,20 +117,11 @@ body{
 }
 .paneltitle p{
   font-size: 24px;
-  padding: 8px 16px;
-  display: table-cell;
-  vertical-align: middle;
-}
-.paneltitle a{
-  font-size: 24px;
-  padding: 8px 16px;
+  padding: 16px 32px;
   display: table-cell;
   vertical-align: middle;
   color:white;
   text-decoration:none;
-}
-.paneltitle a:hover{
-  text-decoration: underline;
 }
 .corner{
   position:relative;
@@ -139,9 +130,11 @@ body{
   overflow:hidden;
 }
 .flag{
-  margin:10%;
+  margin: 20%;
   height: 30px;
-  width:auto;
+  width: auto;
+  display: table-cell;
+  vertical-align: middle;
 }
 .sidemenu{
   width:50%;
