@@ -1,6 +1,11 @@
   #!/usr/local/bin/python
   # -*- coding: utf-8 -*-
   # The above is needed to set the correct encoding, see https://www.python.org/dev/peps/pep-0263/
+  
+  
+  # ISSUES:
+  # 1. Later on, should consider storing error messages in a log file...
+  
 
 from flask import Flask, request, session, abort, url_for, redirect, send_from_directory
 from jinja2 import Environment, PackageLoader
@@ -180,9 +185,10 @@ def weblogin():
     var = style("webmaster")
                 
     if request.method == "POST":
-        log = login(request.form["user"], request.form["password"])
-        if log:
-            var['msg'] = log
+        try:
+            login(request.form["user"], request.form["password"])
+        except Exception as e:
+            var['msg'] = 'ERRORE: {0}'.format(e)
             template = env.get_template("web-res-login.html")
             return template.render(var)
         else:
@@ -192,18 +198,22 @@ def weblogin():
     return template.render(var)
     
 
-@app.route("/pannello/area-riservata/logout", methods=["GET"])
+@app.route("/pannello/area-riservata/logout", methods=["GET", "POST"])
 def weblogout():
     if not session.get('logged_in'):
         return redirect(url_for('weblogin'))
     var = style("webmaster")
-    log = logout()
-    if log:
-        var['msg'] = log
+    try:
+        logout()
+    except Exception as e:
+        var['msg'] = 'ERRORE: {0}'.format(e)
         template = env.get_template("web-res-login.html")
         return template.render(var)
+        # ISSUE!
+        # If I logout, the logout fails, and I immediately try to login 
+        # again, I find myself asking this function to handle my login. 
+        # Should FULLY redirect to the welogin() function, not only render it.
     return redirect(url_for('weblogin'))
-
 
 
 @app.route("/pannello/area-riservata", methods=["GET", "POST"])

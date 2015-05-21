@@ -1,6 +1,7 @@
  #!/usr/local/bin/python
   # -*- coding: utf-8 -*-
   # The above is needed to set the correct encoding, see https://www.python.org/dev/peps/pep-0263/
+    
 
 from flask import session
 from config import DATABASE_PATH, ALLOWED_EXTENSIONS
@@ -22,7 +23,7 @@ def login(name, passw):
 
 def logout():
     if not session.pop("logged_in", None):
-        return "Errore durante il logout."
+        raise Exception('Logout fallito. Riprova.')
     return
 
 
