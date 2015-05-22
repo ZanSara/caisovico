@@ -5,25 +5,27 @@
 
 from flask import session
 from config import DATABASE_PATH, ALLOWED_EXTENSIONS
-import sqlite3, datetime
+import sys, sqlite3, datetime
 
 
 def login(name, passw):
     conn = sqlite3.connect(DATABASE_PATH)
     with conn:
         user = list(conn.execute("SELECT * FROM users WHERE username = ?", ([name])))
-        if user:
+        try:
             if user[0][1] != passw:       # Suppose that I will get only one user with this username
-                return "Invalid password"
+                raise ValueError("Password errata")
             session["logged_in"] = True
             session["username"] = user[0][0]
             return
-        return "Invalid username"
+        except IndexError:
+            raise ValueError("Nome utente non valido")
+            return
 
 
 def logout():
     if not session.pop("logged_in", None):
-        raise Exception('Logout fallito. Riprova.')
+        raise Exception("Logout fallito. Torno nell'Area Riservata e riprova.")
     return
 
 
@@ -31,6 +33,7 @@ def logout():
 def datepick_to_datetime(data):
     """ Convert the date format given by datepickr (string) into the datetime format """
     if str(data).count("/") != 2:
+        raise ValueError('Inserire una data valida')
         return
     d = data.split("/")
     return datetime.date(int(d[2]), int(d[1]), int(d[0]))

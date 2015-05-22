@@ -5,59 +5,93 @@
 from werkzeug import secure_filename
 from utils import datepick_to_datetime, datetime_to_datepick, allowed_file, set_to_string, get_extension
 from config import ALLOWED_EXTENSIONS
-import sqlite3, json, os, datetime
+import sys, sqlite3, json, os, datetime
   
 
 
 # *********** NEWS Management ******************************************
 
-def load_news(request, var):
-    title = request.form['titolo']
-    text = request.form['testo']
-    date = request.form['data']
-    if not datepick_to_datetime(date):
-        var['msg'] = u"Inserire una data valida"
-        return var
-    if not title:
-        var['msg'] = u"Impossibile caricare una notizia senza titolo"
-        return var
-    if not text:
-        var['msg'] = u"Impossibile caricare una notizia senza testo"
-        return var
-        
-    photo, caps = [], []
+# Legend:   
+#   file(s):    file objects without labels
+#   photo(s):   file objects with labels (in a list of tuples, no dictionaries!)
+#   path(s)     file names without labels
+#   pic(s):     file names with labels  (in a list of tuples, no dictionaries!)
+
+
+def load_news(request):
+    """
+        load_news(request):
+    Load all the data from the form without performing any convalidation.
+    """
+    item = {}
+    item['title'] = request.form['titolo']
+    item['content'] = request.form['testo']
+    item['date'] = request.form['data']
+    
+    files, labels = [], []
     for i in xrange(1, 6):
         if request.files['foto{0}'.format(i)]:
-            photo.append(request.files['foto{0}'.format(i)])
-            if not request.form['descrizione{0}'.format(i)]:
-                var['msg'] = u"Inserire la descrizione della foto numero {0}".format(i)
-                return var
-            caps.append(request.form['descrizione{0}'.format(i)])
-            
-    for f in photo:
-        if not allowed_file(f.filename):
-            var['msg'] = u"Attenzione! Le foto non possono essere caricate.<br>Controlla le estensioni! Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS))
-            return var
-    var['item'] = {'title':title, 'date':datepick_to_datetime(date), 'content':text, 'caps':caps, 'photos':photo}            
-    return var
+            files.append(request.files['foto{0}'.format(i)])
+            labels.append(request.form['descrizione{0}'.format(i)])
+
+    item['files'] = files
+    item['labels'] = labels
+    return item
     
-def upload_news(request, var, cursor, app):
-    var = load_news(request, var)
-    if var['item']:
-        item = var['item']
+def check_news(item):
+    '''
+        check_news(item)
+    Performs convalidation on the data loaded from load_news()
+    '''
+    if not item['title']:
+        raise ValueError(u'Impossibile caricare una notizia senza titolo')
+        return 
+    if not item['content']:
+        raise ValueError(u'Impossibile caricare una notizia senza testo')
+        return
+    try:
+        item['date'] = datepick_to_datetime(item['date'])
+    except ValueError:
+        raise
+        return item
+
+    for l in item['labels']:
+        if l=='':
+            raise ValueError( u"Inserire i titoli di tutte le foto." )
+            return item
+    for f in files:
+        if not allowed_file(f.filename):
+            raise ValueError( u'''{0} non può essere caricato.<br>
+                                  {1} non è tra le estensioni ammesse. ({2})
+                               '''.format(f.filename, get_extension(f.filename), set_to_string(ALLOWED_EXTENSIONS)) )
+            # ISSUE:
+            # The user does not find their files after reading the error,
+            # but finds all the capitons. This can be confusing.
+            return item
+    return item
+    
+def upload_news(request, cursor, app):
+    item = load_news(request)
+    print 'UPLOAD NEWS:', item
+    try:
+        item = check_news(item)
+        print item
         paths = []
-        for f in item['photos']:
+        for f in item['files']:
             filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(f.filename)))
             f.save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
             paths.append(filename)
-        pics = zip(paths, item['caps'])
-        cursor.execute("INSERT INTO news (data, title, text, pics) VALUES (?, ?, ?, ?)", [item['date'], item['title'], item['content'], json.dumps(pics)])
-        
-        pics = [{'path': pic[0], 'title':pic[1]} for pic in pics]
-        var['item'] = { 'title':item['title'], 'date':item['date'], 'content':item['content'], 'pics':pics }
-        var["upload"] = 'success'
-        var['msg'] = u"Upload completato con successo"
-    return var
+        pics = zip(paths, item['labels'])
+        cursor.execute("INSERT INTO news (data, title, text, pics) VALUES (?, ?, ?, ?)", [item['date'], item['title'], item['content'], json.dumps(pics)])            
+    except ValueError:
+        print 'VALUE ERROR:', item
+        raise
+    except KeyError:
+        print 'KEY ERROR:', item
+        raise Exception('ERRORE: KeyError in upload_news(). Contatta il webmaster.')
+    finally:
+        return item
+    
 
 
 def update_news(request, var, cursor, app, id):

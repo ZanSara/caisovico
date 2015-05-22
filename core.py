@@ -12,7 +12,7 @@ from jinja2 import Environment, PackageLoader
 from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, ALLOWED_EXTENSIONS, DATABASE_PATH
 from utils import login, logout
 from database import upload_news, upload_note, upload_doc, load_lista, retrieve_item, update_news, update_newspics, update_note, retrieve_photo
-import sqlite3, os
+import sys, sqlite3, os     # sys if for errors handling, os is for file managing
 
 
 env = Environment(loader=PackageLoader('core', '/templates'))
@@ -187,12 +187,11 @@ def weblogin():
     if request.method == "POST":
         try:
             login(request.form["user"], request.form["password"])
-        except Exception as e:
+        except (IndexError, ValueError) as e:
             var['msg'] = 'ERRORE: {0}'.format(e)
             template = env.get_template("web-res-login.html")
             return template.render(var)
-        else:
-            return redirect(url_for('webres'))
+        return redirect(url_for('webres'))
 
     template = env.get_template("web-res-login.html")
     return template.render(var)
@@ -235,24 +234,35 @@ def webupload(obj):
     var = style("webmaster")
     var['obj'] = obj
     template = env.get_template("web-res-upload.html")
-    var['item'] = {}
+    item = {}
 
     if request.method == 'POST':
-        var["upload"] = 'fail'
-        var['msg'] = u"Upload non riuscito. Riprova o contatta il webmaster."
         conn = sqlite3.connect(DATABASE_PATH)
-        with conn:
-            cursor = conn.cursor()
-            if obj=="news":
-                var = upload_news(request, var, cursor, app)
-            elif obj=='note':
-                var = upload_note(request, var, cursor)
-            elif obj=='doc':
-                var = upload_doc(request, var, cursor, app)
-        conn.commit()
-        var['item'] = {}    # To avoid the user believing he is modifying the newly-updated data, while he's writing a new one.
-        conn.close()
-
+        try:
+            print "try:"
+            with conn:
+                cursor = conn.cursor()
+                if obj=="news":
+                    item = upload_news(request, cursor, app)
+                elif obj=='note':
+                    item = upload_note(request, cursor)
+                elif obj=='doc':
+                    item = upload_doc(request, cursor, app)
+            conn.commit()
+            var["upload"] = 'success'
+            var['msg'] = u'Upload completato con successo'
+            var['item'] = {}    # To avoid the user believing he is modifying the newly-updated data, while he's writing a new one.
+            conn.close()
+        except ValueError as e:
+            print 'CORE #1 ', item
+            var['item'] = item
+            var["upload"] = 'fail'
+            var['msg'] = e
+        except:
+            var['msg'] = 'Errore inaspettato :/'
+    
+    var['item'] = item
+    print 'CORE #2', item
     return template.render(var)
     
     
