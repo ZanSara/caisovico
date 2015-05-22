@@ -4,7 +4,7 @@
     
 
 from flask import session
-from config import DATABASE_PATH, ALLOWED_EXTENSIONS
+from config import DATABASE_PATH, ALLOWED_EXTENSIONS_PICS, ALLOWED_EXTENSIONS_DOCS
 import sys, sqlite3, datetime
 
 
@@ -37,7 +37,6 @@ def datepick_to_datetime(data):
         return
     d = data.split("/")
     return datetime.date(int(d[2]), int(d[1]), int(d[0]))
-    
 def datetime_to_datepick(data):
     """ Convert the date in the datetime format into the format given by datepickr (string) """
     if str(data).count("-") != 2:
@@ -45,9 +44,14 @@ def datetime_to_datepick(data):
     d = data.split("-")
     return '/'.join([d[2], d[1], d[0]])
 
-def allowed_file(filename):
+
+def allowed_pic(filename):
     """ Checks for the file extension to be one of the allowed ones """
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_PICS
+def allowed_doc(filename):
+    """ Checks for the file extension to be one of the allowed ones """
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_DOCS
+
 
 def set_to_string(myset):
     mystring = ''

@@ -9,9 +9,9 @@
 
 from flask import Flask, request, session, abort, url_for, redirect, send_from_directory
 from jinja2 import Environment, PackageLoader
-from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, ALLOWED_EXTENSIONS, DATABASE_PATH
+from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, DATABASE_PATH
 from utils import login, logout
-from database import upload_news, upload_note, upload_doc, load_lista, retrieve_item, update_news, update_newspics, update_note, retrieve_photo
+from database import upload_news, load_news, upload_note, load_note, upload_doc, load_doc, load_lista, retrieve_item, update_news, update_newspics, retrieve_photo, update_note, update_doc
 import sys, sqlite3, os     # sys if for errors handling, os is for file managing
 
 
@@ -26,8 +26,11 @@ app.secret_key = ".ASF\x89m\x14\xc9s\x94ff\xfaq\xca}h\xe1/\x1f3\x1dFxj\xdc\xf0\x
 
 
 def style(style):
-    """ style() is just an utility to make some modification regarding the
-        styles of different sections of the website (css, boxes order)"""
+    """ 
+        style(style):
+    This is just an utility to make some modification regarding the
+    styles of different sections of the website (css, boxes order)
+    """
     if style=="home":
         var = {"sidebar":["base/boxrif.html", "base/boxprog.html", "base/boxsez.html", "base/boxweb.html"]};
         var["url_for_css"] = "/static/css/style-home.css"
@@ -233,8 +236,8 @@ def webupload(obj):
 
     var = style("webmaster")
     var['obj'] = obj
+    var['item'] = {}
     template = env.get_template("web-res-upload.html")
-    item = {}
 
     if request.method == 'POST':
         conn = sqlite3.connect(DATABASE_PATH)
@@ -243,26 +246,20 @@ def webupload(obj):
             with conn:
                 cursor = conn.cursor()
                 if obj=="news":
-                    item = upload_news(request, cursor, app)
+                    upload_news(request, cursor, app)
                 elif obj=='note':
-                    item = upload_note(request, cursor)
+                    upload_note(request, cursor)
                 elif obj=='doc':
-                    item = upload_doc(request, cursor, app)
+                    upload_doc(request, cursor, app)
             conn.commit()
             var["upload"] = 'success'
             var['msg'] = u'Upload completato con successo'
-            var['item'] = {}    # To avoid the user believing he is modifying the newly-updated data, while he's writing a new one.
             conn.close()
         except ValueError as e:
-            print 'CORE #1 ', item
-            var['item'] = item
+            var['item'] = load_news(request)
             var["upload"] = 'fail'
             var['msg'] = e
-        except:
-            var['msg'] = 'Errore inaspettato :/'
     
-    var['item'] = item
-    print 'CORE #2', item
     return template.render(var)
     
     
@@ -307,11 +304,11 @@ def webmodify(obj, id):
         with conn:
             cursor = conn.cursor()
             if obj=="news":
-                var = update_news(request, var, cursor, app, id)
+                var = update_news(request, cursor, app, id)
             elif obj=='note':
-                var = update_note(request, var, cursor, id)
+                var = update_note(request, cursor, id)
             elif obj=='doc':
-                var = update_doc(request, var, cursor, app, id)
+                var = update_doc(request, cursor, app, id)
         conn.commit()
         var['item'] = retrieve_item(obj, id, cursor)    # Ensures that the data has actually been written
         conn.close()
