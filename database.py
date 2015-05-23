@@ -206,72 +206,102 @@ def update_note(request, cursor, id):
     NB: it DOESN'T DEAL with the ValueErrors. The caller is supposed to
     manage them.
     '''
-    item = load_news(request)
-    item = check_news(item)
+    item = load_note(request)
+    item = check_note(item)
     cursor.execute("UPDATE notes SET text = ? WHERE id = ?", [item['content'], id])
     return item
     
 
 # *********** DOCS Management ******************************************
+    
+def load_doc(request):
+    """
+        load_doc(request):
+    Loads all the data from the form without performing any convalidation.
+    Loads also any empty field in the 'item' dictionary.
+    """
+    item = {}
+    item['title'] = request.form['descrizione']
+    item['file'] = request.files['doc']
+    return item
 
-def load_doc(request, var):
-    name = request.form['descrizione']
-    f = request.files['doc']
-    if not name:
-        var['msg'] = u"Inserire il nome del documento"
-        return var
-    if not f:
-        var['msg'] = u"Nessun file selezionato"
-        return var
+def check_doc(item):
+    '''
+        check_doc(item):
+    Performs convalidation on the data loaded from load_doc() and raises
+    ValueError if something is wrong.
+    '''
+    if not item['title']:
+        raise ValueError(u'Impossibile caricare documento senza descrizione') 
+        # Secondary issue: the user does not find their file after seeing 
+        # the error message.
+    if not item['file']:
+        raise ValueError(u'Nessun file selezionato')
     if not allowed_doc(f.filename):
-        var['msg'] = u"Upload fallito! Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS))
-        return var
-    var['item'] = {'title':name, 'file': f}
-    return var
-  
-  
-def upload_doc(request, var, cursor, app):
-    var = load_doc(request, var)
-    if var['item']:
-        item = var['item']
-        filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(item['file'].filename)))
-        item['file'].save(os.path.join(app.config['UPLOAD_FOLDER_DOCS'], filename))
-        cursor.execute("INSERT INTO docs (name, path) VALUES (?, ?)", [item['title'], json.dumps(filename)])
-        var["upload"] = 'success'
-        var['msg'] = u"Upload completato con successo"
-    return var
- 
- 
-def update_doc(request, var, cursor, app, id):
-    var = load_doc(request, var)
-    if var['item']:
-        item = var['item']
-        if item['file']:
-            filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(item['file'].filename)))
-            item['file'].save(os.path.join(app.config['UPLOAD_FOLDER_DOCS'], filename))
-            cursor.execute("UPDATE docs SET path=? WHERE id = ?", [json.dumps(filename), id])
+        raise ValueError(u"Upload fallito. Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS)) )
+    return item
+
+def upload_doc(request, cursor, app):
+    '''
+        upload_doc(request, cursor, app):
+    This function performs a fresh upload of all the data previously
+    loaded and checked.
+    It adds a new row in the database without overwriting anything.
+    In case of failure, it returns all the non-checked raw loaded data, 
+    to be displayed again to the user and let they correct it.
+    NB: it DOESN'T DEAL with the ValueErrors. The caller is supposed to
+    manage them.
+    '''
+    item = load_doc(request)
+    item = check_doc(item)
+
+    filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(f.filename)))
+    f.save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
+    
+    cursor.execute("INSERT INTO docs (name, path) VALUES (?, ?)", [item['title'], json.dumps(filename)])
+    return
+
+def update_doc(request, cursor, app, id):
+    '''
+        update_doc(request, cursor, app, id):
+    This function updates a document, meaning that it can identify and 
+    overwrite a specific row in the database. 
+    NB #1: It doesn't call check_doc(), because the user may want to change
+    only the label, without replacing the original file, and reverse.
+    NB #2: it DOESN'T DEAL with the ValueErrors. The caller is supposed to
+    manage them.
+    '''
+    item = load_doc(request)
+    
+    if item['file']:
+        filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(f.filename)))
+        f.save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
+        cursor.execute("UPDATE docs SET path=? WHERE id = ?", [json.dumps(filename), id])
+    if item['title']:
         cursor.execute("UPDATE docs SET name=? WHERE id = ?", [item['title'], id])
-        var["upload"] = 'success'
-        var['msg'] = u"Upload completato con successo"
-    return var
- 
+    else:
+        raise ValueError(u'''Impossibile caricare un documento senza titolo.<br>
+                             Se il titolo non è stato caricato automaticamente, contatta il webmaster.''')
+    return item
 
  
 # *********** Others ***************************************************
 
 def load_lista(obj, cursor):
+    
     lista = []
-    if obj=='news':
-        for item in cursor.execute("SELECT id, data, title FROM news").fetchall():
-            lista.append( {'id':item[0], 'data':item[1], 'title':item[2]  } )
-    if obj=='note':
-        for item in cursor.execute("SELECT id, text FROM notes").fetchall(): 
-            lista.append( {'id':item[0], 'title':item[1] } )
-    if obj=='doc':
-        for item in cursor.execute("SELECT id, name FROM docs").fetchall(): 
-            lista.append( {'id':item[0], 'title':item[1] } )
-    if lista == []:
-        lista = [{'id':0, 'date':'', 'title':u'Errore durante il caricamento della lista.<br>Riprova o contatta il webmaster.'}]
+    try:
+        if obj=='news':
+            for item in cursor.execute("SELECT id, data, title FROM news").fetchall():
+                lista.append( {'id':item[0], 'data':item[1], 'title':item[2]  } )
+        if obj=='note':
+            for item in cursor.execute("SELECT id, text FROM notes").fetchall(): 
+                lista.append( {'id':item[0], 'title':item[1] } )
+        if obj=='doc':
+            for item in cursor.execute("SELECT id, name FROM docs").fetchall(): 
+                lista.append( {'id':item[0], 'title':item[1] } )
+    except Exception:
+        raise ValueError(u'Errore durante il caricamento della lista.<br>Riprova o contatta il webmaster.')
     return lista
 
 
@@ -299,7 +329,6 @@ def retrieve_item(obj, id, cursor):
     
 def retrieve_photo(id, index, cursor):
     pics = json.loads( cursor.execute("SELECT pics FROM news WHERE id=?", [id]).fetchone()[0] )
-    print pics
     if int(index) < len(pics):
         return pics[index]
     return 0

@@ -7,6 +7,13 @@
     <p style='text-align:center;'>Clicca sulla riga da modificare</p>
     
     <div class='pseudotable'>
+      {% if lista==[] %}
+        <a href='#'>
+          <div class='pseudorow'>
+              <p class='tabletitle' style='font-style:italic;'>Nessun elemento trovato</p>
+          </div>
+        </a>
+      {% endif %}
       {% for item in lista %}
         <a href='{{ obj }}/{{ item.id }}'>
           <div class='pseudorow'>
