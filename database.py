@@ -14,7 +14,8 @@ import sys, sqlite3, json, os, datetime
 #   file(s):    file objects without labels
 #   photo(s):   file objects with labels (in a list of tuples, no dictionaries!)
 #   path(s)     file names without labels
-#   pic(s):     file names with labels  (in a list of tuples, no dictionaries!)
+#   pic(s):     file names with labels and ID (in a list of tuples, no dictionaries!)
+#   Remember! In the tuples, the order is (<id>, label, photo)
 
 
 def load_news(request):
@@ -62,7 +63,7 @@ def check_news(item):
                                '''.format(f.filename, get_extension(f.filename), set_to_string(ALLOWED_EXTENSIONS)) )
                                # Secondary issue: now the user have to reload all the photos. 
                                # It is possible to let him see again what they loaded, and correct?
-    return item
+    return
     
 def upload_news(request, cursor, app):
     '''
@@ -76,7 +77,7 @@ def upload_news(request, cursor, app):
     manage them.
     '''
     item = load_news(request)
-    item = check_news(item)
+    check_news(item)
 
     paths = []
     for f in item['files']:
@@ -84,11 +85,9 @@ def upload_news(request, cursor, app):
         f.save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
         paths.append(filename)
 
-    pics = zip(paths, item['labels'])
+    pics = zip(xrange(len(paths)), item['labels'], paths)
     cursor.execute("INSERT INTO news (data, title, text, pics) VALUES (?, ?, ?, ?)", [item['date'], item['title'], item['content'], json.dumps(pics)])
     return
-    
-
 
 def update_news(request, cursor, app, id):
     '''
@@ -101,39 +100,69 @@ def update_news(request, cursor, app, id):
     manage them.
     '''
     item = load_news(request)
-    item = check_news(item)
+    check_news(item)
     cursor.execute("UPDATE news SET data=?, title=?, text=? WHERE id = ?", [item['date'], item['title'], item['content'], id])
     # Photos will be managed separately
     return item
 
+def retrieve_news(id, cursor):
+    '''
+        retrieve_news(id, cursor):
+    Returns a dictionary with all the data regarding a specific news
+    (found by id).
+    Does not retrieve every photo, but a list of their labels, and sets 
+    a flag (addphoto) if there are less than 5 pictures.
+    '''
+    row = cursor.execute("SELECT * FROM news WHERE id == ?", [id]).fetchone()
+    item = {'id':id, 'date':datetime_to_datepick(row[1]), 'title':row[2], 'content':row[3]}
+    item['pics'] = json.loads(str(row[4]))
+    if len(item['pics']) < 5:
+        item['addphoto'] = True
+    elif len(item['pics']) > 5:
+        raise ValueError(u'Si è verificato un errore durante il caricamento delle foto.<br>Contatta il webmaster.')
+    return item
+
+
+
 # *********** NEWS PICTURES Management *********************************
 
-def load_newspics(request, var):
-    name = request.form['descrizione']
-    f = request.files['foto']
-    if not f.isfile():        # <----------------------------------------------- HERE
-        var['upload'] = 'fail'
-        var['msg'] = u"Upload fallito E NESSUNO SA PERCHE'! "
-        return var      # This means that load_newspics already stated an error message that should reach the caller function
-    if not allowed_pic(f.filename):
-        var['upload'] = 'fail'
-        var['msg'] = u"Upload fallito! Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS))
-        var['photo'] = []
-        return var
-    var['photo'] = [f, name]
-    print var['photo']
-    return var
+def load_newspics(request):
+    '''
+        load_newspics(request):
+    Loads everything from the request, without performing any valitation.
+    May raise only 'BAD REQUEST' errors.
+    '''
+    return (request.form['new'], request.form['descrizione'], request.files['foto'])
 
 
-def update_newspics(request, var, cursor, app, id):
-    new_pics = load_newspics(request, var)      # Loads the new photo
-    if not new_pics:
-        var['upload'] = 'fail'
-        var['msg'] = u'Errore interno. Contatta il webmaster.'
-        return var
-    print "++++++++++++++++++++++++", new_pics
+def check_newspics(item):
+    '''
+        check_newspics(request):
+    Performs some validation on the data loaded from loda_newspics() and 
+    raises ValueError if something is wrong.
+    Doesn't check if the value of the checkbox exists.
+    '''
+    if not item[1] and not item[2]:
+        raise ValueError(u"Inserire un nuovo titolo o una nuova foto")
+    if file:
+        if not allowed_pic(item[2].filename):
+            raise ValueError(u"Upload fallito! Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS)) )
+    return
+
+
+def update_newspics(request, cursor, app, id):
+    item = load_news(request)
+    check_news(item)
+    cursor.execute("UPDATE news SET data=?, title=?, text=? WHERE id = ?", [item['date'], item['title'], item['content'], id])
+    return item
     
-    photo = new_pics['photo']
+    item = load_newspics(request)
+    check_newspics(item)
+    
+            # I have to create a new list of tuples basing on the old one.
+    old_pics = retrieve_item('news', id, cursor)['pics']
+            # If I have a new picture, I need to overwrite the correct one.
+
 
     old_pics = retrieve_item('news', id, cursor)['pics']   # Retrieve the old list of photos for that news
     old_pics = [ [ph['path'], ph['title']] for ph in old_pics ]
@@ -180,7 +209,7 @@ def check_note(item):
     '''
     if not item['content']:
         raise ValueError(u'Impossibile caricare una nota vuota') 
-    return item
+    return
     
 def upload_note(request, cursor):
     '''
@@ -193,7 +222,7 @@ def upload_note(request, cursor):
     manage them.
     '''
     item = load_note(request)
-    item = check_note(item)
+    check_note(item)
     cursor.execute("INSERT INTO notes VALUES (null, ?)", [item['content']])
     return
 
@@ -207,10 +236,9 @@ def update_note(request, cursor, id):
     manage them.
     '''
     item = load_note(request)
-    item = check_note(item)
+    check_note(item)
     cursor.execute("UPDATE notes SET text = ? WHERE id = ?", [item['content'], id])
     return item
-    
 
 # *********** DOCS Management ******************************************
     
@@ -288,7 +316,13 @@ def update_doc(request, cursor, app, id):
 # *********** Others ***************************************************
 
 def load_lista(obj, cursor):
-    
+    '''
+        load_lista(obj, cursor):
+    This function retrieve a list of the elements in a specific table of 
+    the database. Overwrites the actual content of every Exception raised
+    during the loading process, resulting in a generic error message for 
+    the user.
+    '''
     lista = []
     try:
         if obj=='news':
@@ -301,7 +335,7 @@ def load_lista(obj, cursor):
             for item in cursor.execute("SELECT id, name FROM docs").fetchall(): 
                 lista.append( {'id':item[0], 'title':item[1] } )
     except Exception:
-        raise ValueError(u'Errore durante il caricamento della lista.<br>Riprova o contatta il webmaster.')
+        raise Exception(u'Errore durante il caricamento della lista.<br>Riprova o contatta il webmaster.')
     return lista
 
 
@@ -315,15 +349,12 @@ def retrieve_item(obj, id, cursor):
             item['pics'] = [ {'id':pic[0], 'path':pic[1], 'title':pic[2]} for pic in pics ]
             if len(photos) < 5:
                 item['addphoto'] = True
-       
     if obj=='note':
         row = cursor.execute("SELECT * FROM notes WHERE id == ?", [id]).fetchone()
         item = {'id':id, 'content':row[1]}
-        
     if obj=='doc':
         row = cursor.execute("SELECT * FROM docs WHERE id == ?", [id]).fetchone()
         item = {'id':id, 'title':row[1], 'path':row[2]}
-    
     return item
     
     
