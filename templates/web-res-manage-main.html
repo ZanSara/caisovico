@@ -6,14 +6,11 @@
 
     <p style='text-align:center;'>Clicca sulla riga da modificare</p>
     
+    {% if msg %}
+    <p style='text-align:center;color:red'>{{ msg }}</p> <!-- Useful for some error messages -->
+    {% endif %}
+    
     <div class='pseudotable'>
-      {% if lista==[] %}
-        <a href='#'>
-          <div class='pseudorow'>
-              <p class='tabletitle' style='font-style:italic;'>Nessun elemento trovato</p>
-          </div>
-        </a>
-      {% endif %}
       {% for item in lista %}
         <a href='{{ obj }}/{{ item.id }}'>
           <div class='pseudorow'>
@@ -24,8 +21,6 @@
               <p class='tabletitle'>{{ item.title }}</p>
             {% elif obj=='doc' %}
               <p class='tabletitle'>{{ item.title }}</p>
-            {% else %}
-              <p style='text-align:center;color:red'>{{ item.title }}</p> <!-- Useful for some error messages -->
             {% endif %}
           </div>
         </a>

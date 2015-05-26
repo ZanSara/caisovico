@@ -3,6 +3,7 @@
   # The above is needed to set the correct encoding, see https://www.python.org/dev/peps/pep-0263/
 
 from werkzeug import secure_filename
+from config import ALLOWED_EXTENSIONS_DOCS, ALLOWED_EXTENSIONS_PICS
 from utils import datepick_to_datetime, datetime_to_datepick, allowed_pic, allowed_doc, set_to_string, get_extension
 import sys, sqlite3, json, os, datetime
   
@@ -30,31 +31,16 @@ def load_news(request):
     item['date'] = request.form['data']
     
     files, labels = [], []
-    for i in xrange(1, 6):
-        if request.files['foto{0}'.format(i)]:
-            files.append(request.files['foto{0}'.format(i)])
-            labels.append(request.form['descrizione{0}'.format(i)])
-
+    try:
+        for i in xrange(1, 6):
+            if request.files['foto{0}'.format(i)]:
+                files.append(request.files['foto{0}'.format(i)])
+                labels.append(request.form['descrizione{0}'.format(i)])
+    except KeyError:    # KeyError = Bad Request Error
+        pass            # It means I'm trying to UPDATE only text (see the structure of web-res-upload.html)
+    
     item['files'] = files
     item['labels'] = labels
-    return item
-    
-def retrieve_news(id, cursor):
-    '''
-        retrieve_news(id, cursor):
-    Returns a dictionary with all the data regarding a specific news
-    (found by id).
-    Does not retrieve every photo, but a list of their labels, and sets 
-    a flag (addphoto) if there are less than 5 pictures.
-    '''
-    row = cursor.execute("SELECT * FROM news WHERE id == ?", [id]).fetchone()
-    item = {'id':id, 'date':datetime_to_datepick(row[1]), 'title':row[2], 'content':row[3]}
-    item['pics'] = json.loads(str(row[4]))
-    
-    if len(item['pics']) < 5:
-        item['addphoto'] = True
-    elif len(item['pics']) > 5:
-        raise ValueError(u'Si è verificato un errore durante il caricamento delle foto.<br>Contatta il webmaster.')
     return item
     
 def check_news(item):
@@ -77,9 +63,9 @@ def check_news(item):
     for f in item['files']:
         if not allowed_pic(f.filename):
             raise ValueError( u'''{0} non può essere caricato:<br>
-                                  '*.{1}' non è tra le estensioni ammesse. (ovvero {2})<br>
+                                  '*.{1}' non è tra le estensioni ammesse (ovvero {2}).<br>
                                   Ricarica le foto.
-                               '''.format(f.filename, get_extension(f.filename), set_to_string(ALLOWED_EXTENSIONS)) )
+                               '''.format(f.filename, get_extension(f.filename), set_to_string(ALLOWED_EXTENSIONS_PICS)) )
                                # Secondary issue: now the user have to reload all the photos. 
                                # It is possible to let him see again what they loaded, and correct?
     return
@@ -159,7 +145,7 @@ def check_newspics(item):
         raise ValueError(u"Impossibile caricare una foto senza descrizione")
     if file:
         if not allowed_pic(item[2].filename):
-            raise ValueError(u"Upload fallito! Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS)) )
+            raise ValueError(u"Upload fallito! Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS_PICS)) )
     return
 
 
@@ -228,16 +214,6 @@ def load_note(request):
     item = {'content': request.form['testo'] }
     return item
 
-
-def retrieve_note(id, cursor):
-    """
-        retrieve_note(id, cursor):
-    Retrieves the text of a note from the database, by ID
-    """
-    row = cursor.execute("SELECT * FROM notes WHERE id == ?", [id]).fetchone()
-    item = {'id':id, 'content':row[1]}
-    return item
-
 def check_note(item):
     '''
         check_note(item):
@@ -275,7 +251,7 @@ def update_note(request, cursor, id):
     item = load_note(request)
     check_note(item)
     cursor.execute("UPDATE notes SET text = ? WHERE id = ?", [item['content'], id])
-    return item
+    return
 
 # *********** DOCS Management ******************************************
     
@@ -288,15 +264,6 @@ def load_doc(request):
     item = {}
     item['title'] = request.form['descrizione']
     item['file'] = request.files['doc']
-    return item
-    
-def retrieve_doc(id, cursor):
-    """
-        retrieve_doc(id, cursor):
-    Retrieves filename and title of the selected document (by ID)
-    """
-    row = cursor.execute("SELECT * FROM docs WHERE id == ?", [id]).fetchone()
-    item = {'id':id, 'title':row[1], 'path':row[2]}
     return item
 
 def check_doc(item):
@@ -312,7 +279,7 @@ def check_doc(item):
     if not item['file']:
         raise ValueError(u'Nessun file selezionato')
     if not allowed_doc(f.filename):
-        raise ValueError(u"Upload fallito. Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS)) )
+        raise ValueError(u"Upload fallito. Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS_DOCS)) )
     return
     
 def upload_doc(request, cursor, app):
@@ -348,8 +315,8 @@ def update_doc(request, cursor, app, id):
     item = load_doc(request)
     
     if item['file']:
-        filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(f.filename)))
-        f.save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
+        filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(item['file'].filename)))
+        item['file'].save(os.path.join(app.config['UPLOAD_FOLDER_DOCS'], filename))
         cursor.execute("UPDATE docs SET path=? WHERE id = ?", [json.dumps(filename), id])
     if item['title']:
         cursor.execute("UPDATE docs SET name=? WHERE id = ?", [item['title'], id])
@@ -385,6 +352,31 @@ def load_lista(obj, cursor):
     return lista
     
     
-
+def retrieve_item(obj, id, cursor):
+    '''
+        retrieve_item(obj, id, cursor):
+    Returns a dictionary with all the data regarding a specific object
+    (found by id).
+    OBJ == 'NEWS': Does not retrieve every photo, but a list of their 
+    labels, and sets a flag (addphoto) if there are less than 5 pictures.
     
+    '''
+    if obj=='news':
+        row = cursor.execute("SELECT * FROM news WHERE id == ?", [id]).fetchone()
+        item = {'id':id, 'date':datetime_to_datepick(row[1]), 'title':row[2], 'content':row[3]}
+        item['pics'] = json.loads(str(row[4]))
 
+        if len(item['pics']) < 5:
+            item['addphoto'] = True
+        elif len(item['pics']) > 5:
+            raise ValueError(u'Si è verificato un errore durante il caricamento delle foto.<br>Contatta il webmaster.')
+            
+    if obj=='note':
+        row = cursor.execute("SELECT * FROM notes WHERE id == ?", [id]).fetchone()
+        item = {'id':id, 'content':row[1]}
+
+    if obj=='doc':
+        row = cursor.execute("SELECT * FROM docs WHERE id == ?", [id]).fetchone()
+        item = {'id':row[0], 'title':row[1], 'path':row[2]}
+
+    return item

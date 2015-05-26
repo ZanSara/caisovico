@@ -28,32 +28,34 @@
             <input class="title" name='titolo' value='{{ item.title }}' type="text" placeholder="Titolo...">
             <textarea class='textfield' type="text" name='testo' placeholder="Testo...">{{ item.content }}</textarea>
         </div>
+        
+        
         <h3>Foto:</h3>
-        {% if item.pics %}
+        {% if item.pics or item.addphoto %}
             <p>Clicca sulla foto da modificare o rimuovere:</p>
             <div class='pseudotable'>
               {% for photo in item.pics %}
-                <a href='{{ item.id }}/pics/{{ photo.id }}'>
+                <a href='{{ item.id }}/pics/{{ photo[0] }}'>
                   <div class='pseudorow'>
-                      <p class='tabletitle'{% if message %} style='text-align:center;color:red' {% endif %}>{{ photo.title }}</p>
+                      <p class='tabletitle'{% if message %} style='text-align:center;color:red' {% endif %}>{{ photo[1] }}</p>
                   </div>
                 </a>
-              {% endfor %}
-              {% if item.addphoto %}
+            {% endfor %}
+            {% if item.addphoto %}
                 <a href='{{item.id}}/pics/add'>
                   <div class='pseudorow'>
                       <p class='tabletitle'style='font-style:italic;' > -- Aggiungi Foto --</p>
                   </div>
                 </a>
-               {% endif %}
-            </div>        
+            {% endif %}  
+            </div>
         {% else %}
             <p><input name='foto1' type='file'><br><input class='caption' name='descrizione1' type='text' placeholder="Descrizione..."></p>
             <p><input name='foto2' type='file'><br><input class='caption' name='descrizione2' type='text' placeholder="Descrizione..."></p>
             <p><input name='foto3' type='file'><br><input class='caption' name='descrizione3' type='text' placeholder="Descrizione..."></p>
             <p><input name='foto4' type='file'><br><input class='caption' name='descrizione4' type='text' placeholder="Descrizione..."></p>
             <p><input name='foto5' type='file'><br><input class='caption' name='descrizione5' type='text' placeholder="Descrizione..."></p>
-        {% endif %}   
+        {% endif %}
         
       {% elif obj=='note' %}
         <div style="text-align:center;">

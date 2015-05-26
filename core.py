@@ -5,13 +5,20 @@
   
   # ISSUES:
   # 1. Later on, should consider storing error messages in a log file...
+  # 2. Maybe try to solve issues related to the upload of the pictures for the news.
+  # 3. Maybe set the navbar to change from style to style, putting there the buttons from the related sidebox
+  # 4. By now, I do not delete files in the uploads folder, I only overwrite their names in the database, making them orphans.
+  
+  
+  # var: dictionary that contains all the template context variables
+  # item: dictionary that contains all the object-related variables (titles, texts, etc...) Contained inside var.
   
 
 from flask import Flask, request, session, abort, url_for, redirect, send_from_directory
 from jinja2 import Environment, PackageLoader
 from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, DATABASE_PATH
 from utils import login, logout
-from database import upload_news, load_news, upload_note, load_note, upload_doc, load_doc, load_lista, retrieve_item, update_news, update_newspics, retrieve_photo, update_note, update_doc
+from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, update_newspics, retrieve_newspics, retrieve_item, load_lista
 import sys, sqlite3, os     # sys if for errors handling, os is for file managing
 
 
@@ -172,6 +179,14 @@ def webmaster():
     return template.render(var)
 
 
+@app.route("/pannello/area-riservata", methods=["GET", "POST"])
+def webres():
+    if not session.get('logged_in'):
+        return redirect(url_for('weblogin'))
+    var = style("webmaster")
+    template = env.get_template("web-res-home.html")
+    return template.render(var)
+
 
 # ************ Reserved Area *******************************************
     
@@ -185,6 +200,7 @@ def static_file(folder, filename):
 
 @app.route("/pannello/area-riservata/login", methods=["GET", "POST"])
 def weblogin():
+    """ Performs the login """
     var = style("webmaster")
                 
     if request.method == "POST":
@@ -202,6 +218,7 @@ def weblogin():
 
 @app.route("/pannello/area-riservata/logout", methods=["GET", "POST"])
 def weblogout():
+    """ Performs the logout """
     if not session.get('logged_in'):
         return redirect(url_for('weblogin'))
     var = style("webmaster")
@@ -218,19 +235,13 @@ def weblogout():
     return redirect(url_for('weblogin'))
 
 
-@app.route("/pannello/area-riservata", methods=["GET", "POST"])
-def webres():
-    if not session.get('logged_in'):
-        return redirect(url_for('weblogin'))
-
-    var = style("webmaster")
-    template = env.get_template("web-res-home.html")
-    return template.render(var)
-    
-
-
 @app.route("/pannello/area-riservata/upload/<obj>", methods=["GET", "POST"])
 def webupload(obj):
+    ''' 
+        webupload(obj):
+    Uploads an object (news, note, doc): writes everything in the 
+    database and upload any file needed.
+    '''
     if not session.get('logged_in'):
         redirect(url_for('weblogin'))
 
@@ -242,7 +253,6 @@ def webupload(obj):
     if request.method == 'POST':
         conn = sqlite3.connect(DATABASE_PATH)
         try:
-            print "try:"
             with conn:
                 cursor = conn.cursor()
                 if obj=="news":
@@ -265,25 +275,39 @@ def webupload(obj):
     
 @app.route("/pannello/area-riservata/manage/<obj>", methods=["GET"])
 def webmanage(obj):
+    '''
+        webmanage(obj):
+    Renders a list of all the available object present in the database, 
+    and allows the user to select the one he wants to modify.
+    '''
     if not session.get('logged_in'):
         redirect(url_for('weblogin'))
         
     var = style("webmaster")
     var['obj'] = obj
-    var['item'] = {}
     template = env.get_template("web-res-manage-main.html")
     
     conn = sqlite3.connect(DATABASE_PATH)
     with conn:
-        cursor = conn.cursor()
-        var['lista'] = load_lista(obj, cursor)
+        try:
+            cursor = conn.cursor()
+            var['lista'] = load_lista(obj, cursor)
+        except Exception as e:
+            var['msg'] = e
     conn.close()
-
+    
+    if var['lista'] == []:
+        var['msg'] = 'Nessun elemento trovato'
+    
     return template.render(var)
     
     
 @app.route("/pannello/area-riservata/manage/<obj>/<id>", methods=["GET", "POST"])
 def webmodify(obj, id):
+    '''
+        webmodify(obj, id):
+    Allows the user to modify the detail of an object.
+    '''
     if not session.get('logged_in'):
         redirect(url_for('weblogin'))
 
@@ -292,33 +316,45 @@ def webmodify(obj, id):
     template = env.get_template("web-res-upload.html")
     
     conn = sqlite3.connect(DATABASE_PATH)
-    with conn:
-        cursor = conn.cursor()
-        var['item'] = retrieve_item(obj, id, cursor)
+    try:
+        
+        if request.method=='POST':
+            conn = sqlite3.connect(DATABASE_PATH)
+            with conn:
+                cursor = conn.cursor()
+                if obj=="news":
+                    update_news(request, cursor, app, id)
+                elif obj=='note':
+                    update_note(request, cursor, id)
+                elif obj=='doc':
+                    update_doc(request, cursor, app, id)
+                conn.commit()
+                var['item'] = retrieve_item(obj, id, cursor)    # Ensures that the data has actually been written
+                var['msg'] = 'Upload completato con successo'
+                var['upload'] = 'success'
+        else:
+            with conn:
+                cursor = conn.cursor()
+                var['item'] = retrieve_item(obj, id, cursor)
+                print '#######################'
+                print var
+
+    except ValueError as e:
+        var['msg'] = e
+        var['upload'] = 'fail'
+        
     conn.close()
-        
-    if request.method=='POST':
-        var["upload"] = 'fail'
-        var['msg'] = u"Upload non riuscito. Riprova o contatta il webmaster."
-        conn = sqlite3.connect(DATABASE_PATH)
-        with conn:
-            cursor = conn.cursor()
-            if obj=="news":
-                var = update_news(request, cursor, app, id)
-            elif obj=='note':
-                var = update_note(request, cursor, id)
-            elif obj=='doc':
-                var = update_doc(request, cursor, app, id)
-        conn.commit()
-        var['item'] = retrieve_item(obj, id, cursor)    # Ensures that the data has actually been written
-        conn.close()
-        
 
     return template.render(var)
-    
+
+
 
 @app.route("/pannello/area-riservata/manage/news/<id>/pics/<index>", methods=["GET", "POST"])
 def weupdatepics(id, index):
+    '''
+        weupdatepics(id, index):
+    Allows the user to modify the detail of an object.
+    '''
     if not session.get('logged_in'):
         redirect(url_for('weblogin'))
     var = style("webmaster")
