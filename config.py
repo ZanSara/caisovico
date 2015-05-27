@@ -1,4 +1,6 @@
+import os
 
+BASE_PATH = os.environ['HOME']
 UPLOAD_FOLDER_DOCS = 'uploads/docs'
 UPLOAD_FOLDER_PICS = 'uploads/photos'
 ALLOWED_EXTENSIONS_PICS = set(['png', 'jpg', 'jpeg', 'gif', 'tif', 'tiff'])

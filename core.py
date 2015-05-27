@@ -18,7 +18,7 @@ from flask import Flask, request, session, abort, url_for, redirect, send_from_d
 from jinja2 import Environment, PackageLoader
 from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, DATABASE_PATH
 from utils import login, logout
-from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, update_newspics, retrieve_newspics, retrieve_item, load_lista
+from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, update_newspics, retrieve_newspics, retrieve_item, retrieve_index, load_lista
 import sys, sqlite3, os     # sys if for errors handling, os is for file managing
 
 
@@ -306,7 +306,7 @@ def webmanage(obj):
 def webmodify(obj, id):
     '''
         webmodify(obj, id):
-    Allows the user to modify the detail of an object.
+    Allows the user to modify the details of an object.
     '''
     if not session.get('logged_in'):
         redirect(url_for('weblogin'))
@@ -336,7 +336,6 @@ def webmodify(obj, id):
             with conn:
                 cursor = conn.cursor()
                 var['item'] = retrieve_item(obj, id, cursor)
-                print '#######################'
                 print var
 
     except ValueError as e:
@@ -357,37 +356,43 @@ def weupdatepics(id, index):
     '''
     if not session.get('logged_in'):
         redirect(url_for('weblogin'))
-    var = style("webmaster")
     
+    var = style("webmaster")
     var['obj'] = 'news'
     var['id'] = id
     var['item'] = {}
     template = env.get_template("web-res-manage-photos.html")
     
-    if index=="add":
-        var['new'] = True
-        # var['index'] is left undefined
-    else:
-        var['new'] = False
-        index = int(index)
-        var['index'] = index
-    
     conn = sqlite3.connect(DATABASE_PATH)
-    with conn:
-        cursor = conn.cursor()
-        if request.method=="POST":
-            var = update_newspics(request, var, cursor, app, id)
-            conn.commit()
-        
-        if var['new'] == False:    
-            photo = retrieve_photo(id, var['index'], cursor)
-            if not photo:
-                var['upload'] = 'fail'
-                var['msg'] = u"Errore durante il caricamento della foto."
-                return template.render(var)
-            var['item'] = photo
+    try:
+        with conn:
+            cursor = conn.cursor()
+            
+            if index=="add":
+                var['new'] = True
+                var['index'] = retrieve_index(id, cursor)
+            else:
+                var['new'] = False
+                var['index'] = int(index)
+                var['item'] = retrieve_newspics(id, var['index'], cursor)
+                
+            if request.method=="POST":
+                update_newspics(request, cursor, app, id, retrieve_index(id, cursor))
+                conn.commit()
+                var['item'] = retrieve_newspics(id, var['index'], cursor)
+                print '###################', var['item']
+                if not var['item']:
+                    raise ValueError (u"Errore durante il caricamento della foto")
+                    return template.render(var)
+                var['msg'] = 'Upload completato con successo'
+                var['upload'] = 'success'
 
-    conn.close()    
+
+        conn.close()
+    except (ValueError, KeyError) as e:
+        var['msg'] = e
+        var['upload'] = 'fail'
+        
     return template.render(var)
     
     

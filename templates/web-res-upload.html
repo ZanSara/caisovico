@@ -84,7 +84,12 @@
         <h1>ERRORE</h1>
     {% endif %}
     </div>
+    {% if item %}
+    <a href='/pannello/area-riservata/manage/{{ obj }}'><button class='backbuttonstyle'>Indietro</button></a>
+    {% else %}
     <a href='/pannello/area-riservata'><button class='backbuttonstyle'>Indietro</button></a>
+    {% endif %}
+
 
     {% if obj=='news' %}
     <link href="/static/css/datepickr.css" rel="stylesheet">

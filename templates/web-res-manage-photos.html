@@ -18,13 +18,14 @@
         <h3>Aggiungi la nuova foto:</h3>
         <form method=POST enctype=multipart/form-data>
             <input type='checkbox' class='hidden' value='new' name='new' checked='yes' disabled>
-            <p><input name='foto' type='file'><br><input class='caption' name='descrizione' type='text' placeholder="Descrizione..."></p>
+            <p><input name='foto' type='file'><br>
+            <input class='caption' name='descrizione' type='text' placeholder="Descrizione..."></p>
             <input class='buttonstyle' type='submit' value='Upload'>
         </form>
 
     {% else %}
       <h3>Foto selezionata:</h3>
-      <img style="border:1px solid black;"  src="/uploads/photos/{{ item[0] }}" title="{{ item[1] }}" alt="ERRORE: Foto mancante. Contatta il webmaster.">
+      <img style="border:1px solid black;"  src="/uploads/photos/{{ item[2] }}" title="{{ item[1] }}" alt="ERRORE: Foto mancante. Contatta il webmaster.">
       <p>" {{ item[1] }} "</p>
       
       <hr>
@@ -32,11 +33,9 @@
         <form method=POST enctype=multipart/form-data>
             <input type='checkbox' class='hidden' value='new' name='new' disabled>
             <input name='foto' type='file'>
-            <input class='buttonstyle' type='submit' value='Upload'>
-        
       <hr>
       <h4>Se vuoi cambiare la didascalia:
-            <input class='caption' name='descrizione' type='text' placeholder="Descrizione..."></h4>
+            <input class='caption' name='descrizione' type='text' value='{{ item[1] }}' placeholder="Descrizione..."></h4>
             <input class='buttonstyle' type='submit' value='Upload'>
         </form>
       
