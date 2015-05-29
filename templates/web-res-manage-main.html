@@ -2,9 +2,13 @@
 
 {% block content %}
 
+    {% if manage=='delete' %}
+    <h2>Elimina</h2>
+    {% else %}
     <h2>Modifica</h2>
+    {% endif %}
 
-    <p style='text-align:center;'>Clicca sulla riga da modificare</p>
+    <p style='text-align:center;'>Clicca sulla riga da {% if manage=='delete' %}eliminare{% else %}modificare{% endif %}</p>
     
     {% if msg %}
     <p style='text-align:center;color:red'>{{ msg }}</p> <!-- Useful for some error messages -->

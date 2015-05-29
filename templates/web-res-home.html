@@ -5,22 +5,34 @@
     <a href="/pannello/area-riservata"><h1>Area Riservata</h1></a>
     
     {% block content %}
-    <div style="text-align:center;">
-        
+    <div class="block">
+
         <table class="index">
-            <tbody>
+           <tbody> 
               <tr>
-                <td><a href="area-riservata/upload/news">Carica Notizia</a></td>
-                <td><a href="area-riservata/manage/news">Modifica Notizie</a></td>
+                <th><h3>Carica</h3></th>
+                <th><h3>Modifica</h3></th>
+                <th><h3>Elimina</h3></th>
               </tr>
+                
               <tr>
-                <td><a href="area-riservata/upload/note">Carica Nota</a></td>
-                <td><a href="area-riservata/manage/note">Modifica Nota</a></td>
+                <td><a href="area-riservata/upload/news">Notizia</a></td>
+                <td><a href="area-riservata/manage/news">Notizia</a></td>
+                <td><a href="area-riservata/delete/news">Notizia</a></td>
               </tr>
+              
               <tr>
-                <td><a href="area-riservata/upload/doc">Carica Documento</a></td>
-                <td><a href="area-riservata/manage/doc">Modifica Documento</a></td>
+                <td><a href="area-riservata/upload/note">Nota</a></td>
+                <td><a href="area-riservata/manage/note">Nota</a></td>
+                <td><a href="area-riservata/delete/note">Nota</a></td>
               </tr>
+              
+              <tr>
+                <td><a href="area-riservata/upload/doc">Documento</a></td>
+                <td><a href="area-riservata/manage/doc">Documento</a></td>
+                <td><a href="area-riservata/delete/doc">Documento</a></td>
+              </tr>              
+              
             </tbody>
         </table>
         

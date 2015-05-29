@@ -171,7 +171,7 @@ def update_newspics(request, cursor, app, id, index):
         # the database
         if len(old_pics) >= 5:
             raise ValueError(u'Impossibile caricare più di 5 fotografie')
-            
+        
         filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(item[2].filename)))
         item[2].save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
         
@@ -188,12 +188,16 @@ def update_newspics(request, cursor, app, id, index):
         # only the label of the photo
         
         if item[2]:
+            old = retrieve_newspics(id, index, cursor)
+            
             filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(item[2].filename)))
             item[2].save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
-            
             old_pics[index][2] = filename
-            # In this way I upload a new picture keeping the same label
-            
+            try:
+                os.remove(os.path.join(BASE_PATH, app.config['UPLOAD_FOLDER_PICS'], old[2]))
+            except OSError:
+                pass # If the file there isn't, I simply load a new one and leave the corrupted one (if exists) orphan.
+                     # Should log about it, anyway
         if item[1]:
             old_pics[index][1] = item[1] 
             
@@ -275,10 +279,13 @@ def check_doc(item):
         raise ValueError(u'Impossibile caricare documento senza descrizione') 
         # Secondary issue: the user does not find their file after seeing 
         # the error message.
+        
     if not item['file']:
         raise ValueError(u'Nessun file selezionato')
+        
     if not allowed_doc(item['file'].filename):
         raise ValueError(u"Upload fallito. Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS_DOCS)) )
+        
     return
     
 def upload_doc(request, cursor, app):
@@ -294,11 +301,11 @@ def upload_doc(request, cursor, app):
     '''
     item = load_doc(request)
     check_doc(item)
-
+    
     filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(item['file'].filename)))
     item['file'].save(os.path.join(app.config['UPLOAD_FOLDER_DOCS'], filename))
     
-    cursor.execute("INSERT INTO docs (name, path) VALUES (?, ?)", [item['title'], json.dumps(filename)])
+    cursor.execute("INSERT INTO docs (name, path) VALUES (?, ?)", [item['title'], filename])
     return
 
 def update_doc(request, cursor, app, id):
@@ -308,7 +315,7 @@ def update_doc(request, cursor, app, id):
     overwrite a specific row in the database. 
     NB #1: It doesn't call check_doc(), because the user may want to change
     only the label, without replacing the original file, and reverse.
-    NB #2: it DOESN'T DEAL with the ValueErrors. The caller is supposed to
+    NB #2: it doesn't deal with the ValueErrors. The caller is supposed to
     manage them.
     '''
     item = load_doc(request)
@@ -377,13 +384,16 @@ def retrieve_item(obj, id, cursor):
         elif len(item['pics']) > 5:
             raise ValueError(u'Si è verificato un errore durante il caricamento delle foto.<br>Contatta il webmaster.')
             
-    if obj=='note':
+    elif obj=='note':
         row = cursor.execute("SELECT * FROM notes WHERE id == ?", [id]).fetchone()
         item = {'id':id, 'content':row[1]}
 
-    if obj=='doc':
+    elif obj=='doc':
         row = cursor.execute("SELECT * FROM docs WHERE id == ?", [id]).fetchone()
         item = {'id':row[0], 'title':row[1], 'path':row[2]}
+    
+    else:
+        raise ValueError(u'Unknown OBJ value.')
 
     return item
 

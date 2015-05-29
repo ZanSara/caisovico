@@ -89,4 +89,8 @@ def get_extension(filename):
         get_extension(filename):
     Returns the extension of filename
     """
-    return filename.rsplit('.', 1)[1].lower()
+    try:
+        return filename.rsplit('.', 1)[1].lower()
+    except IndexError:
+        raise IndexError(u'Nome file non valido')
+    return

@@ -25,18 +25,13 @@
 
     {% else %}
       <h3>Foto selezionata:</h3>
-      <img style="border:1px solid black;"  src="/uploads/photos/{{ item[2] }}" title="{{ item[1] }}" alt="ERRORE: Foto mancante. Contatta il webmaster.">
-      <p>" {{ item[1] }} "</p>
-      
-      <hr>
-      <h4>Se vuoi sostituire la foto:</h4>
-        <form method=POST enctype=multipart/form-data>
-            <input type='checkbox' class='hidden' value='new' name='new' disabled>
-            <input name='foto' type='file'>
-      <hr>
-      <h4>Se vuoi cambiare la didascalia:
-            <input class='caption' name='descrizione' type='text' value='{{ item[1] }}' placeholder="Descrizione..."></h4>
-            <input class='buttonstyle' type='submit' value='Upload'>
+      <form method=POST enctype=multipart/form-data>
+          <img style="border:1px solid black;"  src="/uploads/photos/{{ item[2] }}" title="{{ item[1] }}" alt="ERRORE: Foto mancante. Contatta il webmaster.">
+          <p><input class='caption' name='descrizione' type='text' value='{{ item[1] }}' placeholder="Descrizione..."></p>
+          <h4>Nuova foto:
+          <input type='checkbox' class='hidden' value='new' name='new' disabled>
+          <input class='filepkr' name='foto' type='file'></h4>
+          <input class='buttonstyle' type='submit' value='Upload'>
         </form>
       
     {% endif %} 

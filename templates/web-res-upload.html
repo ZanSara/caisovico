@@ -38,6 +38,7 @@
                 <a href='{{ item.id }}/pics/{{ photo[0] }}'>
                   <div class='pseudorow'>
                       <p class='tabletitle'{% if message %} style='text-align:center;color:red' {% endif %}>{{ photo[1] }}</p>
+                      <a href='../../delete/{{obj}}/{{ item.id }}/{{ photo[0] }}' class='s-delbuttonstyle'><p>ELIMINA FOTO</p></a>
                   </div>
                 </a>
             {% endfor %}

@@ -266,7 +266,7 @@ def webupload(obj):
             var['msg'] = u'Upload completato con successo'
             conn.close()
         except ValueError as e:
-            var['item'] = load_news(request)
+            var['item'] = load_doc(request)
             var["upload"] = 'fail'
             var['msg'] = e
     
@@ -285,6 +285,7 @@ def webmanage(obj):
         
     var = style("webmaster")
     var['obj'] = obj
+    var['manage'] = 'manage'
     template = env.get_template("web-res-manage-main.html")
     
     conn = sqlite3.connect(DATABASE_PATH)
@@ -313,6 +314,7 @@ def webmodify(obj, id):
 
     var = style("webmaster")
     var['obj'] = obj
+    var['item'] = {}
     template = env.get_template("web-res-upload.html")
     
     conn = sqlite3.connect(DATABASE_PATH)
@@ -336,9 +338,8 @@ def webmodify(obj, id):
             with conn:
                 cursor = conn.cursor()
                 var['item'] = retrieve_item(obj, id, cursor)
-                print var
 
-    except ValueError as e:
+    except (ValueError) as e:
         var['msg'] = e
         var['upload'] = 'fail'
         
@@ -352,7 +353,7 @@ def webmodify(obj, id):
 def weupdatepics(id, index):
     '''
         weupdatepics(id, index):
-    Allows the user to modify the detail of an object.
+    Allows the user to modify the details of an object.
     '''
     if not session.get('logged_in'):
         redirect(url_for('weblogin'))
@@ -360,7 +361,6 @@ def weupdatepics(id, index):
     var = style("webmaster")
     var['obj'] = 'news'
     var['id'] = id
-    var['item'] = {}
     template = env.get_template("web-res-manage-photos.html")
     
     conn = sqlite3.connect(DATABASE_PATH)
@@ -377,10 +377,9 @@ def weupdatepics(id, index):
                 var['item'] = retrieve_newspics(id, var['index'], cursor)
                 
             if request.method=="POST":
-                update_newspics(request, cursor, app, id, retrieve_index(id, cursor))
+                update_newspics(request, cursor, app, id, var['index'])
                 conn.commit()
                 var['item'] = retrieve_newspics(id, var['index'], cursor)
-                print '###################', var['item']
                 if not var['item']:
                     raise ValueError (u"Errore durante il caricamento della foto")
                     return template.render(var)
@@ -389,17 +388,101 @@ def weupdatepics(id, index):
 
 
         conn.close()
-    except (ValueError, KeyError) as e:
+    except (ValueError, KeyError, IndexError) as e:
         var['msg'] = e
         var['upload'] = 'fail'
         
     return template.render(var)
     
     
+@app.route("/pannello/area-riservata/delete/<obj>", methods=["GET"])
+def webdeletelist(obj):
+    '''
+        webdeletelist(obj):
+    Renders a list of all the available object present in the database, 
+    and allows the user to select the one he wants to delete.
+    '''
+    if not session.get('logged_in'):
+        redirect(url_for('weblogin'))
+        
+    var = style("webmaster")
+    var['obj'] = obj
+    var['manage'] = 'delete'
+    template = env.get_template("web-res-manage-main.html")
+    
+    conn = sqlite3.connect(DATABASE_PATH)
+    with conn:
+        try:
+            cursor = conn.cursor()
+            var['lista'] = load_lista(obj, cursor)
+        except Exception as e:
+            var['msg'] = e
+    conn.close()
+    
+    if var['lista'] == []:
+        var['msg'] = 'Nessun elemento trovato'
+    
+    return template.render(var)
+    
+@app.route("/pannello/area-riservata/delete/<obj>/<id>", methods=["GET"])
+def webdeleteid(obj, id):
+    '''
+        webdeleteid(obj):
+    Renders the object selected and ask confirmation to delete the object.
+    Then deletes it.
+    '''
+    if not session.get('logged_in'):
+        redirect(url_for('weblogin'))
+        
+    var = style("webmaster")
+    var['obj'] = obj
+    var['manage'] = 'delete'
+    template = env.get_template("web-res-delete.html")
+    
+    conn = sqlite3.connect(DATABASE_PATH)
+    with conn:
+        try:
+            cursor = conn.cursor()
+            var['item'] = retrieve_item(obj, id, cursor)
+        except ValueError as e:
+            var['upload'] = 'fail'
+            var['msg'] = e
+    conn.close()
     
     
     
+    return template.render(var)
     
+    
+@app.route("/pannello/area-riservata/delete/<obj>/<id>/<index>", methods=["GET"])
+def webdeletepic(obj, id, index):
+    '''
+        webdeleteid(obj):
+    Renders the object selected and ask confirmation to delete the object.
+    Then deletes it.
+    '''
+    if not session.get('logged_in'):
+        redirect(url_for('weblogin'))
+        
+    var = style("webmaster")
+    var['obj'] = obj
+    var['manage'] = 'delete'
+    template = env.get_template("web-res-delete.html")
+    
+    conn = sqlite3.connect(DATABASE_PATH)
+    with conn:
+        try:
+            cursor = conn.cursor()
+            var['item'] = retrieve_item(obj, id, cursor)
+        except ValueError as e:
+            var['upload'] = 'fail'
+            var['msg'] = e
+    conn.close()
+    
+    
+    
+    return template.render(var)
+
     
     
     

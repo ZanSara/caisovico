@@ -92,8 +92,13 @@ form .textfield{
     height:160px;
 }
 form .caption{
-    font-size:14px;
-    width:90%;
+    font-size: 14px;
+    width: 50%;
+    text-align: center;
+}
+form .filepkr{
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 form .nota{
     font-size:18px;
@@ -144,16 +149,61 @@ form .nota{
 .backbuttonstyle:hover{
   background-color: #6495ED;
 }
-
+.delbuttonstyle{
+    display:block;
+    width:30%;
+    color: #FFFFFF;
+    font-size:18px;
+    font-weight:bold;
+    line-height:120%;
+    text-decoration: none;
+    font-family: arial, verdana, sans-serif;
+    text-align: center;
+    background-color: red;
+    padding: 15px 10%;
+    margin: 15px auto;
+    border:none;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+}
+.delbuttonstyle:hover, .s-delbuttonstyle:hover{
+  background-color: #FF914D;
+}
+.s-delbuttonstyle{
+    display:block;
+    float:right;
+    color: #FFFFFF;
+    font-size:14px;
+    font-weight:bold;
+    line-height:120%;
+    text-decoration: none;
+    font-family: arial, verdana, sans-serif;
+    text-align: center;
+    background-color: red;
+    padding: 7px;
+    margin: 5px;
+    border:none;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+}
+.s-delbuttonstyle p{
+    color:white;
+    margin:0;
+    padding:0;
+}
 
 .index{
     position:relative;
-    float:center;
-    margin:5%;
+    margin:auto;
+    margin-top:5%;
+    margin-bottom:5%;
     width: 90%;
     padding: 5px;
 }
 .index td{
+    width: 30%;
     font-size:16px;
     font-family:arial, verdana, sans-serif;
     line-height: 250%;
@@ -163,7 +213,10 @@ form .nota{
     background-color: #423189;
 }
 .index td:hover{
-  background-color: #644EC1;
+    background-color: #644EC1;
+}
+.index th{
+    background-color: #FFFFFF;
 }
 .index a{
   color: #FFFFFF;
@@ -212,11 +265,6 @@ form .nota{
 }
 
 
-
-
-
-
-
 .pseudotable{
     margin:auto;
     margin-bottom:40px;
@@ -245,6 +293,19 @@ form .nota{
 .pseudotable a:hover{
     color:black
 }
+.off-pseudorow{
+    margin:auto;
+    margin-top:-2px;    /* Simulate the 'collapse borders' of a table */
+    margin-bottom:-2px;
+    padding:0;
+    width:100%;
+    border-top: 2px solid grey;
+    border-bottom: 2px solid grey;
+    overflow:hidden;
+    background-color:#DDDDDD;
+    color: #888888;
+    font-weight:bold;
+}
 .tabledata{
     margin:0 !important;    /* Overrides .text p inherited margin */
     padding:10px;
@@ -258,5 +319,6 @@ form .nota{
     display:inline;
     float:left;
 }
+
 
 
