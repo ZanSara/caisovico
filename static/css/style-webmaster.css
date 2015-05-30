@@ -172,18 +172,17 @@ form .nota{
 }
 .s-delbuttonstyle{
     display:block;
-    float:right;
     color: #FFFFFF;
     font-size:14px;
     font-weight:bold;
-    line-height:120%;
+    line-height:100%;
     text-decoration: none;
     font-family: arial, verdana, sans-serif;
     text-align: center;
     background-color: red;
-    padding: 7px;
+    padding: 3px;
     margin: 5px;
-    border:none;
+    border: none;
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
       border-radius: 5px;
@@ -318,6 +317,27 @@ form .nota{
     padding:10px;
     display:inline;
     float:left;
+}
+
+
+.photobox{
+    overflow: hidden;
+    display: inline-block;
+    vertical-align:top;
+    text-align:center;
+    margin-left: 4%;
+    margin-bottom: 4%;
+    padding: 15px;
+    width: 35%;
+    background-color: #E6DCF9;
+    border: 2px solid #A69CB9;
+}
+.photobox img, .photobox input, .photobox p, .photobox a{
+    width: 70%;
+    margin-left:auto; 
+    margin-right:auto;
+    margin-top: 5px;
+    margin-bottom:5px;
 }
 
 

@@ -14,7 +14,7 @@
   # item: dictionary that contains all the object-related variables (titles, texts, etc...) Contained inside var.
   
 
-from flask import Flask, request, session, abort, url_for, redirect, send_from_directory
+from flask import Flask, request, session, abort, url_for, redirect, send_from_directory, flash
 from jinja2 import Environment, PackageLoader
 from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, DATABASE_PATH
 from utils import login, logout
@@ -244,7 +244,7 @@ def webupload(obj):
     '''
     if not session.get('logged_in'):
         redirect(url_for('weblogin'))
-
+    
     var = style("webmaster")
     var['obj'] = obj
     var['item'] = {}
@@ -315,7 +315,7 @@ def webmodify(obj, id):
     var = style("webmaster")
     var['obj'] = obj
     var['item'] = {}
-    template = env.get_template("web-res-upload.html")
+    template = env.get_template("web-res-upload2.html")
     
     conn = sqlite3.connect(DATABASE_PATH)
     try:
@@ -344,7 +344,7 @@ def webmodify(obj, id):
         var['upload'] = 'fail'
         
     conn.close()
-
+    
     return template.render(var)
 
 
@@ -457,8 +457,8 @@ def webdeleteid(obj, id):
 @app.route("/pannello/area-riservata/delete/<obj>/<id>/<index>", methods=["GET"])
 def webdeletepic(obj, id, index):
     '''
-        webdeleteid(obj):
-    Renders the object selected and ask confirmation to delete the object.
+        webdeletepic(obj):
+    Renders the object selected and ask confirmation to delete the picture.
     Then deletes it.
     '''
     if not session.get('logged_in'):
@@ -467,19 +467,21 @@ def webdeletepic(obj, id, index):
     var = style("webmaster")
     var['obj'] = obj
     var['manage'] = 'delete'
-    template = env.get_template("web-res-delete.html")
+    template = env.get_template("web-res-delete-pic.html")
     
     conn = sqlite3.connect(DATABASE_PATH)
     with conn:
-        try:
-            cursor = conn.cursor()
-            var['item'] = retrieve_item(obj, id, cursor)
-        except ValueError as e:
-            var['upload'] = 'fail'
-            var['msg'] = e
+        if request.method == 'POST':
+            pass
+        else:
+            try:
+                cursor = conn.cursor()
+                var['item'] = retrieve_item(obj, id, cursor)
+            except ValueError as e:
+                var['upload'] = 'fail'
+                var['msg'] = e
+            
     conn.close()
-    
-    
     
     return template.render(var)
 
