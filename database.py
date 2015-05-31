@@ -16,6 +16,7 @@ import sys, sqlite3, json, os, datetime
 #   photo(s):   file objects with labels (in a list of tuples, no dictionaries!)
 #   path(s)     file names without labels
 #   pic(s):     file names with labels and ID (in a list of tuples, no dictionaries!)
+
 #   Remember! In the tuples, the order is (<index>, label, photo)
 
 
@@ -32,15 +33,17 @@ def load_news(request):
     
     files, labels = [], []
     try:
-        for i in xrange(1, 6):
-            if request.files['foto{0}'.format(i)]:
+        for i in xrange(0, 5):
+            if request.files['foto{0}'.format(i)] or request.form['descrizione{0}'.format(i)]:      # filters a lot of empty pairs
                 files.append(request.files['foto{0}'.format(i)])
                 labels.append(request.form['descrizione{0}'.format(i)])
+            files.append(request.files['foto'])
+            labels.append(request.form['descrizione'])
     except KeyError:    # KeyError = Bad Request Error
-        pass            # It means I'm trying to UPDATE only text (see the structure of web-res-upload.html)
+        pass            # It means I'm trying to UPDATE less than 5 photos (see the structure of web-res-upload.html)
+                        # or that I didn't added any new photo
     
-    item['files'] = files
-    item['labels'] = labels
+    item['photos'] = zip(labels, files)
     return item
     
 def check_news(item):
@@ -53,19 +56,27 @@ def check_news(item):
         raise ValueError(u'Impossibile caricare una notizia senza titolo') 
     if not item['content']:
         raise ValueError(u'Impossibile caricare una notizia senza testo')
+        
     # datepick_to_datetime() itself will raise the ValueError in case
     item['date'] = datepick_to_datetime(item['date']) 
 
-    for l in item['labels']:
-        if l=='':
+    for p in item['photos']:
+        if p[0] == '' and p[1].filename != None:     # If I have a photo without the label
             raise ValueError( u"Impossibile caricare foto senza una descrizione." )
-            
-    for f in item['files']:
-        if not allowed_pic(f.filename):
+
+        if p[1].filename == '' and p[0] != '':      # Here I have only the label
+            p = (p[0], '')                          # and I 'erase' the file
+        # It is possible to UPDATE the label of an existing photo (so a pair label-nophoto is allowed),
+        # while it is impossible to load a photo without a label, because the label is always rendered in the page
+        # and thus loaded with the photo. In case of UPLOAD I must check again and raise errors for every unpaired label.
+        
+    for f in item['photos']:
+        print '#########', f
+        if not allowed_pic(f[1].filename):
             raise ValueError( u'''{0} non può essere caricato:<br>
                                   '*.{1}' non è tra le estensioni ammesse (ovvero {2}).<br>
                                   Ricarica le foto.
-                               '''.format(f.filename, get_extension(f.filename), set_to_string(ALLOWED_EXTENSIONS_PICS)) )
+                               '''.format(f[1].filename, get_extension(f[1].filename), set_to_string(ALLOWED_EXTENSIONS_PICS)) )
                                # Secondary issue: now the user have to reload all the photos. 
                                # It is possible to let him see again what they loaded, and correct?
     return
@@ -83,31 +94,43 @@ def upload_news(request, cursor, app):
     '''
     item = load_news(request)
     check_news(item)
+    
+    # See check_news()
+    for l in item['photos']:
+        if l[1]=='' and l[0]!= None:
+            raise ValueError( u"Impossibile caricare una descrizione senza la relativa foto." )
 
-    paths = []
-    for f in item['files']:
-        filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(f.filename)))
-        f.save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
+    paths, labels = [], []
+    for f in item['photos']:
+        filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(f[1].filename)))
+        f[1].save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
         paths.append(filename)
+        labels.append(f[0])
 
-    pics = zip(xrange(len(paths)), item['labels'], paths)
+    pics = zip(xrange(len(paths)), labels, paths)
     cursor.execute("INSERT INTO news (data, title, text, pics) VALUES (?, ?, ?, ?)", [item['date'], item['title'], item['content'], json.dumps(pics)])
     return
 
 def update_news(request, cursor, app, id):
     '''
         update_news(request, cursor, app, id):
-    This function updates a news, meaning that it can identify and overwrite
-    a specific row in the database. Basically the same as the above for
-    the text parts, but slightly different concerning the management of pictures
-    (see update_newspics() )
+    This function updates a news, meaning that it can identify and 
+    overwrite a specific row in the database. Basically the same as the 
+    above for the text parts, but slightly different concerning the 
+    management of pictures.
     NB: it DOESN'T DEAL with the ValueErrors. The caller is supposed to
     manage them.
     '''
     item = load_news(request)
     check_news(item)
-    cursor.execute("UPDATE news SET data=?, title=?, text=? WHERE id = ?", [item['date'], item['title'], item['content'], id])
-    # Photos will be managed separately
+    
+    print item['photos']
+    
+    
+    
+    
+    #cursor.execute("UPDATE news SET data=?, title=?, text=?, pics=? WHERE id = ?", [item['date'], item['title'], item['content'], item['pics'], id])
+
     return item
 
 
@@ -118,7 +141,7 @@ def load_newspics(request, id):
         load_newspics(request, id):
     Loads everything from the request, without performing any valitation.
     Loads also the value of the 'new' flag as first element of the output 
-    tuple. May raise only 'BAD REQUEST' errors.
+    tuple. May raise only 'BAD REQUEST' (KeyError) errors.
     NB: requires the ID only to build a standard tuple, as found in the 
     database.
     '''
@@ -411,3 +434,27 @@ def retrieve_index(id, cursor):
     if index >= 5:
         raise ValueError(u"Errore durante il caricamento della lista.")
     return index
+
+
+def delete_item(obj, cursor, app, id):
+    '''
+        delete_item(obj, cursor, id):
+    Deletes a specific object in the database.
+    '''
+    if obj=='news':
+        pics = retrieve_item(obj, id, cursor)['pics']
+        for pic in pics:
+            os.remove(os.path.join(BASE_PATH, app.config['UPLOAD_FOLDER_PICS'], pic[2]))
+        cursor.execute('DELETE FROM news WHERE id == ?', [id])
+    elif obj=='note':
+        cursor.execute('DELETE FROM notes WHERE id == ?', [id])
+    elif obj=='doc':
+        try:
+            os.remove(os.path.join(BASE_PATH, app.config['UPLOAD_FOLDER_DOCS'], retrieve_item(obj, id, cursor)['path']))
+        except OSError:
+            pass # If the file there isn't, or cannot be deleted, I simply delete its database entry and leave it orphan.
+                 # Should log about it, anyway
+        cursor.execute('DELETE FROM docs WHERE id == ?', [id])
+    else:
+        raise ValueError(u'Unknown OBJ value')
+    return

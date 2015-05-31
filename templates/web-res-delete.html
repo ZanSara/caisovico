@@ -5,14 +5,13 @@
     <h2>Elimina</h2>
     
     {% if deleted %}
-        <p style="font-weight:bold; text-align:center; color:green">Eliminazione completata con successo</p>
+        <p style="font-weight:bold; text-align:center; color:green">L'elemento è stato eliminato</p>
         <a href='/pannello/area-riservata'><button class='backbuttonstyle'>Indietro</button></a>
     {% else %}
         
         {% if upload=='fail' %}
             <p style="text-align:center;color:red">{{ msg }}</p>
-        {% endif %}
-        {% if upload=='success' %}
+        {% elif upload=='success' %}
             <p style="text-align:center;color:green">{{ msg }}</p>
         {% endif %}
         

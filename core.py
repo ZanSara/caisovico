@@ -18,7 +18,7 @@ from flask import Flask, request, session, abort, url_for, redirect, send_from_d
 from jinja2 import Environment, PackageLoader
 from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, DATABASE_PATH
 from utils import login, logout
-from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, update_newspics, retrieve_newspics, retrieve_item, retrieve_index, load_lista
+from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, retrieve_item, retrieve_index, load_lista, delete_item
 import sys, sqlite3, os     # sys if for errors handling, os is for file managing
 
 
@@ -188,7 +188,9 @@ def webres():
     return template.render(var)
 
 
-# ************ Reserved Area *******************************************
+# ************ RESERVED AREA *******************************************
+
+#************* Misc ****************************************************
     
 @app.route('/uploads/<folder>/<filename>')
 def static_file(folder, filename):
@@ -207,7 +209,7 @@ def weblogin():
         try:
             login(request.form["user"], request.form["password"])
         except (IndexError, ValueError) as e:
-            var['msg'] = 'ERRORE: {0}'.format(e)
+            var['msg'] = e
             template = env.get_template("web-res-login.html")
             return template.render(var)
         return redirect(url_for('webres'))
@@ -221,11 +223,13 @@ def weblogout():
     """ Performs the logout """
     if not session.get('logged_in'):
         return redirect(url_for('weblogin'))
+        
     var = style("webmaster")
+
     try:
         logout()
     except Exception as e:
-        var['msg'] = 'ERRORE: {0}'.format(e)
+        var['msg'] = e
         template = env.get_template("web-res-login.html")
         return template.render(var)
         # ISSUE!
@@ -235,6 +239,8 @@ def weblogout():
     return redirect(url_for('weblogin'))
 
 
+# ************* Upload *************************************************
+
 @app.route("/pannello/area-riservata/upload/<obj>", methods=["GET", "POST"])
 def webupload(obj):
     ''' 
@@ -243,12 +249,12 @@ def webupload(obj):
     database and upload any file needed.
     '''
     if not session.get('logged_in'):
-        redirect(url_for('weblogin'))
+        return redirect(url_for('weblogin'))
     
     var = style("webmaster")
     var['obj'] = obj
     var['item'] = {}
-    template = env.get_template("web-res-upload.html")
+    template = env.get_template("web-res-upload2.html")
 
     if request.method == 'POST':
         conn = sqlite3.connect(DATABASE_PATH)
@@ -261,18 +267,27 @@ def webupload(obj):
                     upload_note(request, cursor)
                 elif obj=='doc':
                     upload_doc(request, cursor, app)
+                else:
+                    raise ValueError(u'Unknown OBJ value')
             conn.commit()
             var["upload"] = 'success'
             var['msg'] = u'Upload completato con successo'
             conn.close()
         except ValueError as e:
-            var['item'] = load_doc(request)
+            if obj=="news":
+                load_news(request)
+            elif obj=='note':
+                load_note(request)
+            elif obj=='doc':
+                load_doc(request)
             var["upload"] = 'fail'
             var['msg'] = e
     
     return template.render(var)
-    
-    
+
+
+# ************ Manage **************************************************
+
 @app.route("/pannello/area-riservata/manage/<obj>", methods=["GET"])
 def webmanage(obj):
     '''
@@ -280,8 +295,8 @@ def webmanage(obj):
     Renders a list of all the available object present in the database, 
     and allows the user to select the one he wants to modify.
     '''
-    if not session.get('logged_in'):
-        redirect(url_for('weblogin'))
+    if session.get('logged_in')==None:
+        return redirect(url_for('weblogin'))
         
     var = style("webmaster")
     var['obj'] = obj
@@ -303,14 +318,14 @@ def webmanage(obj):
     return template.render(var)
     
     
-@app.route("/pannello/area-riservata/manage/<obj>/<id>", methods=["GET", "POST"])
+@app.route("/pannello/area-riservata/manage/<obj>/<int:id>", methods=["GET", "POST"])
 def webmodify(obj, id):
     '''
         webmodify(obj, id):
     Allows the user to modify the details of an object.
     '''
     if not session.get('logged_in'):
-        redirect(url_for('weblogin'))
+        return redirect(url_for('weblogin'))
 
     var = style("webmaster")
     var['obj'] = obj
@@ -342,6 +357,7 @@ def webmodify(obj, id):
     except (ValueError) as e:
         var['msg'] = e
         var['upload'] = 'fail'
+        var['item'] = retrieve_item(obj, id, cursor)
         
     conn.close()
     
@@ -349,14 +365,14 @@ def webmodify(obj, id):
 
 
 
-@app.route("/pannello/area-riservata/manage/news/<id>/pics/<index>", methods=["GET", "POST"])
+@app.route("/pannello/area-riservata/manage/news/<int:id>/pics/<index>", methods=["GET", "POST"])
 def weupdatepics(id, index):
     '''
         weupdatepics(id, index):
     Allows the user to modify the details of an object.
     '''
     if not session.get('logged_in'):
-        redirect(url_for('weblogin'))
+        return redirect(url_for('weblogin'))
     
     var = style("webmaster")
     var['obj'] = 'news'
@@ -395,15 +411,17 @@ def weupdatepics(id, index):
     return template.render(var)
     
     
+# *********** Delete ***************************************************
+    
 @app.route("/pannello/area-riservata/delete/<obj>", methods=["GET"])
 def webdeletelist(obj):
     '''
         webdeletelist(obj):
-    Renders a list of all the available object present in the database, 
+    Renders a list of all the objects available in the database, 
     and allows the user to select the one he wants to delete.
     '''
     if not session.get('logged_in'):
-        redirect(url_for('weblogin'))
+        return redirect(url_for('weblogin'))
         
     var = style("webmaster")
     var['obj'] = obj
@@ -424,7 +442,8 @@ def webdeletelist(obj):
     
     return template.render(var)
     
-@app.route("/pannello/area-riservata/delete/<obj>/<id>", methods=["GET"])
+    
+@app.route("/pannello/area-riservata/delete/<obj>/<int:id>", methods=["GET", "POST"])
 def webdeleteid(obj, id):
     '''
         webdeleteid(obj):
@@ -432,7 +451,7 @@ def webdeleteid(obj, id):
     Then deletes it.
     '''
     if not session.get('logged_in'):
-        redirect(url_for('weblogin'))
+        return redirect(url_for('weblogin'))
         
     var = style("webmaster")
     var['obj'] = obj
@@ -440,13 +459,21 @@ def webdeleteid(obj, id):
     template = env.get_template("web-res-delete.html")
     
     conn = sqlite3.connect(DATABASE_PATH)
-    with conn:
-        try:
+    try:
+        with conn:
             cursor = conn.cursor()
-            var['item'] = retrieve_item(obj, id, cursor)
-        except ValueError as e:
+            if request.method=='POST':
+                delete_item(obj, cursor, app, id)
+                var['deleted'] = True
+            else:
+                cursor = conn.cursor()
+                var['item'] = retrieve_item(obj, id, cursor)
+            
+    except ValueError as e:
             var['upload'] = 'fail'
             var['msg'] = e
+            var['item'] = retrieve_item(obj, id, cursor)
+    
     conn.close()
     
     
@@ -454,7 +481,7 @@ def webdeleteid(obj, id):
     return template.render(var)
     
     
-@app.route("/pannello/area-riservata/delete/<obj>/<id>/<index>", methods=["GET"])
+@app.route("/pannello/area-riservata/delete/<obj>/<int:id>/<index>", methods=["GET"])
 def webdeletepic(obj, id, index):
     '''
         webdeletepic(obj):
@@ -462,7 +489,7 @@ def webdeletepic(obj, id, index):
     Then deletes it.
     '''
     if not session.get('logged_in'):
-        redirect(url_for('weblogin'))
+        return redirect(url_for('weblogin'))
         
     var = style("webmaster")
     var['obj'] = obj
@@ -493,6 +520,7 @@ def webdeletepic(obj, id, index):
     
     
 #*** ERROR HANDLERS ****************
+
 #@app.errorhandler(404)
 #def page_not_found(e):
     #return render_template('404.html'), 404

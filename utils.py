@@ -61,7 +61,7 @@ def allowed_pic(filename):
         allowed_pic(filename):
     Checks for the file extension to be one of the allowed ones 
     """
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_PICS
+    return ('.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_PICS) or (filename=='')    # Useful to load only labels
     
 def allowed_doc(filename):
     """ 
@@ -92,5 +92,5 @@ def get_extension(filename):
     try:
         return filename.rsplit('.', 1)[1].lower()
     except IndexError:
-        raise IndexError(u'Nome file non valido')
+        raise ValueError(u'Nome file non valido')
     return
