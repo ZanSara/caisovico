@@ -5,7 +5,7 @@
 from werkzeug import secure_filename
 from config import ALLOWED_EXTENSIONS_DOCS, ALLOWED_EXTENSIONS_PICS, BASE_PATH
 from utils import datepick_to_datetime, datetime_to_datepick, allowed_pic, allowed_doc, set_to_string, get_extension
-import sys, sqlite3, json, os, datetime
+import sys, sqlite3, json, os, datetime, re
   
 
 
@@ -34,14 +34,21 @@ def load_news(request):
     files, labels = [], []
     try:
         for i in xrange(0, 5):
-            if request.files['foto{0}'.format(i)] or request.form['descrizione{0}'.format(i)]:      # filters a lot of empty pairs
+            if request.files['foto{0}'.format(i)].filename != '' or request.form['descrizione{0}'.format(i)] != '':       # Avoids loading empty 'files'
                 files.append(request.files['foto{0}'.format(i)])
                 labels.append(request.form['descrizione{0}'.format(i)])
-            files.append(request.files['foto'])
-            labels.append(request.form['descrizione'])
+                # Secondary Issue:
+                # During the upload, if a user deletes the label of an existing file, 
+                # no error/warning is raised but the label doesn't change.
+                # (because it is not even loaded here)
     except KeyError:    # KeyError = Bad Request Error
         pass            # It means I'm trying to UPDATE less than 5 photos (see the structure of web-res-upload.html)
-                        # or that I didn't added any new photo
+    try:
+        if request.files['foto'.format(i)].filename != '' or request.form['descrizione'.format(i)] != '':
+            files.append(request.files['foto'])
+            labels.append(request.form['descrizione'])
+    except KeyError:     # May happen if there is no 'Add Photo' option
+        pass
     
     item['photos'] = zip(labels, files)
     return item
@@ -61,22 +68,18 @@ def check_news(item):
     item['date'] = datepick_to_datetime(item['date']) 
 
     for p in item['photos']:
-        if p[0] == '' and p[1].filename != None:     # If I have a photo without the label
+        if re.match('^image/[A-Za-z]*', p[1].mimetype) and p[0] == '':      # If I have a photo without the label
             raise ValueError( u"Impossibile caricare foto senza una descrizione." )
 
-        if p[1].filename == '' and p[0] != '':      # Here I have only the label
-            p = (p[0], '')                          # and I 'erase' the file
         # It is possible to UPDATE the label of an existing photo (so a pair label-nophoto is allowed),
         # while it is impossible to load a photo without a label, because the label is always rendered in the page
         # and thus loaded with the photo. In case of UPLOAD I must check again and raise errors for every unpaired label.
-        
-    for f in item['photos']:
-        print '#########', f
-        if not allowed_pic(f[1].filename):
+    
+        if not allowed_pic(p[1].filename):
             raise ValueError( u'''{0} non può essere caricato:<br>
                                   '*.{1}' non è tra le estensioni ammesse (ovvero {2}).<br>
                                   Ricarica le foto.
-                               '''.format(f[1].filename, get_extension(f[1].filename), set_to_string(ALLOWED_EXTENSIONS_PICS)) )
+                               '''.format(p[1].filename, get_extension(p[1].filename), set_to_string(ALLOWED_EXTENSIONS_PICS)) )
                                # Secondary issue: now the user have to reload all the photos. 
                                # It is possible to let him see again what they loaded, and correct?
     return
@@ -85,7 +88,8 @@ def upload_news(request, cursor, app):
     '''
         upload_news(request, cursor, app):
     This function performs a fresh upload of all the material previously
-    loaded and checked.
+    loaded and checked (except for the unvalidation of unpaired labels, 
+    that is allowed for the uploading, but not allowed here.)
     It adds a new row in the database without overwriting anything.
     In case of failure, it returns all the non-checked raw loaded data, 
     to be displayed again to the user and let they correct it.
@@ -95,9 +99,9 @@ def upload_news(request, cursor, app):
     item = load_news(request)
     check_news(item)
     
-    # See check_news()
+    # Validation
     for l in item['photos']:
-        if l[1]=='' and l[0]!= None:
+        if (not re.match('^image/[A-Za-z]*', p[1].mimetype) ) and l[0]!= None:
             raise ValueError( u"Impossibile caricare una descrizione senza la relativa foto." )
 
     paths, labels = [], []
@@ -126,10 +130,33 @@ def update_news(request, cursor, app, id):
     
     print item['photos']
     
+    old_pics = retrieve_item("news", id, cursor)['pics']
     
-    
-    
-    #cursor.execute("UPDATE news SET data=?, title=?, text=?, pics=? WHERE id = ?", [item['date'], item['title'], item['content'], item['pics'], id])
+    try:
+        for n in xrange(len(item['photos'])):
+            if old_pics[n][1] != item['photos'][n][0]:   # If labels are different, update them
+                old_pics[n][1] = item['photos'][n][0]
+                print 'LABEL:', old_pics[n][0]
+            if item['photos'][n][1].filename != '':     # If I have a new file:
+                # Save it
+                filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(item['photos'][n][1].filename)))
+                item['photos'][n][1].save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
+                # Delete the old one
+                try:
+                    os.remove(os.path.join(BASE_PATH, app.config['UPLOAD_FOLDER_PICS'], old_pics[n][2]))
+                except OSError:
+                    pass # If the file there isn't, I simply load a new one and leave the corrupted one (if exists) orphan.
+                         # Should log about it, anyway
+                # Overwrite te name of the file in the database entry
+                old_pics[n][2] = filename
+    except IndexError:      # Means that I'm trying to update one more photo, than what I have in old_pics (I'm adding a photo)
+        filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(item['photos'][n][1].filename)))
+        item['photos'][n][1].save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
+        old_pics.append( (n, item['photos'][n][0], filename) )
+                   
+    item['pics'] = old_pics
+    print item['pics']
+    cursor.execute("UPDATE news SET data=?, title=?, text=?, pics=? WHERE id = ?", [item['date'], item['title'], item['content'], json.dumps(item['pics']), id])
 
     return item
 

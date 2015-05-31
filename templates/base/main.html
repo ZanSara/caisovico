@@ -23,17 +23,75 @@
       <a href="/"><img class="shadow2" alt="Home Banner CAI Sovico" title="Home CAI Sovico" src="/static/images/banner.png"></a>
       <nav class="navbar shadow2">
 	<ul class="navmenu">
-	  <li><a href="/">HOME</a></li>
-	  <li><a href="/archivio">ARCHIVIO</a></li>
-	  <li><a href="/galleria">FOTO GALLERY</a></li>
+        {% include menu %}
 	</ul>
       </nav>
     </div>
 
+
     <div class='sidebar'>
-    {% for x in sidebar %}
-		{% include x %}
-	{% endfor %}
+        
+        <div id="boxrifugio" class="right-rounded shadow2 mypanel">
+          <div class="right-rounded paneltitle green">
+            <a class="corner" href="#"><img class="flag" alt="Eng" title="English Available!" src="/static/images/us-uk-flag.gif"></a>
+            <p>Rifugio</p>
+          </div>
+          <div class="sidemenu">
+            <ul id="greenglass" class="glassitem">
+              <li><a href="/rifugio">Il Rifugio</a></li>
+              <li><a href="/rifugio/mappe">Mappe</a></li>
+              <li><a href="/rifugio/bivacco">Bivacco</a></li>
+              <li><a href="/rifugio/ampliamenti">Ampliamenti</a></li>
+              <li><a href="/rifugio/storia">La Storia</a></li>
+            </ul>
+          </div>
+        </div>
+            
+        <div id="boxprogrammi" class="right-rounded shadow2 mypanel">
+          <div class="right-rounded paneltitle purple">
+            <p>Programmi</p>
+          </div>
+          <div class="sidemenu">
+            <ul id="purpleglass" class="glassitem">
+              <li><a href="/programmi">Escursioni</a></li>
+              <li><a href="/programmi/norme">Norme</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div id="boxsezione" class="right-rounded shadow2 mypanel">
+          <div class="right-rounded paneltitle orange">
+            <a class="corner" href="#"><img class="flag" alt="Eng" title="English Available!" src="/static/images/us-uk-flag.gif"></a>
+            <p>Sezione</p>
+          </div>
+          <div>
+            <div class="sidemenu">
+              <ul id="orangeglass" class="glassitem">
+                <li><a href="/sezione">La Sezione</a></li>
+                <li><a href="/sezione/contatti">Contatti</a></li>
+                <li><a href="/sezione/quote">Quote</a></li>
+                <li><a href="/sezione/storia">La Storia</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div id="boxriservato" class="right-rounded shadow2 mypanel">
+          <div class="right-rounded paneltitle grey">
+            <a class="corner" href="#"><img class="flag" alt="Eng" title="English Available!" src="/static/images/us-uk-flag.gif"></a>
+            <p>Pannello</p>
+          </div>
+          <div>
+            <div class="sidemenu">
+              <ul id="greyglass" class="glassitem">
+                <li><a href="/pannello">Pannello di Controllo</a></li>
+                <li><a href="/pannello/area-riservata">Area Riservata</a></li>
+                <li><a href="/pannello/feedback">Feedback</a></li>
+                <li><a href="/pannello/webmaster">Webmaster</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
     </div> <!-- closes sidebar-->
 

@@ -39,26 +39,23 @@ def style(style):
     styles of different sections of the website (css, boxes order)
     """
     if style=="home":
-        var = {"sidebar":["base/boxrif.html", "base/boxprog.html", "base/boxsez.html", "base/boxweb.html"]};
+        var = {"menu": "base/menu-home.html"};
         var["url_for_css"] = "/static/css/style-home.css"
         
     elif style=="rifugio":
-        var = {"sidebar":["base/boxrif.html", "base/boxprog.html", "base/boxsez.html", "base/boxweb.html"]};
+        var = {"menu": "base/menu-rif.html"};
         var["url_for_css"] = "/static/css/style-rifugio.css"
         
     elif style=="programmi":
-        var = {"sidebar":["base/boxrif.html", "base/boxprog.html", "base/boxsez.html", "base/boxweb.html"]};
-        #var = {"sidebar":["base/boxprog.html", "base/boxrif.html", "base/boxsez.html", "base/boxweb.html"]};
+        var = {"menu": "base/menu-prog.html"};
         var["url_for_css"] = "/static/css/style-programmi.css"
         
     elif style=="sezione":
-        var = {"sidebar":["base/boxrif.html", "base/boxprog.html", "base/boxsez.html", "base/boxweb.html"]};
-        #var = {"sidebar":["base/boxsez.html", "base/boxrif.html", "base/boxprog.html", "base/boxweb.html"]};
+        var = {"menu": "base/menu-sez.html"};
         var["url_for_css"] = "/static/css/style-sezione.css"
         
     elif style=="webmaster":
-        var = {"sidebar":["base/boxrif.html", "base/boxprog.html", "base/boxsez.html", "base/boxweb.html"]};
-        #var = {"sidebar":["base/boxweb.html", "base/boxrif.html", "base/boxprog.html", "base/boxsez.html"]};
+        var = {"menu": "base/menu-web.html"};
         var["url_for_css"] = "/static/css/style-webmaster.css"
 
     return var;
