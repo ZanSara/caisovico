@@ -6,7 +6,11 @@
     
     {% if deleted %}
         <p style="font-weight:bold; text-align:center; color:green">L'elemento è stato eliminato</p>
-        <a href='/pannello/area-riservata'><button class='backbuttonstyle'>Indietro</button></a>
+        {% if obj=='pic' %}
+        <a href='/pannello/area-riservata/manage/news/{{ id }}' class='backbuttonstyle'>Indietro</a>
+        {% else %}
+        <a href='/pannello/area-riservata/manage/{{ obj }}' class='backbuttonstyle'>Indietro</a>
+        {% endif %}
     {% else %}
         
         {% if upload=='fail' %}
@@ -16,7 +20,7 @@
         {% endif %}
         
         <form method=POST enctype=multipart/form-data>
-          <input class='delbuttonstyle' type='submit' value='ELIMINA TUTTO'>
+          <input class='delbuttonstyle' type='submit' value='ELIMINA'>
           
           <div class="boxup">
           {% if obj=='news' %}
@@ -50,6 +54,11 @@
                 <input name='descrizione' type='text' value='{{ item.title }}' placeholder='Titolo del documento...' disabled>
                 </p>
             </div>
+          {% elif obj=='pic' %}
+            <div style='text-align:center; padding:20px;'>
+                <input class="caption" name='descrizione{{ item[0] }}' value='{{ item[1] }}' type="text" placeholder="Titolo..." disabled>
+                <img src="/uploads/photos/{{ item[2] }}" title="{{ item[1] }}" alt="ERRORE: Foto mancante. Contatta il webmaster.">
+            </div>
           
             </form>
             
@@ -59,8 +68,11 @@
             
         </div>
         
-        <a href='/pannello/area-riservata' class='backbuttonstyle'>Indietro</a>
-
+        {% if obj=='pic' %}
+        <a href='/pannello/area-riservata/manage/news/{{ id }}' class='backbuttonstyle'>Indietro</a>
+        {% else %}
+        <a href='/pannello/area-riservata/delete/{{ obj }}' class='backbuttonstyle'>Indietro</a>
+        {% endif %}
 
         {% if obj=='news' %}
         <link href="/static/css/datepickr.css" rel="stylesheet">

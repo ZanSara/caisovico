@@ -29,34 +29,34 @@
             <textarea class='textfield' type="text" name='testo' placeholder="Testo...">{{ item.content }}</textarea>
         </div>
         
-        
-        <h3>Foto:</h3>
-        {% if item.pics or item.addphoto %}
-            <p>Clicca sulla foto da modificare o rimuovere:</p>
-            <div class='pseudotable'>
-              {% for photo in item.pics %}
-                <a href='{{ item.id }}/pics/{{ photo[0] }}'>
-                  <div class='pseudorow'>
-                      <p class='tabletitle'{% if message %} style='text-align:center;color:red' {% endif %}>{{ photo[1] }}</p>
-                      <a href='../../delete/{{obj}}/{{ item.id }}/{{ photo[0] }}' class='s-delbuttonstyle'><p>ELIMINA FOTO</p></a>
-                  </div>
-                </a>
+        <div class='aligner'>
+        {% if item %}
+            {% for photo in item.pics %}
+            <div class='photobox'>
+                <input class="caption" name='descrizione{{ photo[0] }}' value='{{ photo[1] }}' type="text" placeholder="Titolo...">
+                <img src="/uploads/photos/{{ photo[2] }}" title="{{ photo[1] }}" alt="ERRORE: Foto mancante. Contatta il webmaster.">
+                <h4>Cambia Foto:<input class='filepkr' name='foto{{ photo[0] }}' type='file'></h4>
+                <a href='../../delete/{{obj}}/{{ item.id }}/{{ photo[0] }}' class='s-delbuttonstyle'><p>ELIMINA</p></a>
+            </div>
             {% endfor %}
             {% if item.addphoto %}
-                <a href='{{item.id}}/pics/add'>
-                  <div class='pseudorow'>
-                      <p class='tabletitle'style='font-style:italic;' > -- Aggiungi Foto --</p>
-                  </div>
-                </a>
-            {% endif %}  
+            <div class='photobox'>
+                <input class="caption" name='descrizione' type="text" placeholder="Titolo...">
+                <img src="/static/images/addpic.png" title="Aggiungi una Foto" alt="ERRORE: Foto mancante. Contatta il webmaster.">
+                <p>Nuova Foto:<input class='filepkr' name='foto' type='file'></p>
             </div>
+            {% endif %}
+                    
         {% else %}
-            <p><input name='foto1' type='file'><br><input class='caption' name='descrizione1' type='text' placeholder="Descrizione..."></p>
-            <p><input name='foto2' type='file'><br><input class='caption' name='descrizione2' type='text' placeholder="Descrizione..."></p>
-            <p><input name='foto3' type='file'><br><input class='caption' name='descrizione3' type='text' placeholder="Descrizione..."></p>
-            <p><input name='foto4' type='file'><br><input class='caption' name='descrizione4' type='text' placeholder="Descrizione..."></p>
-            <p><input name='foto5' type='file'><br><input class='caption' name='descrizione5' type='text' placeholder="Descrizione..."></p>
+            {% for n in (0,1,2,3,4) %}
+            <div class='photobox'>
+                <input class="caption" name='descrizione{{ n }}' type="text" placeholder="Titolo...">
+                <img src="/static/images/addpic.png" title="Aggiungi una Foto" alt="ERRORE: Foto mancante. Contatta il webmaster.">
+                <p>Nuova Foto:<input class='filepkr' name='foto{{ n }}' type='file'></p>
+            </div>
+            {% endfor %}
         {% endif %}
+        </div>
         
       {% elif obj=='note' %}
         <div style="text-align:center;">
@@ -84,11 +84,17 @@
     {% else %}
         <h1>ERRORE</h1>
     {% endif %}
-    </div>
+    
     {% if item %}
-    <a href='/pannello/area-riservata/manage/{{ obj }}'><button class='backbuttonstyle'>Indietro</button></a>
+    <a href='/pannello/area-riservata/delete/{{ obj }}/{{ id }}' class='delbuttonstyle'>ELIMINA</a>
+    {% endif %}
+    </div>
+
+
+    {% if item %}
+    <a href='/pannello/area-riservata/manage/{{ obj }}' class='backbuttonstyle'>Indietro</a>
     {% else %}
-    <a href='/pannello/area-riservata'><button class='backbuttonstyle'>Indietro</button></a>
+    <a href='/pannello/area-riservata' class='backbuttonstyle'>Indietro</a>
     {% endif %}
 
 

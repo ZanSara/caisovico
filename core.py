@@ -5,10 +5,9 @@
   
   # ISSUES:
   # 1. Later on, should consider storing error messages in a log file...
-  # 2. Maybe try to solve issues related to the upload of the pictures for the news.
-  # 3. Maybe set the navbar to change from style to style, putting there the buttons from the related sidebox
-  # 4. By now, I do not delete files in the uploads folder, I only overwrite their names in the database, making them orphans.
-  
+  # 2. Should rethink the database structure concerning pictures' storage: 
+  #    there should be a 'pics' table linked with a relationship "many to one" with 'news'
+  # 3. Why I may add only one picture a time, when modifying a news?
   
   # var: dictionary that contains all the template context variables
   # item: dictionary that contains all the object-related variables (titles, texts, etc...) Contained inside var.
@@ -18,7 +17,7 @@ from flask import Flask, request, session, abort, url_for, redirect, send_from_d
 from jinja2 import Environment, PackageLoader
 from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, DATABASE_PATH
 from utils import login, logout
-from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, retrieve_item, retrieve_index, load_lista, delete_item
+from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, retrieve_item, retrieve_index, load_lista, delete_item, delete_pic
 import sys, sqlite3, os     # sys if for errors handling, os is for file managing
 
 
@@ -61,7 +60,7 @@ def style(style):
     return var;
     
 
-# ********* Navbar links ***********************************************
+# ********* Home links ***********************************************
 @app.route("/" , methods=["GET"])
 def home():
     var = style("home")
@@ -84,7 +83,7 @@ def galleria():
 # ********** Rifugio links *********************************************
     
 @app.route("/rifugio/" , methods=["GET"])
-def rif1():
+def rifhome():
     var = style("rifugio")
     template = env.get_template("rif-home.html")
     return template.render(var)
@@ -251,7 +250,7 @@ def webupload(obj):
     var = style("webmaster")
     var['obj'] = obj
     var['item'] = {}
-    template = env.get_template("web-res-upload2.html")
+    template = env.get_template("web-res-upload.html")
 
     if request.method == 'POST':
         conn = sqlite3.connect(DATABASE_PATH)
@@ -326,8 +325,9 @@ def webmodify(obj, id):
 
     var = style("webmaster")
     var['obj'] = obj
+    var['id'] = id      # Useful for the Delete button
     var['item'] = {}
-    template = env.get_template("web-res-upload2.html")
+    template = env.get_template("web-res-upload.html")
     
     conn = sqlite3.connect(DATABASE_PATH)
     try:
@@ -360,53 +360,6 @@ def webmodify(obj, id):
     
     return template.render(var)
 
-
-
-@app.route("/pannello/area-riservata/manage/news/<int:id>/pics/<index>", methods=["GET", "POST"])
-def weupdatepics(id, index):
-    '''
-        weupdatepics(id, index):
-    Allows the user to modify the details of an object.
-    '''
-    if not session.get('logged_in'):
-        return redirect(url_for('weblogin'))
-    
-    var = style("webmaster")
-    var['obj'] = 'news'
-    var['id'] = id
-    template = env.get_template("web-res-manage-photos.html")
-    
-    conn = sqlite3.connect(DATABASE_PATH)
-    try:
-        with conn:
-            cursor = conn.cursor()
-            
-            if index=="add":
-                var['new'] = True
-                var['index'] = retrieve_index(id, cursor)
-            else:
-                var['new'] = False
-                var['index'] = int(index)
-                var['item'] = retrieve_newspics(id, var['index'], cursor)
-                
-            if request.method=="POST":
-                update_newspics(request, cursor, app, id, var['index'])
-                conn.commit()
-                var['item'] = retrieve_newspics(id, var['index'], cursor)
-                if not var['item']:
-                    raise ValueError (u"Errore durante il caricamento della foto")
-                    return template.render(var)
-                var['msg'] = 'Upload completato con successo'
-                var['upload'] = 'success'
-
-
-        conn.close()
-    except (ValueError, KeyError, IndexError) as e:
-        var['msg'] = e
-        var['upload'] = 'fail'
-        
-    return template.render(var)
-    
     
 # *********** Delete ***************************************************
     
@@ -472,44 +425,42 @@ def webdeleteid(obj, id):
             var['item'] = retrieve_item(obj, id, cursor)
     
     conn.close()
-    
-    
-    
     return template.render(var)
     
+
+@app.route("/pannello/area-riservata/delete/news/<int:id>/<int:index>", methods=["GET", "POST"])
+def webdeletepic(id, index):
     
-@app.route("/pannello/area-riservata/delete/<obj>/<int:id>/<index>", methods=["GET"])
-def webdeletepic(obj, id, index):
-    '''
-        webdeletepic(obj):
-    Renders the object selected and ask confirmation to delete the picture.
-    Then deletes it.
-    '''
     if not session.get('logged_in'):
         return redirect(url_for('weblogin'))
         
     var = style("webmaster")
-    var['obj'] = obj
+    var['obj'] = 'pic'
+    var['id'] = id          # Useful for the Back button
     var['manage'] = 'delete'
-    template = env.get_template("web-res-delete-pic.html")
+    template = env.get_template("web-res-delete.html")
     
     conn = sqlite3.connect(DATABASE_PATH)
-    with conn:
-        if request.method == 'POST':
-            pass
-        else:
-            try:
+    try:
+        with conn:
+            cursor = conn.cursor()
+            if request.method=='POST':
+                delete_pic(cursor, app, id, index)
+                var['deleted'] = True
+            else:
                 cursor = conn.cursor()
-                var['item'] = retrieve_item(obj, id, cursor)
-            except ValueError as e:
-                var['upload'] = 'fail'
-                var['msg'] = e
+                var['item'] = retrieve_item('news', id, cursor)['pics'][index]
             
+    except ValueError as e:
+            var['upload'] = 'fail'
+            var['msg'] = e
+            var['item'] = retrieve_item('news', id, cursor)['pics'][index]
+    
     conn.close()
-    
     return template.render(var)
-
     
+    
+
     
     
     

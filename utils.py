@@ -94,3 +94,8 @@ def get_extension(filename):
     except IndexError:
         raise ValueError(u'Nome file non valido')
     return
+    
+def shift_index(lista):
+    for item in lista:
+        item[0] = item[0]-1
+    return lista

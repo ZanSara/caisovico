@@ -4,7 +4,7 @@
 
 from werkzeug import secure_filename
 from config import ALLOWED_EXTENSIONS_DOCS, ALLOWED_EXTENSIONS_PICS, BASE_PATH
-from utils import datepick_to_datetime, datetime_to_datepick, allowed_pic, allowed_doc, set_to_string, get_extension
+from utils import datepick_to_datetime, datetime_to_datepick, allowed_pic, allowed_doc, set_to_string, get_extension, shift_index
 import sys, sqlite3, json, os, datetime, re
   
 
@@ -101,7 +101,7 @@ def upload_news(request, cursor, app):
     
     # Validation
     for l in item['photos']:
-        if (not re.match('^image/[A-Za-z]*', p[1].mimetype) ) and l[0]!= None:
+        if (not re.match('^image/[A-Za-z]*', l[1].mimetype) ) and l[0]!= None:
             raise ValueError( u"Impossibile caricare una descrizione senza la relativa foto." )
 
     paths, labels = [], []
@@ -128,7 +128,7 @@ def update_news(request, cursor, app, id):
     item = load_news(request)
     check_news(item)
     
-    print item['photos']
+    print '@@', item['photos']
     
     old_pics = retrieve_item("news", id, cursor)['pics']
     
@@ -136,7 +136,6 @@ def update_news(request, cursor, app, id):
         for n in xrange(len(item['photos'])):
             if old_pics[n][1] != item['photos'][n][0]:   # If labels are different, update them
                 old_pics[n][1] = item['photos'][n][0]
-                print 'LABEL:', old_pics[n][0]
             if item['photos'][n][1].filename != '':     # If I have a new file:
                 # Save it
                 filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(item['photos'][n][1].filename)))
@@ -155,107 +154,11 @@ def update_news(request, cursor, app, id):
         old_pics.append( (n, item['photos'][n][0], filename) )
                    
     item['pics'] = old_pics
-    print item['pics']
     cursor.execute("UPDATE news SET data=?, title=?, text=?, pics=? WHERE id = ?", [item['date'], item['title'], item['content'], json.dumps(item['pics']), id])
 
     return item
 
-
-# *********** NEWS PICTURES Management *********************************
-
-def load_newspics(request, id):
-    '''
-        load_newspics(request, id):
-    Loads everything from the request, without performing any valitation.
-    Loads also the value of the 'new' flag as first element of the output 
-    tuple. May raise only 'BAD REQUEST' (KeyError) errors.
-    NB: requires the ID only to build a standard tuple, as found in the 
-    database.
-    '''
-    return (id, request.form['descrizione'], request.files['foto'])
-
-def retrieve_newspics(id, index, cursor):
-    '''
-        retrieve_newspics(request):
-    Retrieve a specific picture of a specific news (found by index and 
-    id respectively) from the database.
-    '''
-    pics = json.loads( cursor.execute("SELECT pics FROM news WHERE id=?", [id]).fetchone()[0] )
-    if int(index) >= len(pics):
-        raise ValueError(u'Index out of range')
-    return pics[index]
-
-def check_newspics(item):
-    '''
-        check_newspics(request):
-    Performs some validation on the data loaded from loda_newspics() and 
-    raises ValueError if something is wrong.
-    Doesn't check if the value of the checkbox exists.
-    '''
-    if not item[1]:
-        raise ValueError(u"Impossibile caricare una foto senza descrizione")
-    if item[2]:
-        if not allowed_pic(item[2].filename):
-            raise ValueError(u"Upload fallito! Estensioni ammesse: {0}".format(set_to_string(ALLOWED_EXTENSIONS_PICS)) )
-    return
-
-
-def update_newspics(request, cursor, app, id, index):
-    '''
-        update_newspics(request, cursor, app, id):
-    This function updates a single picture previously selected by the user.
-    It handles two situations: or adds a new picture to the pictures
-    list, or overwrites a specific picture (or its label). To distinguish 
-    between the two situations it checks the value of the 'new' flag,
-    the first value of the tuple returned by 'load_newspics()'
-    '''    
-    item = load_newspics(request, id)
-    check_newspics(item)
-    
-    # I have to create a new list of tuples basing on the old one.
-    old_pics = retrieve_item('news', id, cursor)['pics']
-    
-    if request.path[-3:]=='add':
-        # If the flag 'new' is set to True, I simply need to append the 
-        # new picture to the old list and overwrite the paths' list in 
-        # the database
-        if len(old_pics) >= 5:
-            raise ValueError(u'Impossibile caricare più di 5 fotografie')
-        
-        filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(item[2].filename)))
-        item[2].save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
-        
-        # The index of the last photo is equal to the lenght of the list
-        old_pics.append( (len(old_pics), item[1], filename) )
-        
-        cursor.execute("UPDATE news SET pics=? WHERE id = ?", [json.dumps(old_pics), id])
-        
-    else:
-        # If the flag 'new' is set to False, I need to overwrite a 
-        # specific photo, recognizable by its index, and then overwrite
-        # the paths' list in the database.
-        # Note: in this case is also possible that I need to overwrite
-        # only the label of the photo
-        
-        if item[2]:
-            old = retrieve_newspics(id, index, cursor)
-            
-            filename = 'File{0}.{1}'.format(str(datetime.datetime.now()).translate(None, '.:- ')[:-3], get_extension(secure_filename(item[2].filename)))
-            item[2].save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
-            old_pics[index][2] = filename
-            try:
-                os.remove(os.path.join(BASE_PATH, app.config['UPLOAD_FOLDER_PICS'], old[2]))
-            except OSError:
-                pass # If the file there isn't, I simply load a new one and leave the corrupted one (if exists) orphan.
-                     # Should log about it, anyway
-        if item[1]:
-            old_pics[index][1] = item[1] 
-            
-        cursor.execute("UPDATE news SET pics=? WHERE id = ?", [json.dumps(old_pics), id])
-    
-    return
-        
-    
+   
 # *********** NOTES Management *****************************************  
 
 def load_note(request):
@@ -465,7 +368,7 @@ def retrieve_index(id, cursor):
 
 def delete_item(obj, cursor, app, id):
     '''
-        delete_item(obj, cursor, id):
+        delete_item(obj, cursor, app, id):
     Deletes a specific object in the database.
     '''
     if obj=='news':
@@ -485,3 +388,20 @@ def delete_item(obj, cursor, app, id):
     else:
         raise ValueError(u'Unknown OBJ value')
     return
+    
+def delete_pic(cursor, app, id, index):
+    '''
+        delete_pic(cursor, app, id, index):
+    Deletes a specific picture ands updates the database entry for the 
+    related news
+    '''
+    old_pics = retrieve_item('news', id, cursor)['pics']
+    try:
+        os.remove(os.path.join(BASE_PATH, app.config['UPLOAD_FOLDER_PICS'], old_pics[index][2]))
+    except OSError:
+        pass # If the file there isn't, I simply load a new one and leave the corrupted one (if exists) orphan.
+             # Should log about it, anyway
+    old_pics = old_pics[:index] + shift_index(old_pics[(index+1):])
+    cursor.execute("UPDATE news SET pics=? WHERE id = ?", [json.dumps(old_pics), id])
+    return
+    
