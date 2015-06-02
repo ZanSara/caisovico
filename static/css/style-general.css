@@ -49,9 +49,7 @@ body{
   padding: 0;
   width: 100%;
 }
-.slideshow p{
-  background-color: grey;
-}
+
 .warning{
   text-align:center;
   color:red;
@@ -286,3 +284,25 @@ body{
 .hidden{
   visibility: hidden;
 }
+
+.buttonstyle{
+    display:block;
+    width:30%;
+    color: #FFFFFF;
+    font-size:16px;
+    font-weight:bold;
+    line-height:120%;
+    text-decoration:none;
+    font-family:arial, verdana, sans-serif;
+    text-align: center;
+    border:none;
+    margin:15px auto;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+    /* Fallback properties for buttons */
+    background-color: #465AFB; 
+    padding: 15px;
+}
+.buttonstyle:hover{
+  background-color: #6495ED;

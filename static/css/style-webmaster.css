@@ -104,67 +104,25 @@ form .nota{
     height:108px;
 }
 
-.buttonstyle{
-    display:block;
-    width:35%;
-    color: #FFFFFF;
-    font-size:16px;
-    font-weight:bold;
-    line-height:150%;
-    text-decoration:none;
-    font-family:arial, verdana, sans-serif;
-    text-align: center;
+.btn-upload{
     background-color: #685194;
     padding: 15px 10%;
-    margin: 15px auto;
-    border:none;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px;
 }
-.buttonstyle:hover{
+.btn-upload:hover{
   background-color:#977BD1;
 }
-.backbuttonstyle{
-    display:block;
-    width:20%;
-    color: #FFFFFF;
-    font-size:16px;
-    font-weight:bold;
-    line-height:100%;
-    text-decoration:none;
-    font-family:arial, verdana, sans-serif;
-    text-align: center;
+.btn-back{
     background-color: #465AFB;
     padding: 15px 10%;
-    margin: 15px auto;
-    border:none;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px;
 }
-.backbuttonstyle:hover{
+.btn-back:hover{
   background-color: #6495ED;
 }
-.delbuttonstyle{
-    display:block;
-    width:15%;
-    color: #FFFFFF;
-    font-size:18px;
-    font-weight:bold;
-    line-height:120%;
-    text-decoration: none;
-    font-family: arial, verdana, sans-serif;
-    text-align: center;
-    background-color: red;
+.btn-del{
+    background-color: #FF0000;
     padding: 15px 10%;
-    margin: 15px auto;
-    border:none;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px;
 }
-.delbuttonstyle:hover, .s-delbuttonstyle:hover{
+.btn-del:hover, .s-delbuttonstyle:hover{
   background-color: #FF914D;
 }
 .s-delbuttonstyle{
@@ -190,10 +148,11 @@ form .nota{
     padding:0;
 }
 
+
 .index{
     position:relative;
     margin:auto;
-    margin-top:5%;
+    margin-top: 0;
     margin-bottom:5%;
     width: 90%;
     padding: 5px;
@@ -242,25 +201,6 @@ form .nota{
   float:center;
 }
 
-
-.strip{
-  background-color: white;
-  border-collapse: collapse;
-  font-size:16px;
-}
-.strip td{
-  width: 30%;
-  text-align: center;
-}
-.strip td a{
-  text-decoration:none;
-  color:black;
-}
-.strip td a:hover{
-  text-decoration:underline;
-}
-
-
 .pseudotable{
     margin:auto;
     margin-bottom:40px;
@@ -305,14 +245,12 @@ form .nota{
 .tabledata{
     margin:0 !important;    /* Overrides .text p inherited margin */
     padding:10px;
-    display:inline;
     float:right;
     font-style:italic;
 }
 .tabletitle{
     margin:0 !important ;   /* Overrides .text p inherited margin */
     padding:10px;
-    display:inline;
     float:left;
 }
 

@@ -2,13 +2,14 @@
 
 {% block content %}
 
-    {% if manage=='delete' %}
-    <h2>Elimina</h2>
-    {% else %}
-    <h2>Modifica</h2>
+    {% if obj=='news' %}
+    <h2>Notizie</h2>
+    {% elif obj=='note' %}
+    <h2>Note</h2>
+    {% elif obj=='doc' %}
+    <h2>Documenti</h2>
     {% endif %}
-
-    <p style='text-align:center;'>Clicca sulla riga da {% if manage=='delete' %}eliminare{% else %}modificare{% endif %}</p>
+    <a href='/pannello/area-riservata/upload/{{ obj }}' class='btn-upload buttonstyle'>Nuovo</a>
     
     {% if msg %}
     <p style='text-align:center;color:red'>{{ msg }}</p> <!-- Useful for some error messages -->
@@ -31,6 +32,6 @@
       {% endfor %}
     </div>
     
-    <a href='/pannello/area-riservata' class='backbuttonstyle'>Indietro</a>
+    <a href='/pannello/area-riservata' class='btn-back buttonstyle'>Indietro</a>
 
 {% endblock %}

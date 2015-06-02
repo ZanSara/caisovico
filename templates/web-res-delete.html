@@ -7,9 +7,9 @@
     {% if deleted %}
         <p style="font-weight:bold; text-align:center; color:green">L'elemento è stato eliminato</p>
         {% if obj=='pic' %}
-        <a href='/pannello/area-riservata/manage/news/{{ id }}' class='backbuttonstyle'>Indietro</a>
+        <a href='/pannello/area-riservata/manage/news/{{ id }}' class='btn-back buttonstyle'>Indietro</a>
         {% else %}
-        <a href='/pannello/area-riservata/manage/{{ obj }}' class='backbuttonstyle'>Indietro</a>
+        <a href='/pannello/area-riservata/manage/{{ obj }}' class='btn-back buttonstyle'>Indietro</a>
         {% endif %}
     {% else %}
         
@@ -20,7 +20,7 @@
         {% endif %}
         
         <form method=POST enctype=multipart/form-data>
-          <input class='delbuttonstyle' type='submit' value='ELIMINA'>
+          <input class='btn-del buttonstyle' type='submit' value='ELIMINA'>
           
           <div class="boxup">
           {% if obj=='news' %}
@@ -69,9 +69,9 @@
         </div>
         
         {% if obj=='pic' %}
-        <a href='/pannello/area-riservata/manage/news/{{ id }}' class='backbuttonstyle'>Indietro</a>
+        <a href='/pannello/area-riservata/manage/news/{{ id }}' class='btn-back buttonstyle'>Indietro</a>
         {% else %}
-        <a href='/pannello/area-riservata/delete/{{ obj }}' class='backbuttonstyle'>Indietro</a>
+        <a href='/pannello/area-riservata/delete/{{ obj }}' class='btn-back buttonstyle'>Indietro</a>
         {% endif %}
 
         {% if obj=='news' %}

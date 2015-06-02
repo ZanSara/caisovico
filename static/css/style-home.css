@@ -82,6 +82,9 @@
   color: blue;
   font-size: 16px;
 }
+.post h3{
+  text-align:center;
+}
 .date{
   text-align: right;
   font-style: italic;
@@ -100,6 +103,7 @@
   font-style: italic;
   line-height:200%;
 }
+
 .news{
   width: 85%;
   float:center;
@@ -109,7 +113,7 @@
   border-bottom: 3px solid #bbb;
   border-right: 3px solid #bbb;
 }
-.news h2{
+.news h2, .news h3{
   text-align:center;
 }
 .news h5{
@@ -119,7 +123,6 @@
 }
 .news img{
   margin:0;
-  width: 80%;
 }
 .news .label{
   margin: 10px;

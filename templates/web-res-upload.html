@@ -25,7 +25,7 @@
             <input class='data' name="data" id="datepick" value='{{ item.date }}' type="text" placeholder="Data..."/>
         </div>
         <div style="text-align:center;">
-            <input class="title" name='titolo' value='{{ item.title }}' type="text" placeholder="Titolo...">
+            <input class="title" name='titolo' value="{{ item.title }}" type="text" placeholder="Titolo...">
             <textarea class='textfield' type="text" name='testo' placeholder="Testo...">{{ item.content }}</textarea>
         </div>
         
@@ -33,7 +33,7 @@
         {% if item %}
             {% for photo in item.pics %}
             <div class='photobox'>
-                <input class="caption" name='descrizione{{ photo[0] }}' value='{{ photo[1] }}' type="text" placeholder="Titolo...">
+                <input class="caption" name="descrizione{{ photo[0] }}" value='{{ photo[1] }}' type="text" placeholder="Titolo...">
                 <img src="/uploads/photos/{{ photo[2] }}" title="{{ photo[1] }}" alt="ERRORE: Foto mancante. Contatta il webmaster.">
                 <h4>Cambia Foto:<input class='filepkr' name='foto{{ photo[0] }}' type='file'></h4>
                 <a href='../../delete/{{obj}}/{{ item.id }}/{{ photo[0] }}' class='s-delbuttonstyle'><p>ELIMINA</p></a>
@@ -79,24 +79,18 @@
             </p>
         </div>
       {% endif %}
-            <input class='buttonstyle' type='submit' value='Upload'>
+            <input class='btn-upload buttonstyle' type='submit' value='Upload'>
         </form>	
     {% else %}
         <h1>ERRORE</h1>
     {% endif %}
     
     {% if item %}
-    <a href='/pannello/area-riservata/delete/{{ obj }}/{{ id }}' class='delbuttonstyle'>ELIMINA</a>
+    <a href='/pannello/area-riservata/delete/{{ obj }}/{{ id }}'><button  class='btn-del buttonstyle'>ELIMINA</button></a>
     {% endif %}
     </div>
 
-
-    {% if item %}
-    <a href='/pannello/area-riservata/manage/{{ obj }}' class='backbuttonstyle'>Indietro</a>
-    {% else %}
-    <a href='/pannello/area-riservata' class='backbuttonstyle'>Indietro</a>
-    {% endif %}
-
+    <a href='/pannello/area-riservata/manage/{{ obj }}' class='btn-back buttonstyle'>Indietro</a>
 
     {% if obj=='news' %}
     <link href="/static/css/datepickr.css" rel="stylesheet">

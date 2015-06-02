@@ -14,11 +14,11 @@
   
 
 from flask import Flask, request, session, abort, url_for, redirect, send_from_directory, flash
-from jinja2 import Environment, PackageLoader
+from jinja2 import Environment, PackageLoader, evalcontextfilter, Markup, escape
 from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, DATABASE_PATH
 from utils import login, logout
 from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, retrieve_item, retrieve_index, load_lista, delete_item, delete_pic
-import sys, sqlite3, os     # sys if for errors handling, os is for file managing
+import sys, sqlite3, os, re     # sys if for errors handling, os is for file managing
 
 
 env = Environment(loader=PackageLoader('core', '/templates'))
@@ -29,6 +29,24 @@ app.config['UPLOAD_FOLDER_PICS'] = UPLOAD_FOLDER_PICS
 
 app.secret_key = ".ASF\x89m\x14\xc9s\x94ff\xfaq\xca}h\xe1/\x1f3\x1dFxj\xdc\xf0\xf9"
 
+
+
+# ************** Misc **************************************************
+
+# Multiline rendering
+
+_paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
+
+@evalcontextfilter
+def nl2br(eval_ctx, value):
+    result = u'\n\n'.join(u'<p>%s</p>' %  p.replace('\n', Markup('<br>\n'))  # One new <p></p> for each paragraph.
+    #result = u'\n\n'.join(u'<br>%s' % p.replace('\n', Markup('<br>\n'))     # One <br> for each newline
+                          for p in _paragraph_re.split(escape(value)))
+    if eval_ctx.autoescape:
+        result = Markup(result)
+    return result
+
+env.filters['nl2br'] = nl2br
 
 
 def style(style):
@@ -60,24 +78,35 @@ def style(style):
     return var;
     
 
-# ********* Home links ***********************************************
+# ********* Home & News links ***********************************************
 @app.route("/" , methods=["GET"])
 def home():
     var = style("home")
+    
+    conn = sqlite3.connect(DATABASE_PATH)
+    with conn:
+        cursor = conn.cursor()
+        newslist = load_lista('news', cursor)
+        noteslist = load_lista('note', cursor)
+    conn.close()
+    var['newslist'] = newslist
+    var['noteslist'] = noteslist
+    
     template = env.get_template("home.html")
     return template.render(var)
-
-@app.route("/archivio" , methods=["GET"])
-def archivio():
+    
+@app.route("/news/<id>" , methods=["GET"])
+def fullnews(id):
     var = style("home")
-    template = env.get_template("archivio.html")
+    
+    conn = sqlite3.connect(DATABASE_PATH)
+    with conn:
+        cursor = conn.cursor()
+        var['item'] = retrieve_item('news', id, cursor)
+    
+    template = env.get_template("home-fullnews.html")
     return template.render(var)
 
-@app.route("/galleria" , methods=["GET"])
-def galleria():
-    var = style("home")
-    template = env.get_template("galleria.html")
-    return template.render(var)
 
 
 # ********** Rifugio links *********************************************
@@ -156,12 +185,6 @@ def sezstoria():
 
 # ********** Webmaster links *******************************************
 
-@app.route("/pannello" , methods=["GET"])
-def webhome():
-    var = style("webmaster")
-    template = env.get_template("web-home.html")
-    return template.render(var)
-    
 @app.route("/pannello/feedback" , methods=["GET"])
 def webfed():
     var = style("webmaster")
@@ -477,9 +500,8 @@ def webdeletepic(id, index):
     #return render_template('401.html'), 401
 #@app.errorhandler(500)
 #def internal_error(e):
+    #db.session.rollback()
     #return render_template('500.html'), 500
-
-
 
 
 

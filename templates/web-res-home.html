@@ -6,36 +6,33 @@
     
     {% block content %}
 
+        <h2>Gestisci</h2>
+
         <table class="index">
            <tbody> 
               <tr>
-                <th><h3>Carica</h3></th>
-                <th><h3>Modifica</h3></th>
-                <th><h3>Elimina</h3></th>
+                <td><a href="area-riservata/manage/news">Notizie</a></td>
+                <td><a href="area-riservata/manage/note">Note</a></td>
+                <td><a href="area-riservata/manage/doc">Documenti</a></td>
               </tr>
-                
-              <tr>
-                <td><a href="area-riservata/upload/news">Notizia</a></td>
-                <td><a href="area-riservata/manage/news">Notizia</a></td>
-                <td><a href="area-riservata/delete/news">Notizia</a></td>
-              </tr>
-              
-              <tr>
-                <td><a href="area-riservata/upload/note">Nota</a></td>
-                <td><a href="area-riservata/manage/note">Nota</a></td>
-                <td><a href="area-riservata/delete/note">Nota</a></td>
-              </tr>
-              
-              <tr>
-                <td><a href="area-riservata/upload/doc">Documento</a></td>
-                <td><a href="area-riservata/manage/doc">Documento</a></td>
-                <td><a href="area-riservata/delete/doc">Documento</a></td>
-              </tr>              
-              
             </tbody>
         </table>
         
-        <a class='buttonstyle' href="area-riservata/logout">Logout</a>
+        <hr>
+        
+        <h2>Utility del Server</h2>
+        
+        <table class="index">
+           <tbody> 
+              <tr>
+                <td><a href="mailto:webmaster@caisovico.it">Mailbox del Webmaster</a></td>
+                <td><a href="http://webmail.caisovico.it" target="blank">Web Mail di caisovico.it</a></td>
+                <td><a href="http://web-4.hosting.tiscali.it/" target="blank">Pannello di Controllo</a></td>
+              </tr>
+            </tbody>
+        </table>
+        
+        <a class='btn-upload buttonstyle' href="area-riservata/logout">Logout</a>
     
 
 	{% endblock content %}

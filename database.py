@@ -5,6 +5,7 @@
 from werkzeug import secure_filename
 from config import ALLOWED_EXTENSIONS_DOCS, ALLOWED_EXTENSIONS_PICS, BASE_PATH
 from utils import datepick_to_datetime, datetime_to_datepick, allowed_pic, allowed_doc, set_to_string, get_extension, shift_index
+from operator import itemgetter     # Useful for sorting purposes
 import sys, sqlite3, json, os, datetime, re
   
 
@@ -30,6 +31,8 @@ def load_news(request):
     item['title'] = request.form['titolo']
     item['content'] = request.form['testo']
     item['date'] = request.form['data']
+    
+    print item['content']
     
     files, labels = [], []
     try:
@@ -305,16 +308,21 @@ def load_lista(obj, cursor):
     lista = []
     try:
         if obj=='news':
-            for item in cursor.execute("SELECT id, data, title FROM news").fetchall():
-                lista.append( {'id':item[0], 'data':item[1], 'title':item[2]  } )
+            for item in cursor.execute("SELECT * FROM news").fetchall():
+                it = {'id':item[0], 'date':item[1], 'title':item[2], 'content':item[3], 'pics':json.loads(item[4])  }
+                if len(item[3]) >100:
+                    it['content'] = '{0}...'.format(item[3][:100])
+                lista.append(it)
+                lista.sort(key=itemgetter('date'), reverse=True)
         if obj=='note':
             for item in cursor.execute("SELECT id, text FROM notes").fetchall(): 
                 lista.append( {'id':item[0], 'title':item[1] } )
+                lista.sort(key=itemgetter('id'), reverse=True)
         if obj=='doc':
             for item in cursor.execute("SELECT id, name FROM docs").fetchall(): 
                 lista.append( {'id':item[0], 'title':item[1] } )
-    except Exception:
-        raise Exception(u'Errore durante il caricamento della lista.<br>Riprova o contatta il webmaster.')
+    except Exception as e:
+        raise Exception(e) #(u'Errore durante il caricamento della lista.<br>Riprova o contatta il webmaster.')
     return lista
     
     

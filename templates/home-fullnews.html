@@ -1,0 +1,48 @@
+{% extends "base/main.html" %}
+
+{% set bootstrap=1 %}
+
+
+{% block body %}
+    <div class="bacheca shadow2">
+        
+      <div class="news">
+          
+          <h2>{{ item.title }}</h2>
+          <p>{{ item.content|nl2br() }}</p>
+          
+          {% if item.pics %}
+          <div id="carousel-1" class="slideshow carousel slide" data-ride="carousel">
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+              {% for photo in item.pics %}
+              {% if photo==item.pics[0] %}
+              <div class="item active">
+              {% else %}
+              <div class="item">
+              {% endif %}
+                <img src="/uploads/photos/{{ photo[2] }}" alt="{{ photo[1] }}">
+                <div class="carousel-caption">
+                  <p>{{ photo[0]+1 }}. {{ photo[1] }}</p>
+                </div>
+              </div>
+              {% endfor %}              
+            </div>
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-1" role="button" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-1" role="button" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+        </div>
+        {% endif %}
+      </div>
+        
+    <a href='/' class='btn-back buttonstyle'>HOME</a>
+    </div>
+    
+
+{% endblock %}
