@@ -298,31 +298,55 @@ def update_doc(request, cursor, app, id):
 # *********** Others ***************************************************
 
 def load_lista(obj, cursor):
+    return retrieve_lista(obj, cursor, 0, 0)
+    
+def load_page(obj, cursor, elements, page):
+    return retrieve_lista(obj, cursor, elements, page)
+
+def retrieve_lista(obj, cursor, elements, page):
     '''
-        load_lista(obj, cursor):
+        retrieve_lista(obj, cursor, elements, page):
     This function retrieve a list of the elements in a specific table of 
     the database. Overwrites the actual content of every Exception raised
     during the loading process, resulting in a generic error message for 
     the user.
+    If elements=0, it returns a list containing all the elements it 
+    finds in the database; else, with elements=n and page=p, returns a list
+    containing the n items at the p-th page.
+    Note that if elements=0, the value of page is ignored.
     '''
     lista = []
-    try:
-        if obj=='news':
-            for item in cursor.execute("SELECT * FROM news").fetchall():
-                it = {'id':item[0], 'date':item[1], 'title':item[2], 'content':item[3], 'pics':json.loads(item[4])  }
-                if len(item[3]) >100:
-                    it['content'] = '{0}...'.format(item[3][:100])
-                lista.append(it)
-                lista.sort(key=itemgetter('date'), reverse=True)
-        if obj=='note':
-            for item in cursor.execute("SELECT id, text FROM notes").fetchall(): 
-                lista.append( {'id':item[0], 'title':item[1] } )
-                lista.sort(key=itemgetter('id'), reverse=True)
-        if obj=='doc':
-            for item in cursor.execute("SELECT id, name FROM docs").fetchall(): 
-                lista.append( {'id':item[0], 'title':item[1] } )
-    except Exception as e:
-        raise Exception(e) #(u'Errore durante il caricamento della lista.<br>Riprova o contatta il webmaster.')
+    if obj=='news':
+        if elements == 0:
+            raw = cursor.execute("SELECT * FROM news ORDER BY data DESC").fetchall()
+        else:
+            raw = cursor.execute("SELECT * FROM news ORDER BY data DESC LIMIT ?,?", [elements*page, elements*(page+1)]).fetchall()
+        for item in raw:
+            it = {'id':item[0], 'date':item[1], 'title':item[2], 'content':item[3], 'pics':json.loads(item[4])  }
+            if len(item[3]) >100:
+                it['content'] = '{0}...'.format(item[3][:100])
+            lista.append(it)
+            
+    if obj=='note':
+        if elements == 0:
+            raw = cursor.execute("SELECT * FROM notes ORDER BY id DESC").fetchall()
+        else:
+            raw = cursor.execute("SELECT * FROM notes ORDER BY id DESC LIMIT ?,?", [elements*page, elements*(page+1)]).fetchall()
+        for item in raw:
+            if elements != 0:
+                if len(lista) > elements:
+                    break
+            lista.append( {'id':item[0], 'title':item[1] } )
+    if obj=='doc':
+        if elements == 0:
+            raw = cursor.execute("SELECT id, name FROM docs ORDER BY id DESC").fetchall()
+        else:
+            raw = cursor.execute("SELECT id, name FROM docs ORDER BY id DESC LIMIT ?,?", [elements*page, elements*(page+1)]).fetchall()
+        for item in cursor.execute("SELECT id, name FROM docs").fetchall():
+            if elements != 0:
+                if len(lista) > elements:
+                    break
+            lista.append( {'id':item[0], 'title':item[1] } )
     return lista
     
     
@@ -413,3 +437,9 @@ def delete_pic(cursor, app, id, index):
     cursor.execute("UPDATE news SET pics=? WHERE id = ?", [json.dumps(old_pics), id])
     return
     
+
+def get_totpage(elements, cursor):
+    count = max( cursor.execute("SELECT COUNT(*) FROM news").fetchall()[0][0],  cursor.execute("SELECT COUNT(*) FROM notes").fetchall()[0][0]  )
+    if count % elements == 0:
+        return count / elements
+    return (count / elements) + 1

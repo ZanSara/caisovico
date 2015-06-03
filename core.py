@@ -17,7 +17,7 @@ from flask import Flask, request, session, abort, url_for, redirect, send_from_d
 from jinja2 import Environment, PackageLoader, evalcontextfilter, Markup, escape
 from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, DATABASE_PATH
 from utils import login, logout
-from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, retrieve_item, retrieve_index, load_lista, delete_item, delete_pic
+from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, retrieve_item, retrieve_index, load_lista, delete_item, delete_pic, load_page, get_totpage
 import sys, sqlite3, os, re     # sys if for errors handling, os is for file managing
 
 
@@ -53,32 +53,38 @@ def style(style):
     """ 
         style(style):
     This is just an utility to make some modification regarding the
-    styles of different sections of the website (css, boxes order)
+    styles of different sections of the website (css, open boxes, menu)
     """
     if style=="home":
         var = {"menu": "base/menu-home.html"};
         var["url_for_css"] = "/static/css/style-home.css"
+        var["openbox"] = "rifugio"
         
     elif style=="rifugio":
         var = {"menu": "base/menu-rif.html"};
         var["url_for_css"] = "/static/css/style-rifugio.css"
+        var["openbox"] = "rifugio"
         
     elif style=="programmi":
         var = {"menu": "base/menu-prog.html"};
         var["url_for_css"] = "/static/css/style-programmi.css"
+        var["openbox"] = "programmi"
         
     elif style=="sezione":
         var = {"menu": "base/menu-sez.html"};
         var["url_for_css"] = "/static/css/style-sezione.css"
+        var["openbox"] = "sezione"
         
     elif style=="webmaster":
         var = {"menu": "base/menu-web.html"};
         var["url_for_css"] = "/static/css/style-webmaster.css"
+        var["openbox"] = "pannello"
 
     return var;
     
 
-# ********* Home & News links ***********************************************
+# ********* Home & News links ******************************************
+
 @app.route("/" , methods=["GET"])
 def home():
     var = style("home")
@@ -86,11 +92,30 @@ def home():
     conn = sqlite3.connect(DATABASE_PATH)
     with conn:
         cursor = conn.cursor()
-        newslist = load_lista('news', cursor)
-        noteslist = load_lista('note', cursor)
-    conn.close()
-    var['newslist'] = newslist
-    var['noteslist'] = noteslist
+        var['newslist'] = load_page('news', cursor, 5, 0)
+        var['noteslist'] = load_page('note', cursor, 5, 0)
+        var['curpage'] = 1
+        var['totpage'] = get_totpage(5, cursor)
+    conn.close()   
+    
+    template = env.get_template("home.html")
+    return template.render(var)
+    
+@app.route("/<int:index>" , methods=["GET"])
+def homepages(index):
+    var = style("home")
+    
+    conn = sqlite3.connect(DATABASE_PATH)
+    with conn:
+        cursor = conn.cursor()
+        var['newslist'] = load_page('news', cursor, 5, index-1)
+        var['noteslist'] = load_page('note', cursor, 5, index-1)
+        var['curpage'] = index
+        var['totpage'] = get_totpage(5, cursor)
+    conn.close() 
+    
+    if index > var['totpage']:
+        return abort(404)
     
     template = env.get_template("home.html")
     return template.render(var)
@@ -105,8 +130,10 @@ def fullnews(id):
         var['item'] = retrieve_item('news', id, cursor)
     
     template = env.get_template("home-fullnews.html")
-    return template.render(var)
-
+    return template.render(var) 
+    # Issue!
+    # From this page, when I press the Back button I am redirect on the
+    # homepage, not the n-th page where I actually found the news.
 
 
 # ********** Rifugio links *********************************************
@@ -276,8 +303,8 @@ def webupload(obj):
     template = env.get_template("web-res-upload.html")
 
     if request.method == 'POST':
-        conn = sqlite3.connect(DATABASE_PATH)
         try:
+            conn = sqlite3.connect(DATABASE_PATH)
             with conn:
                 cursor = conn.cursor()
                 if obj=="news":
@@ -292,6 +319,9 @@ def webupload(obj):
             var["upload"] = 'success'
             var['msg'] = u'Upload completato con successo'
             conn.close()
+        except lite.Error:
+            if conn:
+                conn.rollback()
         except ValueError as e:
             if obj=="news":
                 load_news(request)
@@ -385,36 +415,6 @@ def webmodify(obj, id):
 
     
 # *********** Delete ***************************************************
-    
-@app.route("/pannello/area-riservata/delete/<obj>", methods=["GET"])
-def webdeletelist(obj):
-    '''
-        webdeletelist(obj):
-    Renders a list of all the objects available in the database, 
-    and allows the user to select the one he wants to delete.
-    '''
-    if not session.get('logged_in'):
-        return redirect(url_for('weblogin'))
-        
-    var = style("webmaster")
-    var['obj'] = obj
-    var['manage'] = 'delete'
-    template = env.get_template("web-res-manage-main.html")
-    
-    conn = sqlite3.connect(DATABASE_PATH)
-    with conn:
-        try:
-            cursor = conn.cursor()
-            var['lista'] = load_lista(obj, cursor)
-        except Exception as e:
-            var['msg'] = e
-    conn.close()
-    
-    if var['lista'] == []:
-        var['msg'] = 'Nessun elemento trovato'
-    
-    return template.render(var)
-    
     
 @app.route("/pannello/area-riservata/delete/<obj>/<int:id>", methods=["GET", "POST"])
 def webdeleteid(obj, id):

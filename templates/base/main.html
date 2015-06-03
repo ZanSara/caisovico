@@ -6,10 +6,11 @@
 
     <link href="/static/css/style-general.css" rel="stylesheet">
     <link href="{{ url_for_css }}" rel="stylesheet">
+    <link href="/static/css/panel-bootstrap.css" rel="stylesheet">
     {% if bootstrap %}
     <link href="/static/css/carousel-bootstrap.css" rel="stylesheet">
     {% endif %}
-
+    
 
   </head>
 
@@ -29,69 +30,89 @@
     </div>
 
 
-    <div class='sidebar'>
+    <div class="sidebar panel-group" id="sidebar" role="tablist" aria-multiselectable="true">
         
         <div id="boxrifugio" class="right-rounded shadow2 mypanel">
-          <div class="right-rounded paneltitle green">
+          <div class="right-rounded paneltitle green" role="tab" id="headingOne">
             <a class="corner" href="#"><img class="flag" alt="Eng" title="English Available!" src="/static/images/us-uk-flag.gif"></a>
-            <p>Rifugio</p>
+            <a class="collapsed" data-toggle="collapse" data-parent="#sidebar" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              <p>Rifugio</p>
+            </a>
           </div>
-          <div class="sidemenu">
-            <ul id="greenglass" class="glassitem">
-              <li><a href="/rifugio">Il Rifugio</a></li>
-              <li><a href="/rifugio/mappe">Mappe</a></li>
-              <li><a href="/rifugio/bivacco">Bivacco</a></li>
-              <li><a href="/rifugio/ampliamenti">Ampliamenti</a></li>
-              <li><a href="/rifugio/storia">La Storia</a></li>
-            </ul>
-          </div>
-        </div>
-            
-        <div id="boxprogrammi" class="right-rounded shadow2 mypanel">
-          <div class="right-rounded paneltitle purple">
-            <p>Programmi</p>
-          </div>
-          <div class="sidemenu">
-            <ul id="purpleglass" class="glassitem">
-              <li><a href="/programmi">Escursioni</a></li>
-              <li><a href="/programmi/norme">Norme</a></li>
-            </ul>
-          </div>
-        </div>
-        
-        <div id="boxsezione" class="right-rounded shadow2 mypanel">
-          <div class="right-rounded paneltitle orange">
-            <a class="corner" href="#"><img class="flag" alt="Eng" title="English Available!" src="/static/images/us-uk-flag.gif"></a>
-            <p>Sezione</p>
-          </div>
-          <div>
-            <div class="sidemenu">
-              <ul id="orangeglass" class="glassitem">
-                <li><a href="/sezione">La Sezione</a></li>
-                <li><a href="/sezione/contatti">Contatti</a></li>
-                <li><a href="/sezione/quote">Quote</a></li>
-                <li><a href="/sezione/storia">La Storia</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        
-        <div id="boxriservato" class="right-rounded shadow2 mypanel">
-          <div class="right-rounded paneltitle grey">
-            <a class="corner" href="#"><img class="flag" alt="Eng" title="English Available!" src="/static/images/us-uk-flag.gif"></a>
-            <p>Pannello</p>
-          </div>
-          <div>
-            <div class="sidemenu">
-              <ul id="greyglass" class="glassitem">
-                <li><a href="/pannello/area-riservata">Area Riservata</a></li>
-                <li><a href="/pannello/feedback">Feedback</a></li>
-                <li><a href="/pannello/webmaster">Webmaster</a></li>
-              </ul>
+          <div id="collapseOne" class="panel-collapse collapse {% if openbox=='rifugio' %}in{% endif %}" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+              <div class="sidemenu"   id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                  <ul id="greenglass" class="glassitem">
+                    <li><a href="/rifugio">Il Rifugio</a></li>
+                    <li><a href="/rifugio/mappe">Mappe</a></li>
+                    <li><a href="/rifugio/bivacco">Bivacco</a></li>
+                    <li><a href="/rifugio/ampliamenti">Ampliamenti</a></li>
+                    <li><a href="/rifugio/storia">La Storia</a></li>
+                  </ul>
+                </div>
             </div>
           </div>
         </div>
 
+        <div id="boxprogrammi" class="right-rounded shadow2 mypanel">
+          <div class="right-rounded paneltitle purple" role="tab" id="headingTwo">
+              <a class="collapsed" data-toggle="collapse" data-parent="#sidebar" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <p>Programmi</p>
+              </a>
+          </div>
+          <div id="collapseTwo" class="panel-collapse collapse {% if openbox=='programmi' %}in{% endif %}" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="panel-body">
+                <div class="sidemenu"   id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                  <ul id="purpleglass" class="glassitem">
+                    <li><a href="/programmi">Escursioni</a></li>
+                    <li><a href="/programmi/norme">Norme</a></li>
+                  </ul>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="boxsezione" class="right-rounded shadow2 mypanel">
+          <div class="right-rounded paneltitle orange" role="tab" id="headingThree">
+              <a class="corner" href="#"><img class="flag" alt="Eng" title="English Available!" src="/static/images/us-uk-flag.gif"></a>
+              <a class="collapsed" data-toggle="collapse" data-parent="#sidebar" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <p>Sezione</p>
+              </a>
+          </div>
+          <div id="collapseThree" class="panel-collapse collapse {% if openbox=='sezione' %}in{% endif %}" role="tabpanel" aria-labelledby="headingThree">
+            <div class="panel-body">
+                <div class="sidemenu"   id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                  <ul id="orangeglass" class="glassitem">
+                    <li><a href="/sezione">La Sezione</a></li>
+                    <li><a href="/sezione/contatti">Contatti</a></li>
+                    <li><a href="/sezione/quote">Quote</a></li>
+                    <li><a href="/sezione/storia">La Storia</a></li>
+                  </ul>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="boxriservato" class="right-rounded shadow2 mypanel">
+          <div class="right-rounded paneltitle grey" role="tab" id="headingFour">
+              <a class="corner" href="#"><img class="flag" alt="Eng" title="English Available!" src="/static/images/us-uk-flag.gif"></a>
+              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                <p>Area Riservata</p>
+              </a>
+          </div>
+          <div id="collapseFour" class="panel-collapse collapse {% if openbox=='pannello' %}in{% endif %}" role="tabpanel" aria-labelledby="headingFour">
+            <div class="panel-body">
+                <div class="sidemenu"   id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
+                  <ul id="greyglass" class="glassitem">
+                    <li><a href="/pannello/area-riservata">Area Riservata</a></li>
+                    <li><a href="/pannello/feedback">Feedback</a></li>
+                    <li><a href="/pannello/webmaster">Webmaster</a></li>
+                  </ul>
+                </div>
+            </div>
+          </div>
+        </div>
+        
     </div> <!-- closes sidebar-->
 
       {% block body %}
@@ -105,10 +126,10 @@
 
     </div> <!-- closes page-->
 
-	{% if bootstrap %}
+
+
     <script src="/static/javascript/jquery-1.11.2.min.js"></script>     <!-- required for Bootstrap-->
     <script src="/static/javascript/bootstrap.js"></script>
-	{% endif %}
 
   </body>
 </html>

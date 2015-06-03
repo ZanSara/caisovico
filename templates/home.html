@@ -21,6 +21,13 @@
           {% endif %}
         </div>
       {% endfor %}
+      
+        <div class="post">
+          <p>{% if curpage > 1 %}<a href='/{{curpage-1}}'>Prev</a>{% endif %}
+             Pagina {{ curpage }} di {{ totpage }}
+             {% if curpage < totpage %}<a href='/{{curpage+1}}'>Next</a>{% endif %}
+          </p>
+        </div>
 	
       </div><!-- closes postside -->
       
