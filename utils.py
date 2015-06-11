@@ -5,7 +5,7 @@
 
 from flask import session
 from config import DATABASE_PATH, ALLOWED_EXTENSIONS_PICS, ALLOWED_EXTENSIONS_DOCS
-import sys, sqlite3, datetime
+import sqlite3, datetime
 
 
 # ********* SESSION-related functions **********************************

@@ -1,25 +1,28 @@
-  #!/usr/local/bin/python
+    #!/usr/local/bin/python
   # -*- coding: utf-8 -*-
   # The above is needed to set the correct encoding, see https://www.python.org/dev/peps/pep-0263/
+    
   
-  
-  # ISSUES:
+  # MAIN ISSUES:
   # 1. Later on, should consider storing error messages in a log file...
   # 2. Should rethink the database structure concerning pictures' storage: 
   #    there should be a 'pics' table linked with a relationship "many to one" with 'news'
   # 3. Why I may add only one picture a time, when modifying a news?
   # 4. Interface issue: should check if the javascript has been loaded, and open all the sideboxes by default.
+  # Secondary issues somewhere in the code
   
   # var: dictionary that contains all the template context variables
   # item: dictionary that contains all the object-related variables (titles, texts, etc...) Contained inside var.
-  
 
-from flask import Flask, request, session, abort, url_for, redirect, send_from_directory, render_template
-from jinja2 import Environment, PackageLoader, evalcontextfilter, Markup, escape
-from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, DATABASE_PATH
-from utils import login, logout
-from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, retrieve_item, retrieve_index, load_lista, delete_item, delete_pic, load_page, get_totpage
-import sys, sqlite3, os, re     # sys if for errors handling, os is for file managing
+
+try:
+    from flask import Flask, request, abort
+    from jinja2 import Environment, PackageLoader, evalcontextfilter, Markup, escape
+    from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, DATABASE_PATH
+    from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, retrieve_item, retrieve_index, load_lista, delete_item, delete_pic, load_page, get_totpage
+    import sys, sqlite3, os, re     # sys if for errors handling, os is for file managing
+except Exception:
+    print 'CORE IMPORTING ERROR'
 
 
 env = Environment(loader=PackageLoader('core', '/templates'))
@@ -28,9 +31,182 @@ app = Flask(__name__, static_folder="static")
 app.config['UPLOAD_FOLDER_DOCS'] = UPLOAD_FOLDER_DOCS
 app.config['UPLOAD_FOLDER_PICS'] = UPLOAD_FOLDER_PICS
 
-app.secret_key = ".ASF\x89m\x14\xc9s\x94ff\xfaq\xca}h\xe1/\x1f3\x1dFxj\xdc\xf0\xf9"
+app.secret_key = ".ASF\x89m\x14\xc9s\x94ff\xfaq\xca}h\xe1/\x1f3\x1dFxj\xdc\xf0\xf9..."
 
 
+
+# ********* Home & News ************************************************
+
+def home(var):
+    conn = sqlite3.connect(DATABASE_PATH)
+    with conn:
+        cursor = conn.cursor()
+        var['newslist'] = load_page('news', cursor, 5, 0)
+        var['noteslist'] = load_page('note', cursor, 5, 0)
+        var['curpage'] = 1
+        var['totpage'] = get_totpage(5, cursor)
+    return var
+    
+def homepages(var, index):
+    conn = sqlite3.connect(DATABASE_PATH)
+    with conn:
+        cursor = conn.cursor()
+        var['newslist'] = load_page('news', cursor, 5, index-1)
+        var['noteslist'] = load_page('note', cursor, 5, index-1)
+        var['curpage'] = index
+        var['totpage'] = get_totpage(5, cursor)
+    return var
+    
+def fullnews(var, id):
+    conn = sqlite3.connect(DATABASE_PATH)
+    with conn:
+        cursor = conn.cursor()
+        var['item'] = retrieve_item('news', id, cursor)
+    return var
+    # Issue!
+    # From this page, when I press the Back button I am redirect on the
+    # homepage, not the n-th page where I actually found the news.
+
+
+
+# ************ RESERVED AREA *******************************************
+    
+# ************* Upload *************************************************
+
+def upload(var, request):
+    ''' 
+        upload(var, obj, request):
+    Uploads an object (news, note, doc): writes everything in the 
+    database and upload any file needed.
+    '''
+    if request.method == 'POST':
+        try:
+            conn = sqlite3.connect(DATABASE_PATH)
+            with conn:
+                cursor = conn.cursor()
+                if var['obj']=="news":
+                    upload_news(request, cursor, app)
+                elif var['obj']=='note':
+                    upload_note(request, cursor)
+                elif var['obj']=='doc':
+                    upload_doc(request, cursor, app)
+                else:
+                    raise ValueError(u'Unknown OBJ value')
+            conn.commit()
+            var["upload"] = 'success'
+            var['msg'] = u'Upload completato con successo'
+        except sqlite3.Error:
+            if conn:
+                conn.rollback()
+        except ValueError as e:
+            if var['obj']=="news":
+                load_news(request)
+            elif var['obj']=='note':
+                load_note(request)
+            elif var['obj']=='doc':
+                load_doc(request)
+            var["upload"] = 'fail'
+            var['msg'] = e
+    return var
+    
+# ************ Manage **************************************************
+
+def manage(var):
+    '''
+        manage(var):
+    Renders a list of all the available object present in the database, 
+    and allows the user to select the one he wants to modify.
+    '''
+    conn = sqlite3.connect(DATABASE_PATH)
+    with conn:
+        try:
+            cursor = conn.cursor()
+            var['lista'] = load_lista(var['obj'], cursor)
+        except Exception as e:
+            var['msg'] = e
+    conn.close()
+    if var['lista'] == []:
+        var['msg'] = 'Nessun elemento trovato'
+    return var
+    
+def modify(var, request):
+    '''
+        modify(var, request):
+    Allows the user to modify the details of an object.
+    '''
+    conn = sqlite3.connect(DATABASE_PATH)
+    try:
+        if request.method=='POST':
+            conn = sqlite3.connect(DATABASE_PATH)
+            with conn:
+                cursor = conn.cursor()
+                if var['obj']=="news":
+                    update_news(request, cursor, app, var['id'])
+                elif var['obj']=='note':
+                    update_note(request, cursor, var['id'])
+                elif var['obj']=='doc':
+                    update_doc(request, cursor, app, var['id'])
+                conn.commit()
+                var['item'] = retrieve_item(var['obj'], var['id'], cursor)    # Ensures that the data has actually been written
+                var['msg'] = 'Upload completato con successo'
+                var['upload'] = 'success'
+        else:
+            with conn:
+                cursor = conn.cursor()
+                var['item'] = retrieve_item(var['obj'], var['id'], cursor)
+    except (ValueError) as e:
+        var['msg'] = e
+        var['upload'] = 'fail'
+        var['item'] = retrieve_item(var['obj'], var['id'], cursor)
+    return var
+    
+ 
+# *********** Delete ***************************************************
+ 
+def delete(var):
+    '''
+        delete(var):
+    Renders the object selected and ask confirmation to delete the object.
+    Then deletes it.
+    '''   
+    conn = sqlite3.connect(DATABASE_PATH)
+    try:
+        with conn:
+            cursor = conn.cursor()
+            if request.method=='POST':
+                delete_item(var['obj'], cursor, app, var['id'])
+                var['deleted'] = True
+            else:
+                cursor = conn.cursor()
+                var['item'] = retrieve_item(var['obj'], var['id'], cursor)
+    except ValueError as e:
+            var['upload'] = 'fail'
+            var['msg'] = e
+            var['item'] = retrieve_item(var['obj'], var['id'], cursor)
+    return var
+    
+def deletepic(var):
+    '''
+        deletepic(var):
+    Renders the picture selected and ask confirmation.
+    Then deletes it.
+    '''  
+    conn = sqlite3.connect(DATABASE_PATH)
+    try:
+        with conn:
+            cursor = conn.cursor()
+            if request.method=='POST':
+                delete_pic(cursor, app, var['id'], var['index'])
+                var['deleted'] = True
+            else:
+                cursor = conn.cursor()
+                var['item'] = retrieve_item('news', var['id'], cursor)['pics'][var['index']]
+    except ValueError as e:
+            var['upload'] = 'fail'
+            var['msg'] = e
+            var['item'] = retrieve_item('news', var['id'], cursor)['pics'][var['index']]
+    return var
+    
 
 # ************** Misc **************************************************
 
@@ -81,432 +257,4 @@ def style(style):
         var["url_for_css"] = "/static/css/style-webmaster.css"
         var["openbox"] = "pannello"
 
-    return var;
-    
-
-# ********* Home & News links ******************************************
-
-@app.route("/" , methods=["GET"])
-def home():
-    var = style("home")
-    
-    conn = sqlite3.connect(DATABASE_PATH)
-    with conn:
-        cursor = conn.cursor()
-        var['newslist'] = load_page('news', cursor, 5, 0)
-        var['noteslist'] = load_page('note', cursor, 5, 0)
-        var['curpage'] = 1
-        var['totpage'] = get_totpage(5, cursor)
-    conn.close()   
-    
-    template = env.get_template("home.html")
-    return template.render(var)
-    
-@app.route("/<int:index>" , methods=["GET"])
-def homepages(index):
-    var = style("home")
-    
-    conn = sqlite3.connect(DATABASE_PATH)
-    with conn:
-        cursor = conn.cursor()
-        var['newslist'] = load_page('news', cursor, 5, index-1)
-        var['noteslist'] = load_page('note', cursor, 5, index-1)
-        var['curpage'] = index
-        var['totpage'] = get_totpage(5, cursor)
-    conn.close() 
-    
-    if index > var['totpage']:
-        return abort(404)
-    
-    template = env.get_template("home.html")
-    return template.render(var)
-    
-@app.route("/news/<id>" , methods=["GET"])
-def fullnews(id):
-    var = style("home")
-    
-    conn = sqlite3.connect(DATABASE_PATH)
-    with conn:
-        cursor = conn.cursor()
-        var['item'] = retrieve_item('news', id, cursor)
-    
-    template = env.get_template("home-fullnews.html")
-    return template.render(var) 
-    # Issue!
-    # From this page, when I press the Back button I am redirect on the
-    # homepage, not the n-th page where I actually found the news.
-
-
-# ********** Rifugio links *********************************************
-    
-@app.route("/rifugio/" , methods=["GET"])
-def rifhome():
-    var = style("rifugio")
-    template = env.get_template("rif-home.html")
-    return template.render(var)
-
-@app.route("/rifugio/mappe" , methods=["GET"])
-def rifmappe():
-    var = style("rifugio")
-    template = env.get_template("rif-mappe.html")
-    return template.render(var)
-
-@app.route("/rifugio/bivacco" , methods=["GET"])
-def rifbivacco():
-    var = style("rifugio")
-    template = env.get_template("rif-bivacco.html")
-    return template.render(var)
-
-@app.route("/rifugio/ampliamenti" , methods=["GET"])
-def rifamplia():
-    var = style("rifugio")
-    template = env.get_template("rif-ampliamenti.html")
-    return template.render(var)
-
-@app.route("/rifugio/storia" , methods=["GET"])
-def rifstoria():
-    var = style("rifugio")
-    template = env.get_template("rif-storia.html")
-    return template.render(var)
-
-# ********** Programmi links *******************************************
-
-@app.route("/programmi" , methods=["GET"])
-def proghome():
-    var = style("programmi")
-    template = env.get_template("prog-home.html")
-    return template.render(var)
-    
-@app.route("/programmi/norme" , methods=["GET"])
-def prognorme():
-    var = style("programmi")
-    template = env.get_template("prog-norme.html")
-    return template.render(var)
-
-
-# ********** Sezione links *******************************************
-
-@app.route("/sezione" , methods=["GET"])
-def sezhome():
-    var = style("sezione")
-    template = env.get_template("sez-home.html")
-    return template.render(var)
-    
-@app.route("/sezione/contatti" , methods=["GET"])
-def sezcontatti():
-    var = style("sezione")
-    template = env.get_template("sez-contatti.html")
-    return template.render(var)
-
-@app.route("/sezione/quote" , methods=["GET"])
-def sezquote():
-    var = style("sezione")
-    template = env.get_template("sez-quote.html")
-    return template.render(var)
-
-@app.route("/sezione/storia" , methods=["GET"])
-def sezstoria():
-    var = style("sezione")
-    template = env.get_template("sez-storia.html")
-    return template.render(var)
-
-
-# ********** Webmaster links *******************************************
-
-@app.route("/pannello/feedback" , methods=["GET"])
-def webfed():
-    var = style("webmaster")
-    template = env.get_template("web-feedback.html")
-    return template.render(var)
-
-@app.route("/pannello/webmaster" , methods=["GET"])
-def webmaster():
-    var = style("webmaster")
-    template = env.get_template("web-master.html")
-    return template.render(var)
-
-
-@app.route("/pannello/area-riservata", methods=["GET", "POST"])
-def webres():
-    if not session.get('logged_in'):
-        return redirect(url_for('weblogin'))
-    var = style("webmaster")
-    template = env.get_template("web-res-home.html")
-    return template.render(var)
-
-
-# ************ RESERVED AREA *******************************************
-
-#************* Misc ****************************************************
-    
-@app.route('/uploads/<folder>/<filename>')
-def static_file(folder, filename):
-    """ Serves static files """
-    if folder=='photos':
-        return send_from_directory(app.config['UPLOAD_FOLDER_PICS'], filename)
-    return send_from_directory(app.config['UPLOAD_FOLDER_DOCS'], filename)
-
-
-@app.route("/pannello/area-riservata/login", methods=["GET", "POST"])
-def weblogin():
-    """ Performs the login """
-    var = style("webmaster")
-                
-    if request.method == "POST":
-        try:
-            login(request.form["user"], request.form["password"])
-        except (IndexError, ValueError) as e:
-            var['msg'] = e
-            template = env.get_template("web-res-login.html")
-            return template.render(var)
-        return redirect(url_for('webres'))
-
-    template = env.get_template("web-res-login.html")
-    return template.render(var)
-    
-
-@app.route("/pannello/area-riservata/logout", methods=["GET", "POST"])
-def weblogout():
-    """ Performs the logout """
-    if not session.get('logged_in'):
-        return redirect(url_for('weblogin'))
-        
-    var = style("webmaster")
-
-    try:
-        logout()
-    except Exception as e:
-        var['msg'] = e
-        template = env.get_template("web-res-login.html")
-        return template.render(var)
-        # ISSUE!
-        # If I logout, the logout fails, and I immediately try to login 
-        # again, I find myself asking this function to handle my login. 
-        # Should FULLY redirect to the welogin() function, not only render it.
-    return redirect(url_for('weblogin'))
-
-
-# ************* Upload *************************************************
-
-@app.route("/pannello/area-riservata/upload/<obj>", methods=["GET", "POST"])
-def webupload(obj):
-    ''' 
-        webupload(obj):
-    Uploads an object (news, note, doc): writes everything in the 
-    database and upload any file needed.
-    '''
-    if not session.get('logged_in'):
-        return redirect(url_for('weblogin'))
-    
-    var = style("webmaster")
-    var['obj'] = obj
-    var['item'] = {}
-    template = env.get_template("web-res-upload.html")
-
-    if request.method == 'POST':
-        try:
-            conn = sqlite3.connect(DATABASE_PATH)
-            with conn:
-                cursor = conn.cursor()
-                if obj=="news":
-                    upload_news(request, cursor, app)
-                elif obj=='note':
-                    upload_note(request, cursor)
-                elif obj=='doc':
-                    upload_doc(request, cursor, app)
-                else:
-                    raise ValueError(u'Unknown OBJ value')
-            conn.commit()
-            var["upload"] = 'success'
-            var['msg'] = u'Upload completato con successo'
-            conn.close()
-        except lite.Error:
-            if conn:
-                conn.rollback()
-        except ValueError as e:
-            if obj=="news":
-                load_news(request)
-            elif obj=='note':
-                load_note(request)
-            elif obj=='doc':
-                load_doc(request)
-            var["upload"] = 'fail'
-            var['msg'] = e
-    
-    return template.render(var)
-
-
-# ************ Manage **************************************************
-
-@app.route("/pannello/area-riservata/manage/<obj>", methods=["GET"])
-def webmanage(obj):
-    '''
-        webmanage(obj):
-    Renders a list of all the available object present in the database, 
-    and allows the user to select the one he wants to modify.
-    '''
-    if session.get('logged_in')==None:
-        return redirect(url_for('weblogin'))
-        
-    var = style("webmaster")
-    var['obj'] = obj
-    var['manage'] = 'manage'
-    template = env.get_template("web-res-manage-main.html")
-    
-    conn = sqlite3.connect(DATABASE_PATH)
-    with conn:
-        try:
-            cursor = conn.cursor()
-            var['lista'] = load_lista(obj, cursor)
-        except Exception as e:
-            var['msg'] = e
-    conn.close()
-    
-    if var['lista'] == []:
-        var['msg'] = 'Nessun elemento trovato'
-    
-    return template.render(var)
-    
-    
-@app.route("/pannello/area-riservata/manage/<obj>/<int:id>", methods=["GET", "POST"])
-def webmodify(obj, id):
-    '''
-        webmodify(obj, id):
-    Allows the user to modify the details of an object.
-    '''
-    if not session.get('logged_in'):
-        return redirect(url_for('weblogin'))
-
-    var = style("webmaster")
-    var['obj'] = obj
-    var['id'] = id      # Useful for the Delete button
-    var['item'] = {}
-    template = env.get_template("web-res-upload.html")
-    
-    conn = sqlite3.connect(DATABASE_PATH)
-    try:
-        
-        if request.method=='POST':
-            conn = sqlite3.connect(DATABASE_PATH)
-            with conn:
-                cursor = conn.cursor()
-                if obj=="news":
-                    update_news(request, cursor, app, id)
-                elif obj=='note':
-                    update_note(request, cursor, id)
-                elif obj=='doc':
-                    update_doc(request, cursor, app, id)
-                conn.commit()
-                var['item'] = retrieve_item(obj, id, cursor)    # Ensures that the data has actually been written
-                var['msg'] = 'Upload completato con successo'
-                var['upload'] = 'success'
-        else:
-            with conn:
-                cursor = conn.cursor()
-                var['item'] = retrieve_item(obj, id, cursor)
-
-    except (ValueError) as e:
-        var['msg'] = e
-        var['upload'] = 'fail'
-        var['item'] = retrieve_item(obj, id, cursor)
-        
-    conn.close()
-    
-    return template.render(var)
-
-    
-# *********** Delete ***************************************************
-    
-@app.route("/pannello/area-riservata/delete/<obj>/<int:id>", methods=["GET", "POST"])
-def webdeleteid(obj, id):
-    '''
-        webdeleteid(obj):
-    Renders the object selected and ask confirmation to delete the object.
-    Then deletes it.
-    '''
-    if not session.get('logged_in'):
-        return redirect(url_for('weblogin'))
-        
-    var = style("webmaster")
-    var['obj'] = obj
-    var['manage'] = 'delete'
-    template = env.get_template("web-res-delete.html")
-    
-    conn = sqlite3.connect(DATABASE_PATH)
-    try:
-        with conn:
-            cursor = conn.cursor()
-            if request.method=='POST':
-                delete_item(obj, cursor, app, id)
-                var['deleted'] = True
-            else:
-                cursor = conn.cursor()
-                var['item'] = retrieve_item(obj, id, cursor)
-            
-    except ValueError as e:
-            var['upload'] = 'fail'
-            var['msg'] = e
-            var['item'] = retrieve_item(obj, id, cursor)
-    
-    conn.close()
-    return template.render(var)
-    
-
-@app.route("/pannello/area-riservata/delete/news/<int:id>/<int:index>", methods=["GET", "POST"])
-def webdeletepic(id, index):
-    
-    if not session.get('logged_in'):
-        return redirect(url_for('weblogin'))
-        
-    var = style("webmaster")
-    var['obj'] = 'pic'
-    var['id'] = id          # Useful for the Back button
-    var['manage'] = 'delete'
-    template = env.get_template("web-res-delete.html")
-    
-    conn = sqlite3.connect(DATABASE_PATH)
-    try:
-        with conn:
-            cursor = conn.cursor()
-            if request.method=='POST':
-                delete_pic(cursor, app, id, index)
-                var['deleted'] = True
-            else:
-                cursor = conn.cursor()
-                var['item'] = retrieve_item('news', id, cursor)['pics'][index]
-            
-    except ValueError as e:
-            var['upload'] = 'fail'
-            var['msg'] = e
-            var['item'] = retrieve_item('news', id, cursor)['pics'][index]
-    
-    conn.close()
-    return template.render(var)
-    
-    
-
-    
-    
-    
-#*** ERROR HANDLERS ****************
-
-@app.errorhandler(404)
-def page_not_found(e):
-    var = style("home")
-    template = env.get_template("404.html")
-    return template.render(var), 404
-@app.errorhandler(401)
-def unauthorized(e):
-    var = style("home")
-    template = env.get_template("401.html")
-    return template.render(var), 401
-@app.errorhandler(500)
-def internal_error(e):
-    var = style("home")
-    template = env.get_template("500.html")
-    return template.render(var), 500
-
-
-
-if __name__ == "__main__":
-    app.run(debug=False, host="0.0.0.0")
+    return var

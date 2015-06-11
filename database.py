@@ -22,8 +22,7 @@ import sys, sqlite3, json, os, datetime, re
 
 
 def load_news(request):
-    """
-        load_news(request):
+    """load_news(request):
     Loads all the data from the form without performing any convalidation.
     Loads also any empty field in the 'item' dictionary.
     """
@@ -31,8 +30,6 @@ def load_news(request):
     item['title'] = request.form['titolo']
     item['content'] = request.form['testo']
     item['date'] = request.form['data']
-    
-    print item['content']
     
     files, labels = [], []
     try:
@@ -57,8 +54,7 @@ def load_news(request):
     return item
     
 def check_news(item):
-    '''
-        check_news(item):
+    '''check_news(item):
     Performs convalidation on the data loaded from load_news() and raises
     ValueError if something is wrong.
     '''
@@ -73,7 +69,6 @@ def check_news(item):
     for p in item['photos']:
         if re.match('^image/[A-Za-z]*', p[1].mimetype) and p[0] == '':      # If I have a photo without the label
             raise ValueError( u"Impossibile caricare foto senza una descrizione." )
-
         # It is possible to UPDATE the label of an existing photo (so a pair label-nophoto is allowed),
         # while it is impossible to load a photo without a label, because the label is always rendered in the page
         # and thus loaded with the photo. In case of UPLOAD I must check again and raise errors for every unpaired label.
@@ -88,8 +83,7 @@ def check_news(item):
     return
     
 def upload_news(request, cursor, app):
-    '''
-        upload_news(request, cursor, app):
+    '''upload_news(request, cursor, app):
     This function performs a fresh upload of all the material previously
     loaded and checked (except for the unvalidation of unpaired labels, 
     that is allowed for the uploading, but not allowed here.)
@@ -119,8 +113,7 @@ def upload_news(request, cursor, app):
     return
 
 def update_news(request, cursor, app, id):
-    '''
-        update_news(request, cursor, app, id):
+    '''update_news(request, cursor, app, id):
     This function updates a news, meaning that it can identify and 
     overwrite a specific row in the database. Basically the same as the 
     above for the text parts, but slightly different concerning the 
@@ -130,9 +123,6 @@ def update_news(request, cursor, app, id):
     '''
     item = load_news(request)
     check_news(item)
-    
-    print '@@', item['photos']
-    
     old_pics = retrieve_item("news", id, cursor)['pics']
     
     try:
@@ -165,8 +155,7 @@ def update_news(request, cursor, app, id):
 # *********** NOTES Management *****************************************  
 
 def load_note(request):
-    """
-        load_note(request):
+    """load_note(request):
     Loads the content of the form without performing any convalidation.
     Loads also empty fields in the 'item' dictionary.
     """
@@ -174,8 +163,7 @@ def load_note(request):
     return item
 
 def check_note(item):
-    '''
-        check_note(item):
+    '''check_note(item):
     Performs convalidation on the data loaded from load_note() and 
     raises ValueError if something is wrong.
     '''
@@ -184,8 +172,7 @@ def check_note(item):
     return
     
 def upload_note(request, cursor):
-    '''
-        upload_note(request, cursor):
+    '''upload_note(request, cursor):
     This function performs a fresh upload of the loaded and checked note.
     It adds a new row in the database without overwriting anything.
     In case of failure, it returns the non-checked note, to be displayed 
@@ -199,8 +186,7 @@ def upload_note(request, cursor):
     return
 
 def update_note(request, cursor, id):
-    '''
-        update_note(request, cursor, id):
+    '''update_note(request, cursor, id):
     This function updates a note, meaning that it can identify and overwrite
     a specific row in the database. Basically the same as the above, only 
     the database request is different.
@@ -215,8 +201,7 @@ def update_note(request, cursor, id):
 # *********** DOCS Management ******************************************
     
 def load_doc(request):
-    """
-        load_doc(request):
+    """load_doc(request):
     Loads all the data from the form without performing any convalidation.
     Loads also any empty field in the 'item' dictionary.
     """
@@ -226,8 +211,7 @@ def load_doc(request):
     return item
 
 def check_doc(item):
-    '''
-        check_doc(item):
+    '''check_doc(item):
     Performs convalidation on the data loaded from load_doc() and raises
     ValueError if something is wrong.
     '''
@@ -245,8 +229,7 @@ def check_doc(item):
     return
     
 def upload_doc(request, cursor, app):
-    '''
-        upload_doc(request, cursor, app):
+    '''upload_doc(request, cursor, app):
     This function performs a fresh upload of all the data previously
     loaded and checked.
     It adds a new row in the database without overwriting anything.
@@ -265,8 +248,7 @@ def upload_doc(request, cursor, app):
     return
 
 def update_doc(request, cursor, app, id):
-    '''
-        update_doc(request, cursor, app, id):
+    '''update_doc(request, cursor, app, id):
     This function updates a document, meaning that it can identify and 
     overwrite a specific row in the database. 
     NB #1: It doesn't call check_doc(), because the user may want to change
@@ -297,19 +279,28 @@ def update_doc(request, cursor, app, id):
  
 # *********** Others ***************************************************
 
+def get_totpage(elements, cursor):
+    '''get_totpage(elements, cursor):
+    As a part of a paginator, returns how many pages I can render for a
+    specific number of elements per page. It counts both notes and news,
+    picking the highest.
+    '''
+    count = max( cursor.execute("SELECT COUNT(*) FROM news").fetchall()[0][0],  cursor.execute("SELECT COUNT(*) FROM notes").fetchall()[0][0]  )
+    if count % elements == 0:
+        return count / elements
+    return (count / elements) + 1
+
 def load_lista(obj, cursor):
     return retrieve_lista(obj, cursor, 0, 0)
     
 def load_page(obj, cursor, elements, page):
     return retrieve_lista(obj, cursor, elements, page)
 
+
 def retrieve_lista(obj, cursor, elements, page):
-    '''
-        retrieve_lista(obj, cursor, elements, page):
+    '''retrieve_lista(obj, cursor, elements, page):
     This function retrieve a list of the elements in a specific table of 
-    the database. Overwrites the actual content of every Exception raised
-    during the loading process, resulting in a generic error message for 
-    the user.
+    the database.
     If elements=0, it returns a list containing all the elements it 
     finds in the database; else, with elements=n and page=p, returns a list
     containing the n items at the p-th page.
@@ -326,7 +317,6 @@ def retrieve_lista(obj, cursor, elements, page):
             if len(item[3]) >100:
                 it['content'] = '{0}...'.format(item[3][:100])
             lista.append(it)
-            
     if obj=='note':
         if elements == 0:
             raw = cursor.execute("SELECT * FROM notes ORDER BY id DESC").fetchall()
@@ -351,13 +341,10 @@ def retrieve_lista(obj, cursor, elements, page):
     
     
 def retrieve_item(obj, id, cursor):
-    '''
-        retrieve_item(obj, id, cursor):
+    '''retrieve_item(obj, id, cursor):
     Returns a dictionary with all the data regarding a specific object
     (found by id).
-    OBJ == 'NEWS': Does not retrieve every photo, but a list of their 
-    labels, and sets a flag (addphoto) if there are less than 5 pictures.
-    
+    OBJ == 'NEWS': sets 'addphoto' if there are less than 5 pictures.
     '''
     if obj=='news':
         row = cursor.execute("SELECT * FROM news WHERE id == ?", [id]).fetchone()
@@ -383,8 +370,7 @@ def retrieve_item(obj, id, cursor):
     return item
 
 def retrieve_index(id, cursor):
-    '''
-        retrieve_index(id, cursor):
+    '''retrieve_index(id, cursor):
     This function retrieves the last available position in the list of 5
     photos related to a specific picture.
     '''
@@ -399,8 +385,7 @@ def retrieve_index(id, cursor):
 
 
 def delete_item(obj, cursor, app, id):
-    '''
-        delete_item(obj, cursor, app, id):
+    '''delete_item(obj, cursor, app, id):
     Deletes a specific object in the database.
     '''
     if obj=='news':
@@ -422,8 +407,7 @@ def delete_item(obj, cursor, app, id):
     return
     
 def delete_pic(cursor, app, id, index):
-    '''
-        delete_pic(cursor, app, id, index):
+    '''delete_pic(cursor, app, id, index):
     Deletes a specific picture ands updates the database entry for the 
     related news
     '''
@@ -436,10 +420,4 @@ def delete_pic(cursor, app, id, index):
     old_pics = old_pics[:index] + shift_index(old_pics[(index+1):])
     cursor.execute("UPDATE news SET pics=? WHERE id = ?", [json.dumps(old_pics), id])
     return
-    
 
-def get_totpage(elements, cursor):
-    count = max( cursor.execute("SELECT COUNT(*) FROM news").fetchall()[0][0],  cursor.execute("SELECT COUNT(*) FROM notes").fetchall()[0][0]  )
-    if count % elements == 0:
-        return count / elements
-    return (count / elements) + 1
