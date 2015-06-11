@@ -8,12 +8,13 @@
   # 2. Should rethink the database structure concerning pictures' storage: 
   #    there should be a 'pics' table linked with a relationship "many to one" with 'news'
   # 3. Why I may add only one picture a time, when modifying a news?
+  # 4. Interface issue: should check if the javascript has been loaded, and open all the sideboxes by default.
   
   # var: dictionary that contains all the template context variables
   # item: dictionary that contains all the object-related variables (titles, texts, etc...) Contained inside var.
   
 
-from flask import Flask, request, session, abort, url_for, redirect, send_from_directory, flash
+from flask import Flask, request, session, abort, url_for, redirect, send_from_directory, render_template
 from jinja2 import Environment, PackageLoader, evalcontextfilter, Markup, escape
 from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, DATABASE_PATH
 from utils import login, logout
@@ -487,23 +488,25 @@ def webdeletepic(id, index):
     
     
     
-    
-    
-    
 #*** ERROR HANDLERS ****************
 
-#@app.errorhandler(404)
-#def page_not_found(e):
-    #return render_template('404.html'), 404
-#@app.errorhandler(401)
-#def unauthorized(e):
-    #return render_template('401.html'), 401
-#@app.errorhandler(500)
-#def internal_error(e):
-    #db.session.rollback()
-    #return render_template('500.html'), 500
+@app.errorhandler(404)
+def page_not_found(e):
+    var = style("home")
+    template = env.get_template("404.html")
+    return template.render(var), 404
+@app.errorhandler(401)
+def unauthorized(e):
+    var = style("home")
+    template = env.get_template("401.html")
+    return template.render(var), 401
+@app.errorhandler(500)
+def internal_error(e):
+    var = style("home")
+    template = env.get_template("500.html")
+    return template.render(var), 500
 
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=False, host="0.0.0.0")
