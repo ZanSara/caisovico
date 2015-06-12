@@ -15,23 +15,16 @@
   # item: dictionary that contains all the object-related variables (titles, texts, etc...) Contained inside var.
 
 
-try:
-    from flask import Flask, request, abort
-    from jinja2 import Environment, PackageLoader, evalcontextfilter, Markup, escape
-    from config import UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, DATABASE_PATH
-    from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, retrieve_item, retrieve_index, load_lista, delete_item, delete_pic, load_page, get_totpage
-    import sys, sqlite3, os, re     # sys if for errors handling, os is for file managing
-except Exception:
-    print 'CORE IMPORTING ERROR'
+#try:
+import logging, sys, sqlite3, os, re     # sys if for errors handling, os is for file managing
+from flask import request, abort
+from jinja2 import evalcontextfilter, Markup, escape
+from config import app, env, UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, DATABASE_PATH
+from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, retrieve_item, retrieve_index, load_lista, delete_item, delete_pic, load_page, get_totpage
+#except Exception:
+    #print 'CORE IMPORTING ERROR'
+    #logging.CRITICAL('CORE IMPORTING ERROR')
 
-
-env = Environment(loader=PackageLoader('core', '/templates'))
-
-app = Flask(__name__, static_folder="static")
-app.config['UPLOAD_FOLDER_DOCS'] = UPLOAD_FOLDER_DOCS
-app.config['UPLOAD_FOLDER_PICS'] = UPLOAD_FOLDER_PICS
-
-app.secret_key = ".ASF\x89m\x14\xc9s\x94ff\xfaq\xca}h\xe1/\x1f3\x1dFxj\xdc\xf0\xf9..."
 
 
 
@@ -107,6 +100,9 @@ def upload(var, request):
                 load_doc(request)
             var["upload"] = 'fail'
             var['msg'] = e
+        except:
+            logging.error('Unespected Exception in UPLOAD')
+            raise          
     return var
     
 # ************ Manage **************************************************

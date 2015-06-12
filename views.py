@@ -2,12 +2,16 @@
   # -*- coding: utf-8 -*-
   # The above is needed to set the correct encoding, see https://www.python.org/dev/peps/pep-0263/
   
-try:
-    from flask import request, session, abort, url_for, redirect, send_from_directory, render_template
-    from utils import login, logout
-    from core import app, env, nl2br, style, home, homepages, fullnews, upload, manage, modify, delete, deletepic
-except Exception:
-    print 'VIEWS IMPORTING ERROR'
+#try:
+import logging
+from flask import request, session, abort, url_for, redirect, send_from_directory, render_template
+from utils import login, logout
+from config import env, app
+from core import nl2br, style, home, homepages, fullnews, upload, manage, modify, delete, deletepic
+#except Exception as e:
+    #print 'VIEWS IMPORTING ERROR: {}'.format(e)
+    #logging.critical('VIEWS IMPORTING ERROR')
+
 
 
 # ********* Home & News links ******************************************
@@ -24,6 +28,7 @@ def viewhomepages(index):
     var = style("home")
     var = homepages(var, index)
     if index > var['totpage']:
+        app.logger.warning('404: tried to access home-page n^{}'.format(index))
         return abort(404)
     template = env.get_template("home.html")
     return template.render(var)

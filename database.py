@@ -2,12 +2,15 @@
   # -*- coding: utf-8 -*-
   # The above is needed to set the correct encoding, see https://www.python.org/dev/peps/pep-0263/
 
+#try:
+import logging, sys, sqlite3, json, os, datetime, re
 from werkzeug import secure_filename
-from config import ALLOWED_EXTENSIONS_DOCS, ALLOWED_EXTENSIONS_PICS, BASE_PATH
+from config import app, ALLOWED_EXTENSIONS_DOCS, ALLOWED_EXTENSIONS_PICS, BASE_PATH
 from utils import datepick_to_datetime, datetime_to_datepick, allowed_pic, allowed_doc, set_to_string, get_extension, shift_index
 from operator import itemgetter     # Useful for sorting purposes
-import sys, sqlite3, json, os, datetime, re
-  
+#except Exception as e:
+    #print 'DATABASE IMPORTING ERROR: {}'.format{e}
+    #logging.CRITICAL('DATABASE IMPORTING ERROR')
 
 
 # *********** NEWS Management ******************************************
@@ -137,6 +140,7 @@ def update_news(request, cursor, app, id):
                 try:
                     os.remove(os.path.join(BASE_PATH, app.config['UPLOAD_FOLDER_PICS'], old_pics[n][2]))
                 except OSError:
+                    log()
                     pass # If the file there isn't, I simply load a new one and leave the corrupted one (if exists) orphan.
                          # Should log about it, anyway
                 # Overwrite te name of the file in the database entry
