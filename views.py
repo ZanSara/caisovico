@@ -2,15 +2,17 @@
   # -*- coding: utf-8 -*-
   # The above is needed to set the correct encoding, see https://www.python.org/dev/peps/pep-0263/
   
-#try:
-import logging
-from flask import request, session, abort, url_for, redirect, send_from_directory, render_template
-from utils import login, logout
-from config import env, app
-from core import nl2br, style, home, homepages, fullnews, upload, manage, modify, delete, deletepic
-#except Exception as e:
-    #print 'VIEWS IMPORTING ERROR: {}'.format(e)
-    #logging.critical('VIEWS IMPORTING ERROR')
+try:
+    from flask import request, session, abort, url_for, redirect, send_from_directory, render_template
+    from decorators import login_required
+    from utils import login, logout
+    from config import env, app
+    from core import nl2br, style, home, homepages, fullnews, upload, manage, modify, delete, deletepic
+except Exception as e:
+    print 'VIEWS IMPORTING ERROR: {0}'.format(e)
+    app.logger.critical('VIEWS IMPORTING ERROR: {0}'.format(e) )
+    raise
+
 
 
 
@@ -131,9 +133,8 @@ def webmaster():
 
 
 @app.route("/pannello/area-riservata", methods=["GET", "POST"])
+@login_required
 def webres():
-    if not session.get('logged_in'):
-        return redirect(url_for('weblogin'))
     var = style("webmaster")
     template = env.get_template("web-res-home.html")
     return template.render(var)
@@ -152,16 +153,21 @@ def static_file(folder, filename):
 
 
 @app.route("/pannello/area-riservata/login", methods=["GET", "POST"])
-def weblogin():
+def viewlogin():
     var = style("webmaster")
                 
     if request.method == "POST":
         try:
             login(request.form["user"], request.form["password"])
         except (IndexError, ValueError) as e:
+            app.logger.info("Login failed with user:'{0}', pwd:'{1}' Error code: {2}".format(request.form["user"], request.form["password"], e) )
             var['msg'] = e
             template = env.get_template("web-res-login.html")
             return template.render(var)
+        except Exception as e:
+            app.logger.error('Unexpected error during login. Error code: {}'.format(e) )
+            raise
+        app.logger.info("User '{0}' logged in successfully".format(request.form["user"]) )
         return redirect(url_for('webres'))
 
     template = env.get_template("web-res-login.html")
@@ -169,30 +175,30 @@ def weblogin():
     
 
 @app.route("/pannello/area-riservata/logout", methods=["GET", "POST"])
-def weblogout():
-    if not session.get('logged_in'):
-        return redirect(url_for('weblogin'))
+@login_required
+def viewlogout():
     var = style("webmaster")
+    template = env.get_template("web-res-login.html")
+    user = session.get('username')
 
     try:
         logout()
     except Exception as e:
-        var['msg'] = e
-        template = env.get_template("web-res-login.html")
+        app.logger.error('Error during logout of: {0} (Error code: {1})'.format(user, e) )
+        var['msg'] = "Errore Interno.<br>Ripetere il login e tentare nuovamente il logout.<br>Se il problema persiste, contatta immediatamente il webmaster."
         return template.render(var)
-    return redirect(url_for('weblogin'))
-    # ISSUE!
-    # If I logout, the logout fails, and I immediately try to login 
-    # again, I find myself asking this function to handle my login. 
-    # Should FULLY redirect to the welogin() function, not only render it.
         
+    var['success'] = True
+    var['msg'] = 'Logout completato con successo'
+    app.logger.info("User '{0}' logged out successfully".format(user) )
+    return template.render(var)
+
 
 # ************* Upload *************************************************
 
 @app.route("/pannello/area-riservata/upload/<obj>", methods=["GET", "POST"])
+@login_required
 def viewupload(obj):
-    if not session.get('logged_in'):
-        return redirect(url_for('weblogin'))
     var = style("webmaster")
     var['obj'] = obj
     var['item'] = {}
@@ -204,9 +210,8 @@ def viewupload(obj):
 # ************ Manage **************************************************
 
 @app.route("/pannello/area-riservata/manage/<obj>", methods=["GET"])
+@login_required
 def viewmanage(obj):
-    if session.get('logged_in')==None:
-        return redirect(url_for('weblogin'))
     var = style("webmaster")
     var['obj'] = obj
     var['manage'] = 'manage'
@@ -216,9 +221,8 @@ def viewmanage(obj):
     
     
 @app.route("/pannello/area-riservata/manage/<obj>/<int:id>", methods=["GET", "POST"])
+@login_required
 def viewmodify(obj, id):
-    if not session.get('logged_in'):
-        return redirect(url_for('weblogin'))
     var = style("webmaster")
     var['obj'] = obj
     var['id'] = id
@@ -231,9 +235,8 @@ def viewmodify(obj, id):
 # *********** Delete ***************************************************
     
 @app.route("/pannello/area-riservata/delete/<obj>/<int:id>", methods=["GET", "POST"])
+@login_required
 def viewdelete(obj, id):
-    if not session.get('logged_in'):
-        return redirect(url_for('weblogin'))
     var = style("webmaster")
     var['obj'] = obj
     var['id'] = id
@@ -244,9 +247,8 @@ def viewdelete(obj, id):
     
 
 @app.route("/pannello/area-riservata/delete/news/<int:id>/<int:index>", methods=["GET", "POST"])
+@login_required
 def viewdeletepic(id, index):
-    if not session.get('logged_in'):
-        return redirect(url_for('weblogin'))
     var = style("webmaster")
     var['obj'] = 'pic'
     var['id'] = id

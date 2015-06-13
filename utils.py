@@ -2,13 +2,15 @@
   # -*- coding: utf-8 -*-
   # The above is needed to set the correct encoding, see https://www.python.org/dev/peps/pep-0263/
     
-#try:
-import logging, sqlite3, datetime
-from flask import session
-from config import DATABASE_PATH, ALLOWED_EXTENSIONS_PICS, ALLOWED_EXTENSIONS_DOCS
-#except Exception as e:
-    #print 'UTILS IMPORTING ERROR: {}'.format(e)
-    #logging.CRITICAL('UTILS IMPORTING ERROR')
+try:
+    import sqlite3, datetime
+    from flask import session
+    from config import app, DATABASE_PATH, ALLOWED_EXTENSIONS_PICS, ALLOWED_EXTENSIONS_DOCS
+except Exception as e:
+    print 'UTILS IMPORTING ERROR: {0}'.format(e)
+    app.logger.critical('UTILS IMPORTING ERROR: {0}'.format(e) )
+    raise
+
 
 
 # ********* SESSION-related functions **********************************

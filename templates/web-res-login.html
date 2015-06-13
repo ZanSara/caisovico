@@ -2,10 +2,14 @@
 
 {% block content %}
 <div class="boxlog" style="text-align:center;">
-	<form method=POST enctype=multipart/form-data>
+	<form method=POST enctype=multipart/form-data action=login>
 		<h2 style>Login</h2>
             {% if msg %}
+              {% if success %}
+                <p style="text-align:center;color:green">{{ msg }}</p>
+              {% else %}
                 <p style="text-align:center;color:red">{{ msg }}</p>
+              {% endif %}
             {% endif %}
         
 			<input name="user" type=text placeholder="Username">

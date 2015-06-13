@@ -15,15 +15,17 @@
   # item: dictionary that contains all the object-related variables (titles, texts, etc...) Contained inside var.
 
 
-#try:
-import logging, sys, sqlite3, os, re     # sys if for errors handling, os is for file managing
-from flask import request, abort
-from jinja2 import evalcontextfilter, Markup, escape
-from config import app, env, UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, DATABASE_PATH
-from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, retrieve_item, retrieve_index, load_lista, delete_item, delete_pic, load_page, get_totpage
-#except Exception:
-    #print 'CORE IMPORTING ERROR'
-    #logging.CRITICAL('CORE IMPORTING ERROR')
+try:
+    import sys, sqlite3, os, re     # sys if for errors handling, os is for file managing
+    from flask import request, abort
+    from jinja2 import evalcontextfilter, Markup, escape
+    from config import app, env, UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, DATABASE_PATH
+    from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, retrieve_item, retrieve_index, load_lista, delete_item, delete_pic, load_page, get_totpage
+except Exception:
+    print 'CORE IMPORTING ERROR: {0}'.format(e)
+    app.logger.critical('CORE IMPORTING ERROR: {0}'.format(e) )
+    raise
+
 
 
 
@@ -88,9 +90,12 @@ def upload(var, request):
             conn.commit()
             var["upload"] = 'success'
             var['msg'] = u'Upload completato con successo'
-        except sqlite3.Error:
+            app.logger.info('Upload completed successfully')
+        except sqlite3.Error as e:
             if conn:
                 conn.rollback()
+            raise
+            app.logger.error('SQLite failure during upload. Error code:{e}'.format(e) )
         except ValueError as e:
             if var['obj']=="news":
                 load_news(request)
@@ -100,8 +105,9 @@ def upload(var, request):
                 load_doc(request)
             var["upload"] = 'fail'
             var['msg'] = e
-        except:
-            logging.error('Unespected Exception in UPLOAD')
+            app.logger.info('Upload failed due to ValueError. Error Code: {0}'.format(e) )
+        except Exception as e:
+            app.logger.error('Unexpected Exception in UPLOAD. Error Code: {0}'.format(e) )
             raise          
     return var
     
@@ -120,9 +126,12 @@ def manage(var):
             var['lista'] = load_lista(var['obj'], cursor)
         except Exception as e:
             var['msg'] = e
+            app.logger.error('Unexpected error in MANAGE. Error Code: {0}'.format(e) )
+            raise
     conn.close()
     if var['lista'] == []:
         var['msg'] = 'Nessun elemento trovato'
+        app.logger.warning('Table {0} is or seems empty'.format(var['obj']) )
     return var
     
 def modify(var, request):
@@ -132,6 +141,7 @@ def modify(var, request):
     '''
     conn = sqlite3.connect(DATABASE_PATH)
     try:
+        a = 1/0
         if request.method=='POST':
             conn = sqlite3.connect(DATABASE_PATH)
             with conn:
@@ -150,10 +160,15 @@ def modify(var, request):
             with conn:
                 cursor = conn.cursor()
                 var['item'] = retrieve_item(var['obj'], var['id'], cursor)
-    except (ValueError) as e:
+    except ValueError as e:
         var['msg'] = e
         var['upload'] = 'fail'
         var['item'] = retrieve_item(var['obj'], var['id'], cursor)
+        app.logger.info('Modification failed due to Value Error. Erro Code: {0}'.format(e) )
+    except Exception as e:
+        var['msg'] = e
+        app.logger.error('Unexpected error in MODIFY. Error Code: {0}'.format(e) )
+        raise
     return var
     
  

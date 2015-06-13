@@ -4,12 +4,13 @@
     
     
 try:
-    import logging, os
+    import os
     from flask import Flask
     from jinja2 import Environment, PackageLoader
 except Exception as e:
-    print 'CONFIG IMPORTING ERROR: {}'.format(e)
-    logging.CRITICAL('CONFIG IMPORTING ERROR')
+    print 'CONFIG IMPORTING ERROR: {0}'.format(e)
+    app.logger.critical('CONFIG IMPORTING ERROR: {0}'.format(e) )
+    raise
 
    
 # *********** Definitions **********************************************

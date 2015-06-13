@@ -2,15 +2,16 @@
   # -*- coding: utf-8 -*-
   # The above is needed to set the correct encoding, see https://www.python.org/dev/peps/pep-0263/
 
-#try:
-import logging, sys, sqlite3, json, os, datetime, re
-from werkzeug import secure_filename
-from config import app, ALLOWED_EXTENSIONS_DOCS, ALLOWED_EXTENSIONS_PICS, BASE_PATH
-from utils import datepick_to_datetime, datetime_to_datepick, allowed_pic, allowed_doc, set_to_string, get_extension, shift_index
-from operator import itemgetter     # Useful for sorting purposes
-#except Exception as e:
-    #print 'DATABASE IMPORTING ERROR: {}'.format{e}
-    #logging.CRITICAL('DATABASE IMPORTING ERROR')
+try:
+    import sys, sqlite3, json, os, datetime, re
+    from werkzeug import secure_filename
+    from config import app, ALLOWED_EXTENSIONS_DOCS, ALLOWED_EXTENSIONS_PICS, BASE_PATH
+    from utils import datepick_to_datetime, datetime_to_datepick, allowed_pic, allowed_doc, set_to_string, get_extension, shift_index
+    from operator import itemgetter     # Useful for sorting purposes
+except Exception as e:
+    print 'DATABASE IMPORTING ERROR: {0}'.format(e)
+    app.logger.critical('DATABASE IMPORTING ERROR: {0}'.format(e) )
+    raise
 
 
 # *********** NEWS Management ******************************************
