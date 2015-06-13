@@ -16,7 +16,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if session.get('logged_in') is None:
-            app.logger.info('Tried to access Area Riservata without permission')
+            app.logger.info('{0} tried to access Area Riservata without permission'.format(f.__name__) )
             return redirect(url_for('viewlogin'))
         return f(*args, **kwargs)
     return decorated_function

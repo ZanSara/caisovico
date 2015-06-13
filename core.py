@@ -16,16 +16,15 @@
 
 
 try:
-    import sys, sqlite3, os, re     # sys if for errors handling, os is for file managing
+    from config import app, env, UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, DATABASE_PATH
     from flask import request, abort
     from jinja2 import evalcontextfilter, Markup, escape
-    from config import app, env, UPLOAD_FOLDER_PICS, UPLOAD_FOLDER_DOCS, DATABASE_PATH
     from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, retrieve_item, retrieve_index, load_lista, delete_item, delete_pic, load_page, get_totpage
-except Exception:
-    print 'CORE IMPORTING ERROR: {0}'.format(e)
+    import sys, sqlite3, os, re     # sys if for errors handling, os is for file managing
+except Exception as e:
     app.logger.critical('CORE IMPORTING ERROR: {0}'.format(e) )
+    print 'CORE IMPORTING ERROR: {0}'.format(e)
     raise
-
 
 
 
@@ -94,8 +93,8 @@ def upload(var, request):
         except sqlite3.Error as e:
             if conn:
                 conn.rollback()
-            raise
             app.logger.error('SQLite failure during upload. Error code:{e}'.format(e) )
+            raise
         except ValueError as e:
             if var['obj']=="news":
                 load_news(request)
@@ -141,7 +140,6 @@ def modify(var, request):
     '''
     conn = sqlite3.connect(DATABASE_PATH)
     try:
-        a = 1/0
         if request.method=='POST':
             conn = sqlite3.connect(DATABASE_PATH)
             with conn:
@@ -165,6 +163,11 @@ def modify(var, request):
         var['upload'] = 'fail'
         var['item'] = retrieve_item(var['obj'], var['id'], cursor)
         app.logger.info('Modification failed due to Value Error. Erro Code: {0}'.format(e) )
+    except sqlite3.Error as e:
+            if conn:
+                conn.rollback()
+            app.logger.error('SQLite failure during modification. Error code:{e}'.format(e) )
+            raise
     except Exception as e:
         var['msg'] = e
         app.logger.error('Unexpected error in MODIFY. Error Code: {0}'.format(e) )
@@ -194,6 +197,16 @@ def delete(var):
             var['upload'] = 'fail'
             var['msg'] = e
             var['item'] = retrieve_item(var['obj'], var['id'], cursor)
+            app.logger.info('Deletion failed due to Value Error. Erro Code: {0}'.format(e) )
+    except sqlite3.Error as e:
+            if conn:
+                conn.rollback()
+            app.logger.error('SQLite failure during deletion of a full object. Error code:{e}'.format(e) )
+            raise
+    except Exception as e:
+        var['msg'] = e
+        app.logger.error('Unexpected error in DELETE. Error Code: {0}'.format(e) )
+        raise
     return var
     
 def deletepic(var):
@@ -216,6 +229,11 @@ def deletepic(var):
             var['upload'] = 'fail'
             var['msg'] = e
             var['item'] = retrieve_item('news', var['id'], cursor)['pics'][var['index']]
+            app.logger.info('Deletion failed due to Value Error. Erro Code: {0}'.format(e) )
+    except Exception as e:
+        var['msg'] = e
+        app.logger.error('Unexpected error in DELETEPIC. Error Code: {0}'.format(e) )
+        raise
     return var
     
 

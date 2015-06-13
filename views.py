@@ -3,14 +3,14 @@
   # The above is needed to set the correct encoding, see https://www.python.org/dev/peps/pep-0263/
   
 try:
+    from config import app, env
     from flask import request, session, abort, url_for, redirect, send_from_directory, render_template
     from decorators import login_required
     from utils import login, logout
-    from config import env, app
     from core import nl2br, style, home, homepages, fullnews, upload, manage, modify, delete, deletepic
 except Exception as e:
     print 'VIEWS IMPORTING ERROR: {0}'.format(e)
-    app.logger.critical('VIEWS IMPORTING ERROR: {0}'.format(e) )
+    app.logger.error('VIEWS IMPORTING ERROR: {0}'.format(e) )
     raise
 
 
@@ -21,16 +21,28 @@ except Exception as e:
 @app.route("/" , methods=["GET"])
 def viewhome():
     var = style("home")
-    var = home(var)
     template = env.get_template("home.html")
+    try:
+        var = home(var)
+    except:
+        # "Safety Homepage". 
+        # It's so ugly to get a 500 right in the homepage if something is wrong with the database.
+        template = env.get_template("home-safety.html")
+        app.logger.critical('*** HOMEPAGE FAILED TO LOAD ***')
     return template.render(var)
     
 @app.route("/<int:index>" , methods=["GET"])
 def viewhomepages(index):
     var = style("home")
-    var = homepages(var, index)
+    try:
+        var = homepages(var, index)
+    except:
+        # "Safety Homepage".
+        template = env.get_template("home-safety.html")
+        app.logger.critical('*** HOMEPAGE FAILED TO LOAD ***')
+        
     if index > var['totpage']:
-        app.logger.warning('404: tried to access home-page n^{}'.format(index))
+        app.logger.warning('404: tried to access home-page n^{0}, while the maximum is {1}'.format(index, var['totpage']))
         return abort(404)
     template = env.get_template("home.html")
     return template.render(var)
@@ -120,7 +132,7 @@ def sezstoria():
 # ********** Webmaster links *******************************************
 
 @app.route("/pannello/feedback" , methods=["GET"])
-def webfed():
+def webfeedback():
     var = style("webmaster")
     template = env.get_template("web-feedback.html")
     return template.render(var)
@@ -134,7 +146,7 @@ def webmaster():
 
 @app.route("/pannello/area-riservata", methods=["GET", "POST"])
 @login_required
-def webres():
+def webreserved():
     var = style("webmaster")
     template = env.get_template("web-res-home.html")
     return template.render(var)
@@ -147,9 +159,13 @@ def webres():
 @app.route('/uploads/<folder>/<filename>')
 def static_file(folder, filename):
     """ Serves static files """
-    if folder=='photos':
-        return send_from_directory(app.config['UPLOAD_FOLDER_PICS'], filename)
-    return send_from_directory(app.config['UPLOAD_FOLDER_DOCS'], filename)
+    try:
+        if folder=='photos':
+            return send_from_directory(app.config['UPLOAD_FOLDER_PICS'], filename)
+        return send_from_directory(app.config['UPLOAD_FOLDER_DOCS'], filename)
+    except Exception as e:
+        app.logger.error("'{0}' cannot be sent because it does not exist in '{1}'. Is database ok?".format(filename, folder))
+    return abort(404)
 
 
 @app.route("/pannello/area-riservata/login", methods=["GET", "POST"])
@@ -168,7 +184,7 @@ def viewlogin():
             app.logger.error('Unexpected error during login. Error code: {}'.format(e) )
             raise
         app.logger.info("User '{0}' logged in successfully".format(request.form["user"]) )
-        return redirect(url_for('webres'))
+        return redirect(url_for('webreserved'))
 
     template = env.get_template("web-res-login.html")
     return template.render(var)

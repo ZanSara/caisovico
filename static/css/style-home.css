@@ -22,14 +22,17 @@
 
 /**************** Bacheca classes ********************/
 .bacheca{
-  position:relative;
-  float:right;
-  width:60%;
+  position: relative;
+  float: right;
+  width: 60%;
   height:auto;
   margin: 30px 1%;
   padding: 0;
   background-color:#EED2A0 ;
   border: 15px solid #81522C;
+  line-height: 140%;
+  font-size: 15px;
+  font-family: arial, verdana, sans-serif;
 }
 .bacheca h1{
   position:relative;
@@ -106,8 +109,10 @@
 
 .news{
   width: 85%;
-  float:center;
-  margin: 5% 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
   padding: 20px;
   background-color:white;
   border-bottom: 3px solid #bbb;

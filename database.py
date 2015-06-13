@@ -3,11 +3,11 @@
   # The above is needed to set the correct encoding, see https://www.python.org/dev/peps/pep-0263/
 
 try:
-    import sys, sqlite3, json, os, datetime, re
-    from werkzeug import secure_filename
     from config import app, ALLOWED_EXTENSIONS_DOCS, ALLOWED_EXTENSIONS_PICS, BASE_PATH
     from utils import datepick_to_datetime, datetime_to_datepick, allowed_pic, allowed_doc, set_to_string, get_extension, shift_index
+    from werkzeug import secure_filename
     from operator import itemgetter     # Useful for sorting purposes
+    import sys, sqlite3, json, os, datetime, re
 except Exception as e:
     print 'DATABASE IMPORTING ERROR: {0}'.format(e)
     app.logger.critical('DATABASE IMPORTING ERROR: {0}'.format(e) )
@@ -140,10 +140,9 @@ def update_news(request, cursor, app, id):
                 # Delete the old one
                 try:
                     os.remove(os.path.join(BASE_PATH, app.config['UPLOAD_FOLDER_PICS'], old_pics[n][2]))
-                except OSError:
-                    log()
-                    pass # If the file there isn't, I simply load a new one and leave the corrupted one (if exists) orphan.
-                         # Should log about it, anyway
+                except OSError as e:
+                    # If the file there isn't, I simply leave the corrupted one (if exists) orphan.
+                    app.logger.error('OSError occurred in update_NEWS, probly orphan file. Error Code: {0}'.format(e))
                 # Overwrite te name of the file in the database entry
                 old_pics[n][2] = filename
     except IndexError:      # Means that I'm trying to update one more photo, than what I have in old_pics (I'm adding a photo)
@@ -272,7 +271,11 @@ def update_doc(request, cursor, app, id):
         cursor.execute("UPDATE docs SET path=? WHERE id = ?", [json.dumps(filename), id])
         
         #Then I remove the old one
-        os.remove(os.path.join(BASE_PATH, app.config['UPLOAD_FOLDER_DOCS'], old_file['path']))
+        try:
+            os.remove(os.path.join(BASE_PATH, app.config['UPLOAD_FOLDER_DOCS'], old_file['path']))
+        except OSError as e:
+            # If the file there isn't, I simply leave the corrupted one (if exists) orphan.
+            app.logger.error('OSError in update_DOC, probly orphan file. Error Code: {0}'.format(e))
         
     if item['title']:
         cursor.execute("UPDATE docs SET name=? WHERE id = ?", [item['title'], id])
@@ -355,23 +358,18 @@ def retrieve_item(obj, id, cursor):
         row = cursor.execute("SELECT * FROM news WHERE id == ?", [id]).fetchone()
         item = {'id':id, 'date':datetime_to_datepick(row[1]), 'title':row[2], 'content':row[3]}
         item['pics'] = json.loads(str(row[4]))
-
         if len(item['pics']) < 5:
             item['addphoto'] = True
         elif len(item['pics']) > 5:
             raise ValueError(u'Si è verificato un errore durante il caricamento delle foto.<br>Contatta il webmaster.')
-            
     elif obj=='note':
         row = cursor.execute("SELECT * FROM notes WHERE id == ?", [id]).fetchone()
         item = {'id':id, 'content':row[1]}
-
     elif obj=='doc':
         row = cursor.execute("SELECT * FROM docs WHERE id == ?", [id]).fetchone()
         item = {'id':row[0], 'title':row[1], 'path':row[2]}
-    
     else:
         raise ValueError(u'Unknown OBJ value.')
-
     return item
 
 def retrieve_index(id, cursor):
@@ -396,16 +394,20 @@ def delete_item(obj, cursor, app, id):
     if obj=='news':
         pics = retrieve_item(obj, id, cursor)['pics']
         for pic in pics:
-            os.remove(os.path.join(BASE_PATH, app.config['UPLOAD_FOLDER_PICS'], pic[2]))
+            try:
+                os.remove(os.path.join(BASE_PATH, app.config['UPLOAD_FOLDER_PICS'], pic[2]))
+            except OSError as e:
+                # If the file there isn't, or cannot be deleted, I simply delete its database entry and leave it orphan.
+                app.logger.error('OSError in DELETE_ITEM in news, probly orphan file. Error Code: {0}'.format(e))
         cursor.execute('DELETE FROM news WHERE id == ?', [id])
     elif obj=='note':
         cursor.execute('DELETE FROM notes WHERE id == ?', [id])
     elif obj=='doc':
         try:
             os.remove(os.path.join(BASE_PATH, app.config['UPLOAD_FOLDER_DOCS'], retrieve_item(obj, id, cursor)['path']))
-        except OSError:
-            pass # If the file there isn't, or cannot be deleted, I simply delete its database entry and leave it orphan.
-                 # Should log about it, anyway
+        except OSError as e:
+            # If the file there isn't, or cannot be deleted, I simply delete its database entry and leave it orphan.
+            app.logger.error('OSError in DELETE_ITEM in docs, probly orphan file. Error Code: {0}'.format(e))
         cursor.execute('DELETE FROM docs WHERE id == ?', [id])
     else:
         raise ValueError(u'Unknown OBJ value')
@@ -419,9 +421,9 @@ def delete_pic(cursor, app, id, index):
     old_pics = retrieve_item('news', id, cursor)['pics']
     try:
         os.remove(os.path.join(BASE_PATH, app.config['UPLOAD_FOLDER_PICS'], old_pics[index][2]))
-    except OSError:
-        pass # If the file there isn't, I simply load a new one and leave the corrupted one (if exists) orphan.
-             # Should log about it, anyway
+    except OSError as e:
+        # If the file there isn't, I simply load a new one and leave the corrupted one (if exists) orphan.
+        app.logger.error('OSError in DELETE_ITEM, probly orphan file. Error Code: {0}'.format(e))
     old_pics = old_pics[:index] + shift_index(old_pics[(index+1):])
     cursor.execute("UPDATE news SET pics=? WHERE id = ?", [json.dumps(old_pics), id])
     return
