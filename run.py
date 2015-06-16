@@ -1,4 +1,6 @@
-#!flask/bin/python
+  #!/usr/local/bin/python
+  # -*- coding: utf-8 -*-
+  # The above is needed to set the correct encoding, see https://www.python.org/dev/peps/pep-0263/
 
 try:
     from views import app

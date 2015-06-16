@@ -1,6 +1,8 @@
 *.pyc
 *.jpg
-static/bootstrap
 uploads/docs/*.*
 uploads/photos/*.*
+log/*.*
+static/bootstrap
 templates/base/OLD_BOXES
+
