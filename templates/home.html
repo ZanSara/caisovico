@@ -7,20 +7,28 @@
       </div>
       <div class="postside">
 	  
-      {% for post in newslist %}
+      {% if news_placeholder %}
         <div class="post">
-          
-          <h3> {{ post.title }} </h3>
-          <p> {{ post.content|nl2br() }} <br>
-          <a href="news/{{ post.id }}"> Leggi Tutto...</a></p>
-          {% if post.pics[0] %}
-          <img src='/uploads/photos/{{ post.pics[0][2] }}'>
-          {% endif %}
-          {% if post.pics[1] %}
-          <img src='/uploads/photos/{{ post.pics[1][2] }}'>
-          {% endif %}
+            <h3> Benvenuti! </h3>
+            <p>Al momento non ci sono notizie sulla nostra homepage.</p>
+            <p>Se pensate che sia un errore, <a href="mailto:webmaster@caisovico.it">mandateci una mail</a> all'indirizzo <b>webmaster@caisovico.it</b>.<br>
         </div>
-      {% endfor %}
+      {% else %}
+          {% for post in newslist %}
+            <div class="post">
+              
+              <h3> {{ post.title }} </h3>
+              <p> {{ post.content|nl2br() }} <br>
+              <a href="news/{{ post.id }}"> Leggi Tutto...</a></p>
+              {% if post.pics[0] %}
+              <img src='/uploads/photos/{{ post.pics[0][2] }}'>
+              {% endif %}
+              {% if post.pics[1] %}
+              <img src='/uploads/photos/{{ post.pics[1][2] }}'>
+              {% endif %}
+            </div>
+          {% endfor %}
+       {% endif %}
       
         <div class="post">
           <p>{% if curpage > 1 %}<a href='/{{curpage-1}}'>Prev</a>{% endif %}
@@ -32,11 +40,17 @@
       </div><!-- closes postside -->
       
       <div class="noteside">
+      {% if notes_placeholder %}
+        <div class="note">
+            <p>Benvenuti nel sito del CAI di Sovico!</p>
+        </div>
+      {% else %}
         {% for note in noteslist %}
         <div class="note">
           <p>{{ note.title|nl2br() }}</p>
         </div>
         {% endfor %}
+      {% endif %}
       </div><!-- closes noteside -->
 
     </div><!-- closes bacheca -->

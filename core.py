@@ -39,6 +39,14 @@ def home(var):
         var['noteslist'] = load_page('note', cursor, 5, 0)
         var['curpage'] = 1
         var['totpage'] = get_totpage(5, cursor)
+        if var['totpage'] < 1:
+            var['totpage'] = 1
+    if len(var['newslist']) == 0:
+        var['news_placeholder'] = True
+        app.logger.warning('No news in the homepage')
+    if len(var['noteslist']) == 0:
+        var['notes_placeholder'] = True
+        app.logger.warning('No notes in the homepage')
     return var
     
 def homepages(var, index):

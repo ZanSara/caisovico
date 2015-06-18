@@ -37,9 +37,8 @@ def viewhomepages(index):
     try:
         var = homepages(var, index)
     except:
-        # "Safety Homepage".
-        template = env.get_template("home-safety.html")
-        app.logger.critical('*** HOMEPAGE FAILED TO LOAD ***')
+        app.logger.critical('*** HOMEPAGE n^{} FAILED TO LOAD ***'.format(index))
+        return abort(404)
         
     if index > var['totpage']:
         app.logger.warning('404: tried to access home-page n^{0}, while the maximum is {1}'.format(index, var['totpage']))
@@ -50,8 +49,12 @@ def viewhomepages(index):
 @app.route("/news/<id>" , methods=["GET"])
 def viewfullnews(id):
     var = style("home")
-    var = fullnews(var, id)
     template = env.get_template("home-fullnews.html")
+    try:
+        var = fullnews(var, id)
+    except:
+        app.logger.warning('404: tried to access non-existent news n^{0}'.format(id))
+        return abort(404)
     return template.render(var) 
     
 
@@ -158,13 +161,13 @@ def webreserved():
     
 @app.route('/uploads/<folder>/<filename>')
 def static_file(folder, filename):
-    """ Serves static files """
+    """ Serves uploaded static files """
     try:
         if folder=='photos':
             return send_from_directory(app.config['UPLOAD_FOLDER_PICS'], filename)
         return send_from_directory(app.config['UPLOAD_FOLDER_DOCS'], filename)
     except Exception as e:
-        app.logger.error("'{0}' cannot be sent because it does not exist in '{1}'. Is database ok?".format(filename, folder))
+        app.logger.error("'{0}' cannot be sent. Maybe it does not exist in '{1}', or some error is raised in the process.".format(filename, folder))
     return abort(404)
 
 
