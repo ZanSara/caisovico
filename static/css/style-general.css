@@ -20,7 +20,7 @@ body{
 .text{
   position:relative;
   float:right;
-  width:60%;
+  width: 70%;
   height:auto;
   margin: 30px 1%;
   padding: 0;
@@ -101,7 +101,7 @@ body{
 
 /******************* Sidebar classes ***********************/
 .sidebar{
-  width:33%;
+  width: 25%;
   height: 100%;
   margin:0;
   padding:0;
@@ -118,35 +118,32 @@ body{
   padding: 16px 32px;
   display: table-cell;
   vertical-align: middle;
-  color:white;
+  color: white;
   text-decoration:none;
 }
-.corner{
-  position:relative;
-  bottom:0;
-  float:right;
-  overflow:hidden;
-}
 .flag{
-  margin: 20%;
+  margin:0;
   height: 30px;
   width: auto;
-  display: table-cell;
-  vertical-align: middle;
+  display: inline;
+  vertical-align: table-cell;
 }
 .sidemenu{
-  width:50%;
-  height:100%;
-  margin:0;
-  padding:0;
+  width: 66%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
-.sidemenu ul li a{
+.sidemenu ul a{
   text-decoration: none;
+}
+.sidemenu ul a li{
   font-size: 18px;
   font-weight: bold;
   color: #FFFFFF;
 }
 .sidemenu ul{
+  text-decoration: none;
   list-style-type:none;
   padding:0;
   margin:0;
@@ -223,7 +220,7 @@ body{
     -o-background-size: cover;
     background-size: cover;
 }
-#boxprogrammi{
+#boxescursioni{
   background: url('../images/box-programmi.jpg') no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
