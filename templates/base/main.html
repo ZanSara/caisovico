@@ -20,13 +20,24 @@
 
     <div class="main">   <!--Useful only to keep the footer in the right place... :/-->
     <!-- Header -->
-    <div class="header">
-      <a href="/"><img class="shadow2" alt="Home Banner CAI Sovico" title="Home CAI Sovico" src="/static/images/banner.png"></a>
-      <nav class="navbar shadow2">
-	<ul class="navmenu">
-        {% include menu %}
-	</ul>
-      </nav>
+    <div class="header shadow2">
+	 <a href="/"><img class=" banner " alt="Banner CAI Sovico" title="Home CAI Sovico" src="/static/images/banner.png"></a>
+	{% if eng %}
+	  <a href="#"><img class="flag" alt="Eng" title="English Available!" src="/static/images/flag-eng.gif"></a> 
+	{% endif %}
+	{% if not ita %}
+	  <a href="#"><img class="flag" alt="Eng" title="Versione Italiana" src="/static/images/flag-ita.gif"></a> 
+	{% endif %}
+	  <a href="/"><img class="homeico" alt="Home" title="Home CAI Sovico" src=
+			{% if openbox=='rifugio' %}		
+				"/static/images/homegreen.png"
+			{% elif openbox=='programmi' %}
+				"/static/images/homepurple.png"
+			{% elif openbox=='sezione' %}
+				"/static/images/homeorange.png"
+			{% elif openbox=='pannello' %}
+				"/static/images/homeblue.png"
+			{% endif %}></a>
     </div>
 
 
@@ -34,9 +45,8 @@
         <div id="boxrifugio" class="right-rounded shadow2 mypanel">
           <div class="right-rounded paneltitle green" role="tab" id="headingOne">
             <a class="collapsed" data-toggle="collapse" data-parent="#sidebar" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-              <p>Rifugio</p>
+				<p>Rifugio Del Grande</p> 
             </a>
-			<a href="#"><img class="flag" alt="Eng" title="English Available!" src="/static/images/us-uk-flag.gif"></a>
           </div>
           <div id="collapseOne" class="panel-collapse collapse {% if openbox=='rifugio' %}in{% endif %}" role="tabpanel" aria-labelledby="headingOne">
             <div class="panel-body">
@@ -56,14 +66,15 @@
         <div id="boxescursioni" class="right-rounded shadow2 mypanel">
           <div class="right-rounded paneltitle purple" role="tab" id="headingTwo">
               <a class="collapsed" data-toggle="collapse" data-parent="#sidebar" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                <p>Escursioni</p>
+                <p > Escursioni </p>
               </a>
           </div>
           <div id="collapseTwo" class="panel-collapse collapse {% if openbox=='programmi' %}in{% endif %}" role="tabpanel" aria-labelledby="headingTwo">
             <div class="panel-body">
                 <div class="sidemenu"   id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                   <ul id="purpleglass" class="glassitem">
-                    <a href="/programmi"><li>Escursioni</li></a>
+                    <a href="/programmi/prossime"><li>Prossime Gite</li></a>
+					<a href="/programmi"><li>Calendario</li></a>
                     <a href="/programmi/norme"><li>Norme</li></a>
                   </ul>
                 </div>
@@ -74,18 +85,19 @@
         <div id="boxsezione" class="right-rounded shadow2 mypanel">
           <div class="right-rounded paneltitle orange" role="tab" id="headingThree">
               <a class="collapsed" data-toggle="collapse" data-parent="#sidebar" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                <p>Sezione</p>
+                <p >Sezione </p>
               </a>
-              <a href="#"><img class="flag" alt="Eng" title="English Available!" src="/static/images/us-uk-flag.gif"></a>
           </div>
           <div id="collapseThree" class="panel-collapse collapse {% if openbox=='sezione' %}in{% endif %}" role="tabpanel" aria-labelledby="headingThree">
             <div class="panel-body">
                 <div class="sidemenu"   id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
                   <ul id="orangeglass" class="glassitem">
                     <a href="/sezione"><li>La Sezione</li></a>
-                    <a href="/sezione/contatti"><li>Contatti</li></a>
-                    <a href="/sezione/quote"><li>Quote</li></a>
+                    <a href="/sezione/avvisi"><li>Avvisi</li></a>
                     <a href="/sezione/storia"><li>La Storia</li></a>
+                    <a href="/sezione/quote"><li>Quote</li></a>
+                    <a href="/sezione/assicurazioni"><li>Assicurazioni</li></a>
+                    <a href="/sezione/contatti"><li>Contatti</li></a>
                   </ul>
                 </div>
             </div>
@@ -95,9 +107,8 @@
         <div id="boxriservato" class="right-rounded shadow2 mypanel">
           <div class="right-rounded paneltitle grey" role="tab" id="headingFour">
               <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                <p>Area Riservata</p>
+                <p >Area Riservata </p>
               </a>
-              <a class="corner" href="#"><img class="flag" alt="Eng" title="English Available!" src="/static/images/us-uk-flag.gif"></a>
           </div>
           <div id="collapseFour" class="panel-collapse collapse {% if openbox=='pannello' %}in{% endif %}" role="tabpanel" aria-labelledby="headingFour">
             <div class="panel-body">

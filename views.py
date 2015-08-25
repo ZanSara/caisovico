@@ -109,11 +109,11 @@ def sezhome():
     var = style("sezione")
     template = env.get_template("sez-home.html")
     return template.render(var)
-    
-@app.route("/sezione/contatti" , methods=["GET"])
-def sezcontatti():
+
+@app.route("/sezione/storia" , methods=["GET"])
+def sezstoria():
     var = style("sezione")
-    template = env.get_template("sez-contatti.html")
+    template = env.get_template("sez-storia.html")
     return template.render(var)
 
 @app.route("/sezione/quote" , methods=["GET"])
@@ -122,12 +122,17 @@ def sezquote():
     template = env.get_template("sez-quote.html")
     return template.render(var)
 
-@app.route("/sezione/storia" , methods=["GET"])
-def sezstoria():
+@app.route("/sezione/assicurazioni" , methods=["GET"])
+def sezassic():
     var = style("sezione")
-    template = env.get_template("sez-storia.html")
+    template = env.get_template("sez-assic.html")
     return template.render(var)
 
+@app.route("/sezione/contatti" , methods=["GET"])
+def sezcontatti():
+    var = style("sezione")
+    template = env.get_template("sez-contatti.html")
+    return template.render(var)
 
 # ********** Webmaster links *******************************************
 

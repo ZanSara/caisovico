@@ -61,42 +61,28 @@ body{
   line-height: 180%;
 }
 
-/************** Header  and navbar classes*********************/
 .header{
   position:relative;
   background-size:100% 100%;
 }
-.header img{
-  width:100%;
-  height:auto;
-  margin:0;
-  position:relative;
-  z-index:1;
+.banner{
+  width: 80%;
+  height: auto;
+  margin: 0;
+  position: relative;
+  z-index: 1;
 }
-.navbar{
-  text-align:right;
-  margin:-5px 0;
-  padding: 10px;
+.flag{
+  margin: 1%;
+  height: 30px;
+  float: right;
 }
-.navbar a{
-  color:white;
-  font-size:14px;
-  font-weight:bold;
-  text-align:right;
-  text-decoration:none;
-  position:relative;
-  padding: 10px 20px;
-}
-.navbar a:hover{
-  text-decoration: underline;
-}
-.navmenu{
-  margin:0;
-  padding:0;
-}
-.navmenu li{
-  display: inline;
-  list-style-type:none;
+.homeico{
+  margin: 1%;
+  height: 50px;
+  position:absolute;
+  bottom:0;
+  right:0;
 }
 
 /******************* Sidebar classes ***********************/
@@ -121,13 +107,7 @@ body{
   color: white;
   text-decoration:none;
 }
-.flag{
-  margin:0;
-  height: 30px;
-  width: auto;
-  display: inline;
-  vertical-align: table-cell;
-}
+
 .sidemenu{
   width: 66%;
   height: 100%;
@@ -303,3 +283,4 @@ body{
 }
 .buttonstyle:hover{
   background-color: #6495ED;
+
