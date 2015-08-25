@@ -1,44 +1,67 @@
 {% extends "base/main.html" %}
+{% set leftside='leaflet' %}
+
+{% set home=1 %}
+
+
 
 {% block body %}
     <div class="bacheca shadow2"> <!-- Bacheca -->
-      <div class="bachtitle">
-        <h1>Ultime Notizie e Avvisi</h1>
-      </div>
-      <div class="postside">
-	  
-      {% for post in newslist %}
-        <div class="post">
-          
-          <h3> {{ post.title }} </h3>
-          <p> {{ post.content|nl2br() }} <br>
-          <a href="news/{{ post.id }}"> Leggi Tutto...</a></p>
-          {% if post.pics[0] %}
-          <img src='/uploads/photos/{{ post.pics[0][2] }}'>
-          {% endif %}
-          {% if post.pics[1] %}
-          <img src='/uploads/photos/{{ post.pics[1][2] }}'>
-          {% endif %}
-        </div>
-      {% endfor %}
-      
-        <div class="post">
-          <p>{% if curpage > 1 %}<a href='/{{curpage-1}}'>Prev</a>{% endif %}
-             Pagina {{ curpage }} di {{ totpage }}
-             {% if curpage < totpage %}<a href='/{{curpage+1}}'>Next</a>{% endif %}
-          </p>
+        
+		<h1>Ultime Notizie e Avvisi</h1>
+		<button OnClick="javascript:showDialog('','{Avviso del giorno}','warning');" class="note"> AVVISI </button>
+
+      <div class="left post">
+		{% if leftside=='leaflet' %}
+          <h3> Nuova Gita! </h3>
+          <p> Venite anche voi alla nuova gita! Clicca per scaricare il volantino.<br>
+          <a href="gite/{ leaflet.id }"> Leggi Tutto...</a></p>
+      {% else %}
+          <h3> { rec.title }} </h3>
+          <p> { rec.desc|nl2br() }} <br>
+          <a href="gite/{ rec.id }}"> Leggi Tutto...</a></p>
+		  <!-- {*% if post.pics[0] %} 
+          <img src='/uploads/photos/{ rec.pics[0][2] }}'>
+          {*% endif %}
+          {*% if post.pics[1] %}
+          <img src='/uploads/photos/{ rec.pics[1][2] }}'>
+          {*% endif %} -->
+      {% endif %}
         </div>
 	
-      </div><!-- closes postside -->
-      
-      <div class="noteside">
-        {% for note in noteslist %}
-        <div class="note">
-          <p>{{ note.title|nl2br() }}</p>
+	  <div class="right post">
+      {% if rightside=='document' %}
+          <h3> {{ leaflet.title }} </h3>
+          <p> {{ leaflet.desc|nl2br() }} <br>
+          <a href="gite/{{ leaflet.id }}"> Leggi Tutto...</a></p>
+      {% else %}
+          <h3> { rec.title }} </h3>
+          <p> { rec.desc|nl2br() }} <br>
+          <a href="gite/{ rec.id }}"> Leggi Tutto...</a></p>
+		  <!--{*% if post.pics[0] %}
+          <img src='/uploads/photos/{ rec.pics[0][2] }}'>
+          {*% endif %}
+          {*% if post.pics[1] %}
+          <img src='/uploads/photos/{ rec.pics[1][2] }}'>
+          {*% endif %}-->
+      {% endif %}
         </div>
-        {% endfor %}
-      </div><!-- closes noteside -->
 
     </div><!-- closes bacheca -->
 
+{% endblock %}
+
+
+{% block rec %}
+        <div class="rec">
+          <h3> { rec.title }} </h3>
+          <p> { rec.desc|nl2br() }} <br>
+          <a href="gite/{ rec.id }}"> Leggi Tutto...</a></p>
+		  {% if post.pics[0] %}
+          <img src='/uploads/photos/{ post.pics[0][2] }}'>
+          {% endif %}
+          {% if post.pics[1] %}
+          <img src='/uploads/photos/{ post.pics[1][2] }}'>
+          {% endif %}
+        </div>
 {% endblock %}

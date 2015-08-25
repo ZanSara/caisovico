@@ -29,7 +29,62 @@
   color: #050336;
 }
 
-/************** Main Page classes ********************/
+/******************** Home Page classes *******************************/
+
+.index{
+    position:relative;
+    margin:auto;
+    margin-top: 0;
+    margin-bottom:5%;
+    width: 90%;
+    padding: 5px;
+}
+.index td{
+    font-size:16px;
+    font-family:arial, verdana, sans-serif;
+    line-height: 250%;
+    position:relative;
+    padding: 5px;
+    text-align: center;
+    background-color: #423189;
+}
+.index td:hover{
+    background-color: #644EC1;
+}
+.index th{
+    background-color: #FFFFFF;
+}
+.index a{
+  color: #FFFFFF;
+  font-weight:bold;
+  text-decoration:none;
+}
+.index a:hover{
+  text-decoration:underline;
+}
+
+
+.text a{
+    text-decoration:none;
+}
+.text a h1:hover{
+    text-decoration:underline;
+}
+.text img{
+  width:50%;
+}
+.text .label{
+  background-color: #CCC2E0;
+}
+.text .me{
+  width:35%;
+  margin: 0 30%;
+  float:center;
+}
+
+
+
+/************** Login Page classes ********************/
 
 .boxlog{
   overflow:hidden;
@@ -51,8 +106,11 @@
     margin:auto;
     margin-top:10px;
     margin-bottom:0;
-
 }
+
+
+/************** Upload Page classes ********************/
+
 .boxup{
   overflow:hidden;
   border: 4px dotted #050336;
@@ -104,6 +162,31 @@ form .nota{
     height:108px;
 }
 
+.photobox{
+    overflow: hidden;
+    display: inline-block;
+    vertical-align:top;
+    text-align:center;
+    margin-left: 4%;
+    margin-bottom: 2%;
+    margin-top: 2%;
+    padding: 15px;
+    width: 35%;
+    background-color: #E6DCF9;
+    border: 2px solid #A69CB9;
+}
+.photobox img, .photobox input, .photobox p, .photobox a{
+    width: 70%;
+    margin-left:auto; 
+    margin-right:auto;
+    margin-top: 5px;
+    margin-bottom:5px;
+}
+
+
+
+/************** Button classes ********************/
+
 .btn-upload{
     background-color: #685194;
     padding: 15px 10%;
@@ -149,57 +232,27 @@ form .nota{
 }
 
 
-.index{
-    position:relative;
-    margin:auto;
-    margin-top: 0;
-    margin-bottom:5%;
-    width: 90%;
-    padding: 5px;
+/************** Manage Page classes ********************/
+
+.calend li {
+  font-size:14px;
+  line-height:160%;
 }
-.index td{
-    width: 30%;
-    font-size:16px;
-    font-family:arial, verdana, sans-serif;
-    line-height: 250%;
-    position:relative;
-    padding: 5px;
-    text-align: center;
-    background-color: #423189;
+.calend tr td:first-child p {
+  text-align:right;
+  font-style: italic;
+  margin: 7px;
+  padding: 0;
 }
-.index td:hover{
-    background-color: #644EC1;
+.calend tr td:first-child {
+  width:25%;
 }
-.index th{
-    background-color: #FFFFFF;
-}
-.index a{
-  color: #FFFFFF;
-  font-weight:bold;
-  text-decoration:none;
-}
-.index a:hover{
-  text-decoration:underline;
+.calend tr td:nth-child(2) p {
+  margin: 7px;
+  padding: 0;
 }
 
 
-.text a{
-    text-decoration:none;
-}
-.text a h1:hover{
-    text-decoration:underline;
-}
-.text img{
-  width:50%;
-}
-.text .label{
-  background-color: #CCC2E0;
-}
-.text .me{
-  width:35%;
-  margin: 0 30%;
-  float:center;
-}
 
 .pseudotable{
     margin:auto;
@@ -254,27 +307,6 @@ form .nota{
     float:left;
 }
 
-
-.photobox{
-    overflow: hidden;
-    display: inline-block;
-    vertical-align:top;
-    text-align:center;
-    margin-left: 4%;
-    margin-bottom: 2%;
-    margin-top: 2%;
-    padding: 15px;
-    width: 35%;
-    background-color: #E6DCF9;
-    border: 2px solid #A69CB9;
-}
-.photobox img, .photobox input, .photobox p, .photobox a{
-    width: 70%;
-    margin-left:auto; 
-    margin-right:auto;
-    margin-top: 5px;
-    margin-bottom:5px;
-}
 
 
 

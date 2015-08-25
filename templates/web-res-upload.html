@@ -17,10 +17,10 @@
     {% endif %}
 
     <div class="boxup">
-    {% if obj=='news' or obj=='note' or obj=='doc' %}
+    {% if obj=='leaflet' or obj=='popup' or obj=='doc' %}
         <form method=POST enctype=multipart/form-data>
 
-      {% if obj=='news' %}
+      {% if obj=='leaflet' %}
         <div style="text-align:right;">
             <input class='data' name="data" id="datepick" value='{{ item.date }}' type="text" placeholder="Data..."/>
         </div>

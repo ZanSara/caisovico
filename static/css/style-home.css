@@ -24,7 +24,7 @@
 .bacheca{
   position: relative;
   float: right;
-  width: 60%;
+  width: 66%;
   height:auto;
   margin: 30px 1%;
   padding: 0;
@@ -40,37 +40,46 @@
   font-size: 26px;
   text-align: center;
   background-color:white;
-  padding: 20px;
-  margin: 5px 30px;
+  padding: 20px 0;
+  margin: 10px 30px;
   border-bottom: 3px solid #bbb;
   border-right: 3px solid #bbb;
   border-top: 3px solid #FFFFFF;
   border-left: 3px solid #FFFFFF;
 }
-.bachtitle{
-  background:#EED2A0;
-  margin:0;
-  padding: 10px;
+.note{
+  position: absolute;
+  top:-5px;
+  right: -5px;
+  height: auto;
+  z-index: 3;
+  padding: 20px;
+  background-color:#FFEE70;
+  border-bottom: 3px solid #bbb;
+  border-right: 3px solid #bbb;
+  border-top: 3px solid #FFFFFF;
+  border-left: 3px solid #FFFFFF;
 }
-.postside{
-  position:relative;
-  float:left;
-  width:63%;
-  height:100%;
-  margin:0 0 10px 10px ;
-  padding:0;
+.note p{
+  text-align: 
+  font-size: 14px;
+  font-style: italic;
+  line-height:150%;
 }
-.noteside{
-  position:relative;
+
+
+.right{
   float:right;
-  width:33%;
-  height:100%;
-  margin:0 10px 10px 0;
-  padding:0;
+}
+.left{
+  float:left;
 }
 .post{
-  margin: 20px 8px;
-  padding:20px;
+  position:relative;
+  width: 40%;
+  height: 100%;
+  margin: 2% ;
+  padding: 2%;
   background-color:white;
   border-bottom: 3px solid #bbb;
   border-right: 3px solid #bbb;
@@ -92,20 +101,8 @@
   text-align: right;
   font-style: italic;
 }
-.note{
-  margin: 20px 8px;
-  padding:20px;
-  background-color:#FFEE70;
-  border-bottom: 3px solid #bbb;
-  border-right: 3px solid #bbb;
-  border-top: 3px solid #FFFFFF;
-  border-left: 3px solid #FFFFFF;
-}
-.note p{
-  font-size: 20px;
-  font-style: italic;
-  line-height:200%;
-}
+
+
 
 .news{
   width: 85%;

@@ -4,7 +4,7 @@
     
   
   # MAIN ISSUES:
-  # 1. Later on, should consider storing error messages in a log file...
+  # 1. Later on, should consider storing error messages in a log file... DONE
   # 2. Should rethink the database structure concerning pictures' storage: 
   #    there should be a 'pics' table linked with a relationship "many to one" with 'news'
   # 3. Why I may add only one picture a time, when modifying a news?
@@ -12,7 +12,7 @@
   # Secondary issues somewhere in the code
   
   # var: dictionary that contains all the template context variables
-  # item: dictionary that contains all the object-related variables (titles, texts, etc...) Contained inside var.
+  # item: dictionary that contains all the object-related variables (titles, texts, etc...). Contained inside var.
 
 
 try:
@@ -20,7 +20,7 @@ try:
     from flask import request, abort
     from jinja2 import evalcontextfilter, Markup, escape
     from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, retrieve_item, retrieve_index, load_lista, delete_item, delete_pic, load_page, get_totpage
-    import sys, sqlite3, os, re     # sys if for errors handling, os is for file managing
+    import sys, sqlite3, os, re     # sys for errors handling, os for file managing
 except Exception as e:
     app.logger.critical('CORE IMPORTING ERROR: {0}'.format(e) )
     print 'CORE IMPORTING ERROR: {0}'.format(e)

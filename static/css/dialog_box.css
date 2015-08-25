@@ -1,0 +1,62 @@
+
+#content {
+padding:20px
+}
+
+#dialog {
+position:absolute; 
+width:225px; 
+padding:0px; 
+z-index:200; 
+background:#fff
+}
+
+#dialog-title {
+float:left
+}
+
+#dialog-close {
+float:right; 
+margin:5px; 
+height:11px; 
+width:11px; 
+background:url(/static/images/postit-images/dialog_close.gif) no-repeat
+}
+
+/* The actual popup */
+#dialog-content {
+  text-align: 
+  font-size: 14px;
+  font-style: italic;
+  line-height:150%;
+display:block; 
+padding:20px; 
+color:#666666; 
+font-size:20px
+}
+
+/* Color of the background mask */
+#dialog-mask {
+position:absolute; 
+top:0; 
+left:0; 
+min-height:100%; 
+width:100%; 
+background:#444; 
+opacity:.3; filter:alpha(opacity=30);
+ z-index:100
+}
+
+.warning {
+  background-color:#FFEE70;
+  border-bottom: 3px solid #bbb;
+  border-right: 3px solid #bbb;
+  border-top: 3px solid #FFFFFF;
+  border-left: 3px solid #FFFFFF;
+}
+.warningheader {
+background:url(/static/images/postit-images/warning_header.gif) repeat-x; 
+color:#957c17; 
+border:1px solid #c5a524;
+ border-bottom:none
+}

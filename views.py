@@ -230,6 +230,17 @@ def viewupload(obj):
 
 # ************ Manage **************************************************
 
+@app.route("/pannello/area-riservata/manage/calendario", methods=["GET"])
+@login_required
+def viewmanage_calendario():
+    var = style("webmaster")
+    var['obj'] = "obj"
+    var['manage'] = 'manage'
+    #var = manage(var)
+    template = env.get_template("web-res-manage-calendario.html")    
+    return template.render(var)
+    
+
 @app.route("/pannello/area-riservata/manage/<obj>", methods=["GET"])
 @login_required
 def viewmanage(obj):

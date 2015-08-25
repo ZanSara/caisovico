@@ -10,12 +10,17 @@
     {% if bootstrap %}
     <link href="/static/css/carousel-bootstrap.css" rel="stylesheet">
     {% endif %}
-    
+	{% if home %}  <!-- Custom JS popups -->
+	<link rel="stylesheet" type="text/css" href="/static/css/dialog_box.css" />
+	<script type="text/javascript" src="/static/javascript/dialog_box.js"></script>
+    {% endif %}
 
   </head>
 
-  <body>
 
+   <!-- Pop the note out -->
+  <body  {% if home %} onload="showDialog('','Ricordatevi il bollino del 2015! Sta per scadere!','warning');" {% endif %}>
+ 
   <div class='shadow2 page'>
 
     <div class="main">   <!--Useful only to keep the footer in the right place... :/-->
