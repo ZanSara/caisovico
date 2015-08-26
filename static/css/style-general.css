@@ -283,4 +283,25 @@ body{
 }
 .buttonstyle:hover{
   background-color: #6495ED;
+}
+.s-buttonstyle{
+    display:block;
+    font-size:14px;
+    color: #FFFFFF;
+    font-weight:bold;
+    line-height:100%;
+    text-decoration: none;
+    font-family: arial, verdana, sans-serif;
+    text-align: center;
+    background-color: #465AFB; 
+    padding: 3px;
+    margin: 5px;
+    border: none;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+}
+.s-buttonstyle:hover{
+  background-color: #6495ED;
+}
 

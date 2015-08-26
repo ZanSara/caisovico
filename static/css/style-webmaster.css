@@ -123,9 +123,9 @@ hr{
     margin: 30px;
 }
 
-input[type="text"], input[type="datetime"], input[type="password"], textarea{
+input[type="text"], input[type="datetime"], input[type="password"]{
     border : 1px solid #cccccc;
-    font-family:sans-serif;
+    font-family: sans-serif;
     margin-top:10px;
     margin-bottom:10px;
 }
@@ -142,9 +142,8 @@ form .data{
     margin-right:5%;
 }
 form .textfield{
-    font-family:sans-serif;
-    width:90%;
-    height:160px;
+    width:70%;
+    height:140px;
 }
 form .caption{
     font-size: 14px;
@@ -205,51 +204,64 @@ form .nota{
     background-color: #FF0000;
     padding: 15px 10%;
 }
-.btn-del:hover, .s-delbuttonstyle:hover{
+.btn-del:hover, .s-btn-del:hover{
   background-color: #FF914D;
 }
-.s-delbuttonstyle{
-    display:block;
+.s-btn-del{
     color: #FFFFFF;
-    font-size:14px;
-    font-weight:bold;
-    line-height:100%;
-    text-decoration: none;
-    font-family: arial, verdana, sans-serif;
-    text-align: center;
     background-color: red;
-    padding: 3px;
-    margin: 5px;
-    border: none;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px;
 }
-.s-delbuttonstyle p{
+.s-btn-del p{
     color:white;
     margin:0;
     padding:0;
 }
-
+.tbl-btn{
+	width:50%;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top: 5px;
+	margin-bottom:5px;
+}
 
 /************** Manage Page classes ********************/
 
 .calend li {
   font-size:14px;
   line-height:160%;
+  border-collapse: collapse;  /* Makes row borders stylable? */
 }
-.calend tr td:first-child p {
+.calend{
+  width: 90%;
+  position: relative;
+  margin: auto;
+}
+
+.calend tr:nth-child(even) td{
+  border-bottom: 3px solid #888;
+}
+.calend tr td:first-child{
+  border-left: 3px solid #888;
+}
+.calend tr td:nth-child(2){
+  border-right: 3px solid #888;
+}
+
+.calend tr td:nth-child(1) p {
   text-align:right;
   font-style: italic;
   margin: 7px;
   padding: 0;
 }
-.calend tr td:first-child {
+.calend tr td:nth-child(1) {
   width:25%;
 }
 .calend tr td:nth-child(2) p {
   margin: 7px;
   padding: 0;
+}
+.calend tr td:nth-child(3){
+  width:15%;
 }
 
 
