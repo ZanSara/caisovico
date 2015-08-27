@@ -3,15 +3,6 @@
 .header{
   background-image:url('../images/banner-prog.jpg');
 }
-.navbar{
-  background-color:#7B00A8;
-}
-.navbar a{
-  background-color: #43005C;
-}
-.navbar a:hover{
-  background-color: #C62EFF;
-}
 .page{
   background-color: #E7C1F5;
 }

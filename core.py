@@ -20,6 +20,8 @@ try:
     from flask import request, abort
     from jinja2 import evalcontextfilter, Markup, escape
     from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, retrieve_item, retrieve_index, load_lista, delete_item, delete_pic, load_page, get_totpage
+    
+    from database import find_postit, last_leaflet, last_doc, find_rec
     import sys, sqlite3, os, re     # sys for errors handling, os for file managing
 except Exception as e:
     app.logger.critical('CORE IMPORTING ERROR: {0}'.format(e) )
@@ -35,10 +37,17 @@ def home(var):
     conn = sqlite3.connect(DATABASE_PATH)
     with conn:
         cursor = conn.cursor()
-        var['newslist'] = load_page('news', cursor, 5, 0)
-        var['noteslist'] = load_page('note', cursor, 5, 0)
-        var['curpage'] = 1
-        var['totpage'] = get_totpage(5, cursor)
+        var['postit'] = find_postit()
+        var['leaflet'] = last_leaflet()    #load_page('news', cursor, 5, 0)
+        var['doc'] = last_doc()
+        # Both leaflet and doc may be None. Then look for a filler.
+        if var['leaflet']==None:
+            var['recleft'] = find_rec(0)
+        if var['doc']==None:
+            if var['leaflet']==None:
+                var['recright'] = find_rec(1)
+            else:
+                var['recright'] = find_rec(0)
     return var
     
 def homepages(var, index):

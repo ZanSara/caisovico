@@ -14,6 +14,25 @@ except Exception as e:
     raise
 
 
+# ************* Completely new code ***********************************
+
+def find_postit():
+    pass
+
+def last_leaflet():
+    pass
+
+def last_doc():
+    pass
+    
+def find_rec(index):
+    pass
+
+
+
+
+
+
 # *********** NEWS Management ******************************************
 
 # Legend:   

@@ -3,15 +3,6 @@
 .header{
   background-image:url('../images/banner-web.jpg');
 }
-.navbar{
-  background-color: #9893C2;
-}
-.navbar a{
-  background-color: #575086;
-}
-.navbar a:hover{
-  background-color: #B2AEC6;
-}
 .page{
   background-color: #E6DCF9;
 }
@@ -226,26 +217,23 @@ form .nota{
 
 /************** Manage Page classes ********************/
 
-.calend li {
+.calend td {
   font-size:14px;
   line-height:160%;
-  border-collapse: collapse;  /* Makes row borders stylable? */
 }
 .calend{
   width: 90%;
   position: relative;
   margin: auto;
+  border-collapse: collapse;  /* Makes row borders stylable */
+}
+.calend tr:nth-child(odd){
+  border-top: 2px solid #999;
+}
+.calend tr:nth-child(even){
+  border-bottom: 2px solid #999;
 }
 
-.calend tr:nth-child(even) td{
-  border-bottom: 3px solid #888;
-}
-.calend tr td:first-child{
-  border-left: 3px solid #888;
-}
-.calend tr td:nth-child(2){
-  border-right: 3px solid #888;
-}
 
 .calend tr td:nth-child(1) p {
   text-align:right;

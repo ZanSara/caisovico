@@ -43,6 +43,8 @@ function showDialog(title,message,type,autohide) {
     dialogtitle.id = 'dialog-title';
     dialogclose = document.createElement('div');
     dialogclose.id = 'dialog-close'
+    dialogimg = document.createElement('img');
+    dialogimg.id = 'dialog-img';
     dialogcontent = document.createElement('div');
     dialogcontent.id = 'dialog-content';
     dialogmask = document.createElement('div');
@@ -52,6 +54,8 @@ function showDialog(title,message,type,autohide) {
     dialog.appendChild(dialogheader);
     dialogheader.appendChild(dialogtitle);
     dialogheader.appendChild(dialogclose);
+    dialogheader.appendChild(dialogimg);
+    dialogimg.setAttribute('src','/static/images/postit-head.png');
     dialog.appendChild(dialogcontent);;
     dialogclose.setAttribute('onclick','hideDialog()');
     dialogclose.onclick = hideDialog;

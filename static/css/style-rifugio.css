@@ -3,15 +3,6 @@
 .header{
   background-image:url('../images/banner-rif.jpg');
 }
-.navbar{
-  background-color:#00992E;
-}
-.navbar a{
-  background-color: #00611D;
-}
-.navbar a:hover{
-  background-color: #14FF5B;
-}
 .page{
   background-color: #A8E1AD;
 }

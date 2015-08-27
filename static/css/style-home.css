@@ -47,38 +47,28 @@
   border-top: 3px solid #FFFFFF;
   border-left: 3px solid #FFFFFF;
 }
-.note{
+.postit{
   position: absolute;
-  top:-5px;
-  right: -5px;
-  height: auto;
+  top:-30px;
+  right: -30px;
+  height: 100px;
   z-index: 3;
   padding: 20px;
-  background-color:#FFEE70;
-  border-bottom: 3px solid #bbb;
-  border-right: 3px solid #bbb;
-  border-top: 3px solid #FFFFFF;
-  border-left: 3px solid #FFFFFF;
 }
-.note p{
-  text-align: 
+.postit p{
+  text-align:center; 
   font-size: 14px;
   font-style: italic;
   line-height:150%;
 }
 
-
-.right{
-  float:right;
-}
-.left{
-  float:left;
-}
 .post{
   position:relative;
+  float:left;
   width: 40%;
   height: 100%;
-  margin: 2% ;
+  margin: 1%;
+  margin-left: 3% ;
   padding: 2%;
   background-color:white;
   border-bottom: 3px solid #bbb;

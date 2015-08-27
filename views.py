@@ -31,22 +31,6 @@ def viewhome():
         app.logger.critical('*** HOMEPAGE FAILED TO LOAD ***')
     return template.render(var)
     
-@app.route("/<int:index>" , methods=["GET"])
-def viewhomepages(index):
-    var = style("home")
-    try:
-        var = homepages(var, index)
-    except:
-        # "Safety Homepage".
-        template = env.get_template("home-safety.html")
-        app.logger.critical('*** HOMEPAGE FAILED TO LOAD ***')
-        
-    if index > var['totpage']:
-        app.logger.warning('404: tried to access home-page n^{0}, while the maximum is {1}'.format(index, var['totpage']))
-        return abort(404)
-    template = env.get_template("home.html")
-    return template.render(var)
-    
 @app.route("/news/<id>" , methods=["GET"])
 def viewfullnews(id):
     var = style("home")
