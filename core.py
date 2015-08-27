@@ -24,8 +24,8 @@ try:
     from database import find_postit, last_leaflet, last_doc, find_rec
     import sys, sqlite3, os, re     # sys for errors handling, os for file managing
 except Exception as e:
-    app.logger.critical('CORE IMPORTING ERROR: {0}'.format(e) )
     print 'CORE IMPORTING ERROR: {0}'.format(e)
+    app.logger.critical('CORE IMPORTING ERROR: {0}'.format(e) )
     raise
 
 
@@ -248,6 +248,22 @@ def deletepic(var):
 
 # ************** Misc **************************************************
 
+# Thumbnailer
+
+#from wand.image import Image
+
+# Converting first page into JPG
+def makethumb():
+    with Image(filename="uploads/docs/verbi.pdf[0]") as img:
+         img.save(filename="uploads/thumb/temp.jpg")
+    # Resizing this image
+    with Image(filename="uploads/thumb/temp.jpg") as img:
+         # scale height to 100px and preserve aspect ratio
+         img.transform(resize='x300')
+         img.save(filename="uploads/thumb/thumbnail.jpg")
+
+
+
 # Multiline rendering
 
 _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
@@ -260,38 +276,39 @@ def nl2br(eval_ctx, value):
     if eval_ctx.autoescape:
         result = Markup(result)
     return result
-
+    
 env.filters['nl2br'] = nl2br
+
 
 
 def style(style):
     """ 
         style(style):
     This is just an utility to make some modification regarding the
-    styles of different sections of the website (css, open boxes, menu)
+    styles of different sections of the website (css, open boxes)
     """
     if style=="home":
-        var = {"menu": "base/menu-home.html"};
+        var = {}
         var["url_for_css"] = "/static/css/style-home.css"
         var["openbox"] = "rifugio"
         
     elif style=="rifugio":
-        var = {"menu": "base/menu-rif.html"};
+        var = {}
         var["url_for_css"] = "/static/css/style-rifugio.css"
         var["openbox"] = "rifugio"
         
     elif style=="programmi":
-        var = {"menu": "base/menu-prog.html"};
+        var = {}
         var["url_for_css"] = "/static/css/style-programmi.css"
         var["openbox"] = "programmi"
         
     elif style=="sezione":
-        var = {"menu": "base/menu-sez.html"};
+        var = {}
         var["url_for_css"] = "/static/css/style-sezione.css"
         var["openbox"] = "sezione"
         
     elif style=="webmaster":
-        var = {"menu": "base/menu-web.html"};
+        var = {}
         var["url_for_css"] = "/static/css/style-webmaster.css"
         var["openbox"] = "pannello"
 

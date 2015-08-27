@@ -18,6 +18,7 @@ except Exception as e:
 BASE_PATH = os.getcwd()
 UPLOAD_FOLDER_DOCS = 'uploads/docs'
 UPLOAD_FOLDER_PICS = 'uploads/photos'
+UPLOAD_FOLDER_THUMB = 'uploads/thumb'
 ALLOWED_EXTENSIONS_PICS = set(['png', 'jpg', 'jpeg', 'gif', 'tif', 'tiff'])
 ALLOWED_EXTENSIONS_DOCS = set(['txt', 'pdf'])
 DATABASE_PATH = 'base.sqlite'
@@ -27,6 +28,7 @@ DATABASE_PATH = 'base.sqlite'
 app = Flask(__name__, static_folder="static")
 app.config['UPLOAD_FOLDER_DOCS'] = UPLOAD_FOLDER_DOCS
 app.config['UPLOAD_FOLDER_PICS'] = UPLOAD_FOLDER_PICS
+app.config['UPLOAD_FOLDER_THUMB'] = UPLOAD_FOLDER_THUMB
 app.secret_key = ".ASF\x89m\x14\xc9s\x94ff\xfaq\xca}h\xe1/\x1f3\x1dFxj\xdc\xf0\xf9..."
 
 env = Environment(loader=PackageLoader('config', '/templates'))

@@ -73,6 +73,18 @@ def rifstoria():
 
 # ********** Programmi links *******************************************
 
+@app.route("/programmi/prossima-gita" , methods=["GET"])
+def prognuovagita():
+    var = style("programmi")
+    template = env.get_template("prog-nuovagita.html")
+    return template.render(var)
+    
+@app.route("/programmi/eventi" , methods=["GET"])
+def progeventi():
+    var = style("programmi")
+    template = env.get_template("prog-eventi.html")
+    return template.render(var)
+
 @app.route("/programmi" , methods=["GET"])
 def proghome():
     var = style("programmi")
@@ -151,9 +163,11 @@ def static_file(folder, filename):
     try:
         if folder=='photos':
             return send_from_directory(app.config['UPLOAD_FOLDER_PICS'], filename)
+        elif folder=='thumb':
+            return send_from_directory(app.config['UPLOAD_FOLDER_THUMB'], filename)
         return send_from_directory(app.config['UPLOAD_FOLDER_DOCS'], filename)
     except Exception as e:
-        app.logger.error("'{0}' cannot be sent because it does not exist in '{1}'. Is database ok?".format(filename, folder))
+        app.logger.error("An exception occurred trying to send '{0}' from '{1}'. Does the file exist?".format(filename, folder))
     return abort(404)
 
 
