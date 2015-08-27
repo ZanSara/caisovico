@@ -3,19 +3,38 @@
 {% block body %}
     <div class="text">
         
-	  <h1>Eventi passati</h1>
+	  <h1>Eventi del {year}</h1>
 	  
-	  
-	  <div class='box'>
+	  <div class='post'>
           <h3> Gita al Rifugio </h3>
           <p> Una fantastica escursione tra le montagne della Valmalenco. <br></p>
           <a href='{post.id}'>Leggi tutto</a><br>
           <img src='/uploads/thumb/thumb1.jpg'>
-          <img src='/uploads/thumb/thumb2.jpg'>\
-          { endif }
+          <img src='/uploads/thumb/thumb2.jpg'>
       </div>
-	  
-	  
+      
+      <div class='post'>
+          <h3> Gita al Rifugio </h3>
+          <p> Una fantastica escursione tra le montagne della Valmalenco. <br></p>
+          <a href='{post.id}'>Leggi tutto</a><br>
+          <img src='/uploads/thumb/thumb1.jpg'>
+          <img src='/uploads/thumb/thumb2.jpg'>
+      </div>
+      
+      <a href='eventi/{2014}'>
+        <div class='post postbtn'>
+          < 2014
+        </div>
+      </a>
+      
+      <a href='eventi/{2016}'>
+        <div class='post postbtn' style='text-align:right;'>
+          2016 >
+        </div>
+      </a>
+      
+       
+	  <!--
 	  { for post in postlist }
 	  
 	  <div class='box'>
@@ -30,7 +49,7 @@
           { endif }
       </div>
 
-      { endfor }
+      { endfor }-->
 
     </div><!-- closes bacheca -->
 

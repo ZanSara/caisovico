@@ -11,7 +11,26 @@
 		<h1>Ultime Notizie e Avvisi</h1>
 		<!--<img src="/static/images/postit.png" class="postit" OnClick="javascript:showDialog('','{Avviso del giorno}<br><button id=postit-btn OnClick=hideDialog()>CHIUDI</button>','warning');"> -->
 
-      <div class="post">
+      <div class="postit">
+          <div class="postit-header">
+              <img src="/static/images/postit-head.png">
+          </div>
+          <div class="postit-content">
+              <p>{{ postit1 }}</p>
+          </div>
+      </div>
+      
+      
+      <div class="postit">
+          <div class="postit-header">
+              <img src="/static/images/postit-head.png">
+          </div>
+          <div class="postit-content">
+              <p>{{ postit2 }}</p>
+          </div>
+      </div>
+            
+      <!--<div class="post">      
           <h3> { rec.title }} </h3>
           <p> { rec.desc|nl2br() }} <br>
       </div>
@@ -25,9 +44,9 @@
           <h3> { rec.title }} </h3>
           <p> { rec.desc|nl2br() }} <br>
       </div>
-	{ endfor }
+	{ endfor }-->
 
-    </div><!-- closes bacheca -->
+    </div> <!-- closes bacheca -->
 
 {% endblock %}
 

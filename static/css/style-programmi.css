@@ -10,8 +10,6 @@
   background-color: #6B00EB;
 }
 .text{
-  font-size:14px;
-  line-height:160%;
   background-color: #FFFFFF;
   border: 2px solid #6600FF;
 }
@@ -38,47 +36,22 @@ table tr td:nth-child(2) p {
   padding: 0;
 }
 
-/************** Prossima Gita classes ********************/
 
-.container{
-  overflow:hidden;
-  margin:5%;
-}
-.miniature{
-  width:25%;
-}
-.miniature img{
-  padding:0;
-  margin:auto;
-  float:left;
-  height:auto;
-}
-.description{
-  float:right;
-  width:75%;
-}
-.description a{
-  margin:25px;
-}
 
-/************** Eventi classes ********************/
+/************** Eventi classes (See style-general for more about .post) ********************/
 
-.box{
-  overflow:hidden;
-  position:relative;
-  float:left;
-  width: 45%;
-  margin:3%;
+.post{
+  width: 40%;
+  background-color: #F9F0FF;
+}
+.post img{
+  width: 40%;
+  height: auto;
+  display:inline;
   padding: 0;
-  border: 1px solid black;
+  margin: 20px 7px;  
 }
-.box a, .box p, ,box h3{
-  margin:0;
-  margin-left:25px;
+.postbtn{
+  font-weight:bold;
+  font-size:24px;
 }
-.box img{
-  width:20%;
-}
-
-
-

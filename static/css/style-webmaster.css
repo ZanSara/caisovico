@@ -61,9 +61,6 @@
 .text a h1:hover{
     text-decoration:underline;
 }
-.text img{
-  width:50%;
-}
 .text .label{
   background-color: #CCC2E0;
 }
@@ -98,6 +95,19 @@
     margin-top:10px;
     margin-bottom:0;
 }
+
+/************** Postit classes ********************/
+
+.postit-text{
+  font-size:20px;
+  line-height:150%;
+  font-family:arial, verdana, sans-serif;
+  margin-top: 30px;
+  width:80%;
+  height:150px;
+  background:#fff7b2;
+}
+
 
 
 /************** Upload Page classes ********************/

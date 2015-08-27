@@ -19,7 +19,9 @@
 
 
    <!-- Pop the note out -->
-  <body>
+  <body {% if home %} onload="showDialog('','Ricordatevi il bollino del 2015! Sta per scadere!<br><button OnClick=hideDialog() class=postit-btn buttonstyle>CHIUDI</button>','warning');" {% endif %}>
+ 
+    
  
   <div class='shadow2 page'>
 
@@ -79,7 +81,7 @@
                 <div class="sidemenu"   id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                   <ul id="purpleglass" class="glassitem">
                     <a href="/programmi/prossima-gita"><li>Prossima Gita</li></a>
-                    <a href="/programmi/eventi"><li>Eventi Passati</li></a>
+                    <a href="/programmi/eventi/{2015}"><li>Eventi Passati</li></a>
 					<a href="/programmi"><li>Calendario</li></a>
                     <a href="/programmi/norme"><li>Norme</li></a>
                   </ul>
@@ -99,7 +101,7 @@
                 <div class="sidemenu"   id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
                   <ul id="orangeglass" class="glassitem">
                     <a href="/sezione"><li>La Sezione</li></a>
-                    <a href="/sezione/avvisi"><li>Avvisi</li></a>
+                    <a href="/sezione/documenti"><li>Documenti</li></a>
                     <a href="/sezione/storia"><li>La Storia</li></a>
                     <a href="/sezione/quote"><li>Quote</li></a>
                     <a href="/sezione/assicurazioni"><li>Assicurazioni</li></a>

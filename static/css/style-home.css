@@ -42,81 +42,19 @@
   background-color:white;
   padding: 20px 0;
   margin: 10px 30px;
-  border-bottom: 3px solid #bbb;
-  border-right: 3px solid #bbb;
-  border-top: 3px solid #FFFFFF;
-  border-left: 3px solid #FFFFFF;
 }
+
 .postit{
   position: absolute;
   top:-30px;
   right: -30px;
   height: 100px;
+  width:auto;
   z-index: 3;
   padding: 20px;
 }
-.postit p{
-  text-align:center; 
-  font-size: 14px;
-  font-style: italic;
-  line-height:150%;
+
+.copertina{
+  width:100%
 }
 
-.post{
-  position:relative;
-  float:left;
-  width: 40%;
-  height: 100%;
-  margin: 1%;
-  margin-left: 3% ;
-  padding: 2%;
-  background-color:white;
-  border-bottom: 3px solid #bbb;
-  border-right: 3px solid #bbb;
-}
-.post img{
-  width:40%;
-  height: auto;
-  display:inline;
-  margin: 10px;  
-}
-.post a{
-  color: blue;
-  font-size: 16px;
-}
-.post h3{
-  text-align:center;
-}
-.date{
-  text-align: right;
-  font-style: italic;
-}
-
-
-
-.news{
-  width: 85%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  padding: 20px;
-  background-color:white;
-  border-bottom: 3px solid #bbb;
-  border-right: 3px solid #bbb;
-}
-.news h2, .news h3{
-  text-align:center;
-}
-.news h5{
-  font-weight:none;
-  font-style:italic;
-  text-align:right;
-}
-.news img{
-  margin:0;
-}
-.news .label{
-  margin: 10px;
-  font-style: italic;
-}

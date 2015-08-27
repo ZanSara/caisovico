@@ -20,8 +20,6 @@ try:
     from flask import request, abort
     from jinja2 import evalcontextfilter, Markup, escape
     from database import upload_news, load_news, update_news, upload_note, load_note, update_note, update_doc, upload_doc, load_doc, retrieve_item, retrieve_index, load_lista, delete_item, delete_pic, load_page, get_totpage
-    
-    from database import find_postit, last_leaflet, last_doc, find_rec
     import sys, sqlite3, os, re     # sys for errors handling, os for file managing
 except Exception as e:
     print 'CORE IMPORTING ERROR: {0}'.format(e)
@@ -30,25 +28,44 @@ except Exception as e:
 
 
 
+# ************* To Do ***********************************
+
+def last_leaflet():
+    pass
+
+def last_doc():
+    pass
+    
+def find_rec(index):
+    pass
+
+
+def prossimagita():
+    pass
+    
+def eventi(year):
+    pass
+
+def managepostit(var, request):
+    if request.method=="POST":
+        f1 = open('{0}/postit1.txt'.format(app.config['UPLOAD_FOLDER_POSTIT']), 'w')
+        
+        
+    return var
+
+
+
 
 # ********* Home & News ************************************************
 
-def home(var):
-    conn = sqlite3.connect(DATABASE_PATH)
-    with conn:
-        cursor = conn.cursor()
-        var['postit'] = find_postit()
-        var['leaflet'] = last_leaflet()    #load_page('news', cursor, 5, 0)
-        var['doc'] = last_doc()
-        # Both leaflet and doc may be None. Then look for a filler.
-        if var['leaflet']==None:
-            var['recleft'] = find_rec(0)
-        if var['doc']==None:
-            if var['leaflet']==None:
-                var['recright'] = find_rec(1)
-            else:
-                var['recright'] = find_rec(0)
-    return var
+def find_postit(var):
+    pass
+
+
+    
+    
+    
+    
     
 def homepages(var, index):
     conn = sqlite3.connect(DATABASE_PATH)

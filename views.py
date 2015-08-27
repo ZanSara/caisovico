@@ -7,7 +7,7 @@ try:
     from flask import request, session, abort, url_for, redirect, send_from_directory, render_template
     from decorators import login_required
     from utils import login, logout
-    from core import nl2br, style, home, homepages, fullnews, upload, manage, modify, delete, deletepic
+    from core import nl2br, style, find_postit, managepostit, eventi, prossimagita, fullnews, upload, manage, modify, delete, deletepic
 except Exception as e:
     print 'VIEWS IMPORTING ERROR: {0}'.format(e)
     app.logger.error('VIEWS IMPORTING ERROR: {0}'.format(e) )
@@ -21,14 +21,14 @@ except Exception as e:
 @app.route("/" , methods=["GET"])
 def viewhome():
     var = style("home")
-    template = env.get_template("home.html")
-    try:
-        var = home(var)
-    except:
+    template = env.get_template("homepage.html")
+    #try:
+    #var = find_postit(var)
+    #except Exception as e:
         # "Safety Homepage". 
         # It's so ugly to get a 500 right in the homepage if something is wrong with the database.
-        template = env.get_template("home-safety.html")
-        app.logger.critical('*** HOMEPAGE FAILED TO LOAD ***')
+        #template = env.get_template("home-safety.html")
+        #app.logger.critical('*** HOMEPAGE FAILED TO LOAD *** (Error: {0})'.format(e))
     return template.render(var)
     
 @app.route("/news/<id>" , methods=["GET"])
@@ -76,12 +76,14 @@ def rifstoria():
 @app.route("/programmi/prossima-gita" , methods=["GET"])
 def prognuovagita():
     var = style("programmi")
+    #var = prossimagita()
     template = env.get_template("prog-nuovagita.html")
     return template.render(var)
     
-@app.route("/programmi/eventi" , methods=["GET"])
-def progeventi():
+@app.route("/programmi/eventi/<year>" , methods=["GET"])
+def progeventi(year):
     var = style("programmi")
+    #var = eventi(year)
     template = env.get_template("prog-eventi.html")
     return template.render(var)
 
@@ -104,6 +106,12 @@ def prognorme():
 def sezhome():
     var = style("sezione")
     template = env.get_template("sez-home.html")
+    return template.render(var)
+    
+@app.route("/sezione/documenti" , methods=["GET"])
+def sezavvisi():
+    var = style("sezione")
+    template = env.get_template("sez-documenti.html")
     return template.render(var)
 
 @app.route("/sezione/storia" , methods=["GET"])
@@ -226,14 +234,23 @@ def viewupload(obj):
     return template.render(var)
 
 
+
+
 # ************ Manage **************************************************
 
-@app.route("/pannello/area-riservata/manage/calendario", methods=["GET"])
+@app.route("/pannello/area-riservata/manage/postit", methods=["GET", "POST"])
 @login_required
 def viewmanage_calendario():
     var = style("webmaster")
-    var['obj'] = "obj"
-    var['manage'] = 'manage'
+    var = managepostit(var, request)
+    template = env.get_template("web-res-manage-postit.html")    
+    return template.render(var)
+
+
+@app.route("/pannello/area-riservata/manage/calendario", methods=["GET"])
+@login_required
+def viewmanage_postit():
+    var = style("webmaster")
     #var = manage(var)
     template = env.get_template("web-res-manage-calendario.html")    
     return template.render(var)

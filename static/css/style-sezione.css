@@ -26,7 +26,7 @@
   margin: 0 20px;
 }
 
-.text img{
+.picsez img{
   width: 40%;
   float:right;
 }
@@ -70,4 +70,60 @@
 .text .nested{
   margin: 5px 40px;
   list-style: circle;
+}
+
+
+
+/************** Pseudotable classes ********************/
+.pseudotable{
+    margin:auto;
+    margin-bottom:40px;
+    padding-top:3px;    /* Simulate the 'collapse borders' of a table */
+    padding-bottom:3px;
+    width:80%;
+    overflow:hidden;
+}
+.pseudorow{
+    margin:auto;
+    margin-top:-2px;    /* Simulate the 'collapse borders' of a table */
+    margin-bottom:-2px;
+    padding:0;
+    width:100%;
+    border-top: 2px solid grey;
+    border-bottom: 2px solid grey;
+    overflow:hidden;
+}
+.pseudorow:hover{
+    font-weight:bold;
+    background-color:#EEEEEE;
+}
+.pseudotable a{
+    color:black
+}
+.pseudotable a:hover{
+    color:black
+}
+.off-pseudorow{
+    margin:auto;
+    margin-top:-2px;    /* Simulate the 'collapse borders' of a table */
+    margin-bottom:-2px;
+    padding:0;
+    width:100%;
+    border-top: 2px solid grey;
+    border-bottom: 2px solid grey;
+    overflow:hidden;
+    background-color:#DDDDDD;
+    color: #888888;
+    font-weight:bold;
+}
+.tabledata{
+    margin:0 !important;    /* Overrides .text p inherited margin */
+    padding:10px;
+    float:right;
+    font-style:italic;
+}
+.tabletitle{
+    margin:0 !important ;   /* Overrides .text p inherited margin */
+    padding:10px;
+    float:left;
 }

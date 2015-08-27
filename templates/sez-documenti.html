@@ -1,0 +1,57 @@
+{% extends "base/main.html" %}
+
+{% block body %}
+    <div class="text">
+        
+	  <h1>Documenti</h1>
+	  
+	  
+	  <div class='container'>
+	  
+	    <div class='miniature'><img src='/uploads/thumb/thumbnail.jpg' style='border:1px solid #333;'></div>
+
+          <div class='description'>
+              <h3> Lettera di Natale </h3>
+              <p> La tradizionale lettera del Presidente in occasione del Natale. <br></p>
+              <a href='volantino'>Leggi...</a>
+          </div>
+          
+        </div>
+          
+        <h3>Tutti i documenti del 2015</h3>
+
+        <div class='pseudotable'>
+            <a href='avvisi/{avviso.id}'>
+              <div class='pseudorow'>
+                  <p class='tabletitle'>{Titolo}</p>
+                  <p class='tabledata'>{Descrizione [n caratteri + ...]}</p>
+              </div>
+            </a>
+            <a href='avvisi/{avviso.id}'>
+              <div class='pseudorow'>
+                  <p class='tabletitle'>{Titolo}</p>
+                  <p class='tabledata'>{Descrizione [n caratteri + ...]}</p>
+              </div>
+            </a>
+            <a href='avvisi/{avviso.id}'>
+              <div class='pseudorow'>
+                  <p class='tabletitle'>{Titolo}</p>
+                  <p class='tabledata'>{Descrizione [n caratteri + ...]}</p>
+              </div>
+            </a>
+        </div>
+    
+          
+          
+          
+          
+          
+          
+      
+      
+
+      
+
+    </div>
+
+{% endblock %}
