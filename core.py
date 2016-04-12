@@ -176,6 +176,8 @@ def modify(var, request):
                 conn.rollback()
             app.logger.error('SQLite failure during modification. Error code:{e}'.format(e) )
             raise
+    except TypeError:
+        raise   # Will be handled in the views module
     except Exception as e:
         var['msg'] = e
         app.logger.error('Unexpected error in MODIFY. Error Code: {0}'.format(e) )

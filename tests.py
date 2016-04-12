@@ -1,9 +1,10 @@
-import os, shutil, sqlite3
+import os, io, shutil, sqlite3
 import unittest
 import views
 
 from config import app, BASE_PATH, DATABASE_PATH, UPLOAD_FOLDER_DOCS, UPLOAD_FOLDER_PICS
 from core import home, homepages
+from database import retrieve_item
 
 
 
@@ -100,25 +101,170 @@ class CAITestCase(unittest.TestCase):
      
     def login(self, user, pwd):
         return self.app.post('/pannello/area-riservata/login', data=dict(
-        user=user,
-        password=pwd
-    ), follow_redirects=True)
+            user=user,
+            password=pwd
+        ), follow_redirects=True)
     def logout(self):
         return self.app.get('/pannello/area-riservata/logout', follow_redirects=True)
+        
     def test_loginlogout_admin(self):
-        # Should hide the password here!
+        # Testing superuser, see setUp()
         res = self.login('admin', 'admin')
         self.assertIn( 'Utility del Server', res.data )
         res = self.login('a', 'admin')
         self.assertIn( 'Nome utente non valido', res.data )
         res = self.login('admin', 'a')
         self.assertIn( 'Password errata', res.data )
-    
+        
+    def test_loginrequired(self):
+        # Not logged
+        res = self.app.get('/pannello/area-riservata/logout', follow_redirects=True)
+        self.assertIn('Login', res.data)
+        res = self.app.get('/pannello/area-riservata/upload/news', follow_redirects=True)
+        self.assertIn('Login', res.data)
+        res = self.app.get('/pannello/area-riservata/manage/news', follow_redirects=True)
+        self.assertIn('Login', res.data)
+        res = self.app.get('/pannello/area-riservata/manage/news/0', follow_redirects=True)
+        self.assertIn('Login', res.data)
+        res = self.app.get('/pannello/area-riservata/delete/news/0', follow_redirects=True)
+        self.assertIn('Login', res.data)
+        res = self.app.get('/pannello/area-riservata/delete/news/0/0', follow_redirects=True)
+        self.assertIn('Login', res.data)
+        # Logged
+        res = self.login('admin', 'admin')
+        res = self.app.get('/pannello/area-riservata/upload/news', follow_redirects=True)
+        self.assertIn('Upload', res.data)
+        res = self.app.get('/pannello/area-riservata/manage/news', follow_redirects=True)
+        self.assertIn('Notizie', res.data)
+        res = self.app.get('/pannello/area-riservata/manage/news/0', follow_redirects=True)
+        self.assertIn('Modifica', res.data)
+        res = self.app.get('/pannello/area-riservata/delete/news/0', follow_redirects=True)
+        self.assertIn('Elimina', res.data)
+        res = self.app.get('/pannello/area-riservata/delete/news/0/0', follow_redirects=True)
+        self.assertIn('Elimina', res.data)
+        res = self.app.get('/pannello/area-riservata/logout', follow_redirects=True)
+        self.assertIn('Logout completato con successo', res.data)
+        
     
     # ******* Upload Tests *********************************************
-     
+    # Requires admin permissions!
+    
+    def login_admin(self):
+        # Testing admin, see setUp()
+        return self.login('admin', 'admin')
+        
+    def upload(self, obj, req):
+        return self.app.post('/pannello/area-riservata/upload/{}'.format(obj), data=req, follow_redirects=True)
+    
+    def retrieve_lastinserted(self, obj):
+        conn = sqlite3.connect(self.database)
+        with conn:
+            cursor = conn.cursor()
+            return cursor.execute('SELECT COUNT(*) FROM {}'.format(obj)).fetchone()[0]
+        print 'LastInserted Error!'
+        return -1
             
-      
+        
+        # ******* News Sector ***********************
+    
+    def check_upload_news(self, id, expect):
+        # Here I assume that retrieve_item() from database.py works fine (will test it later)
+        conn = sqlite3.connect(self.database)
+        with conn:
+            cursor = conn.cursor()
+            result = retrieve_item('news', id, cursor)
+        self.assertEqual( expect['data'], result['date'])
+        self.assertEqual( expect['titolo'], result['title'])
+        self.assertEqual( expect['testo'], result['content'])
+        for i in xrange(len(result['pics'])):
+            expectfile = open(expect['foto{}'.format(i)][0], 'rb')
+            resultfile = open("uploads/photos/{0}".format(result['pics'][i][2]), 'rb')
+            self.assertEqual( expectfile.read(), resultfile.read() )
+            expectfile.close()
+            resultfile.close()
+            self.assertEqual(expect['descrizione{}'.format(i)], result['pics'][i][1])
+        return
+    def make_news(self, data, title, text, foto, descrizione):
+        req = {
+            'data': data,
+            'titolo': title,
+            'testo': text
+            }
+        for i in xrange(0, len(foto)):
+            req['foto{}'.format(i)] = foto[i]
+            req['descrizione{}'.format(i)] = descrizione[i]
+        return req
+
+    def test_uploadnews_onlytext_ok(self):
+        self.login_admin()
+        expect = self.make_news('01/06/2015', 'Only Text OK', 'Text of the 1st "Only Text" Test News.', [], [])
+        res = self.upload('news', expect)
+        self.assertIn('Upload completato con successo', res.data)
+        self.check_upload_news(self.retrieve_lastinserted('news'), expect)
+    def test_uploadnews_onlytext_wrongdata(self):
+        self.login_admin()
+        expect = self.make_news('01-06-2015', 'Only Text WrongData', 'Text of the 2nd "Only Text" Test News.', [], [])
+        res = self.upload('news', expect)
+        self.assertIn('Inserire una data valida', res.data)
+        with self.assertRaises(Exception): # Tests that the news wasn't loaded in the database
+            self.check_upload_news(self.retrieve_lastinserted('news'), expect)
+    def test_uploadnews_onlytext_nodata(self):
+        self.login_admin()
+        expected = self.make_news('', 'Only Text NoData', 'Text of the 3rd "Only Text" Test News.', [], [])
+        res = self.upload('news', expected)
+        self.assertIn('Inserire una data valida', res.data)
+        with self.assertRaises(Exception):
+            self.check_upload_news(self.retrieve_lastinserted('news'), expect)
+    def test_uploadnews_onlytext_notitle(self):
+        self.login_admin()
+        expected = self.make_news('01-06-2015', '', 'Text of the 4th "Only Text" Test News.', [], [])
+        res = self.upload('news', expected)
+        self.assertIn('Impossibile caricare una notizia senza titolo', res.data)
+        with self.assertRaises(Exception):
+            self.check_upload_news(self.retrieve_lastinserted('news'), expect)
+    def test_uploadnews_onlytext_notext(self):
+        self.login_admin()
+        expected = self.make_news('01-06-2015', 'Only Text NoText', '', [], [])
+        res = self.upload('news', expected)
+        self.assertIn('Impossibile caricare una notizia senza testo', res.data)
+        with self.assertRaises(Exception):
+            self.check_upload_news(self.retrieve_lastinserted('news'), expect)
+    
+    def test_uploadnews_onepicture(self):
+        self.login_admin()
+        photo = open('xtest.jpg', 'rb')
+        expect = self.make_news('01/06/2015', 'OnePicture', 'Text of the "OnePicture" Test News.', [photo], ['OnePicture test photo'])
+        res = self.upload('news', expect)
+        self.assertIn('Upload completato con successo', res.data)
+        self.check_upload_news(self.retrieve_lastinserted('news'), expect)
+    
+    
+            
+        # ******* Notes Sector ***********************
+        
+    def check_upload_notes(self, id, expect):
+        # Here I assume that retrieve_item() from database.py works fine (will test it later)
+        conn = sqlite3.connect(self.database)
+        with conn:
+            cursor = conn.cursor()
+            result = retrieve_item('note', id, cursor)
+        self.assertEqual(expect['testo'], result['content'])
+    def make_note(self, text):
+        return {'testo':text}
+        
+    def test_uploadnote_ok(self):
+        self.login_admin()
+        expect = self.make_note('Test Note 1')
+        res = self.upload('note', expect)
+        self.assertIn('Upload completato con successo', res.data)
+        self.check_upload_notes(self.retrieve_lastinserted('notes'), expect)
+    def test_uploadnote_empty(self):
+        self.login_admin()
+        expect = self.make_note('')
+        res = self.upload('note', expect)
+        self.assertIn('Impossibile caricare una nota vuota', res.data)
+        with self.assertRaises(Exception):
+            self.check_upload_notes(self.retrieve_lastinserted('notes'), expect)
 
 
 if __name__ == '__main__':

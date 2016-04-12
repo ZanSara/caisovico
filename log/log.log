@@ -1,18 +1,4 @@
-----------
-2015-06-13 12:21:18,390 INFO: Starting up... [in run.py:16]
-----------
-2015-06-13 12:21:18,717 INFO: Starting up... [in run.py:16]
-----------
-2015-06-13 12:21:32,607 INFO: Tried to access Area Riservata without permission [in decorators.py:19]
-----------
-2015-06-13 12:21:38,039 INFO: User 'admin' logged in successfully [in views.py:170]
-----------
-2015-06-13 12:22:01,860 ERROR: Unexpected error in MODIFY. Error Code: integer division or modulo by zero [in core.py:170]
-----------
-2015-06-13 12:22:15,648 INFO: User 'admin' logged out successfully [in views.py:193]
-----------
-2015-06-13 12:22:24,223 INFO: Switching off.. [in run.py:26]
-----------
-----------
-2015-06-13 12:22:24,224 INFO: Switching off.. [in run.py:26]
-----------
+#### 2015-06-19 11:00:14,775 ==> INFO: Starting up... [in run.py:20]
+#### 2015-06-19 11:02:07,013 ==> INFO: Starting up... [in run.py:20]
+#### 2015-06-19 11:02:18,037 ==> INFO: User 'admin' logged out successfully [in views.py:211]
+#### 2015-06-19 11:02:22,911 ==> INFO: User 'admin' logged in successfully [in views.py:188]

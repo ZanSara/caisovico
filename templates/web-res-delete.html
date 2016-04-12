@@ -68,11 +68,7 @@
             
         </div>
         
-        {% if obj=='pic' %}
         <a href='/pannello/area-riservata/manage/news/{{ id }}' class='btn-back buttonstyle'>Indietro</a>
-        {% else %}
-        <a href='/pannello/area-riservata/delete/{{ obj }}' class='btn-back buttonstyle'>Indietro</a>
-        {% endif %}
 
         {% if obj=='news' %}
         <link href="/static/css/datepickr.css" rel="stylesheet">

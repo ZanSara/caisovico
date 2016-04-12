@@ -39,7 +39,6 @@ def viewhomepages(index):
     except:
         app.logger.critical('*** HOMEPAGE n^{} FAILED TO LOAD ***'.format(index))
         return abort(404)
-        
     if index > var['totpage']:
         app.logger.warning('404: tried to access home-page n^{0}, while the maximum is {1}'.format(index, var['totpage']))
         return abort(404)
@@ -232,6 +231,9 @@ def viewupload(obj):
 @login_required
 def viewmanage(obj):
     var = style("webmaster")
+    if obj not in ('news', 'note', 'doc'):
+        app.logger.warning("A logged user tried to access a non-existent object: {0}".format(obj) )
+        return abort(404)
     var['obj'] = obj
     var['manage'] = 'manage'
     var = manage(var)
@@ -246,7 +248,11 @@ def viewmodify(obj, id):
     var['obj'] = obj
     var['id'] = id
     var['item'] = {}
-    var = modify(var, request)
+    try:
+        var = modify(var, request)
+    except TypeError: # Someone tried to access a non existent object
+        app.logger.warning("A logged user tried to access a non-existent element (obj:{0}, id:{1})".format(obj, id) )
+        return abort(404)
     template = env.get_template("web-res-upload.html")
     return template.render(var)
 
