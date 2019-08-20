@@ -1,0 +1,39 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+.mainpage {
+    overflow-x:hidden;
+    color: black;
+    background: white;
+}
+@media (max-width : 800px){
+    .mainpage {
+        font-size: 14px;
+        background: white;
+    }
+}
+
+
+/* Utility classes to limit the use of style atributes */
+.center-text{
+    text-align:center;
+}
+.sidePadding10{
+    padding-left:10%;
+    padding-right:10%;
+}
+.border{
+    border: 2px solid red;
+}
+.control-label{
+    font-weight: normal;
+}
+
+
+
+
+@media print{
+    noprint {display:none;}
+}
+

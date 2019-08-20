@@ -1,0 +1,485 @@
+=============== REPORT RUT230  ==============
+            Generato il 17/Aug/2019
+=============================================
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 00:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -83
+	MB in ingresso su wwan0: 2264
+	MB in uscita su wwan0: 12013
+	Tempo di accensione: 54 giorni, 13 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 44.0°C
+	Dispositivi connessi alla rete Wifi:
+         - 1566021380 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566030780 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566012256 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566028111 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566032898 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566029527 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 01:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -83
+	MB in ingresso su wwan0: 2264
+	MB in uscita su wwan0: 12014
+	Tempo di accensione: 54 giorni, 14 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 43.4°C
+	Dispositivi connessi alla rete Wifi:
+         - 1566021380 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566030780 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566012256 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566028111 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566032898 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566029527 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 02:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 2264
+	MB in uscita su wwan0: 12014
+	Tempo di accensione: 54 giorni, 15 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 43.1°C
+	Dispositivi connessi alla rete Wifi:
+         - 1566042980 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566030780 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566012256 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566028111 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566032898 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566029527 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 03:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -83
+	MB in ingresso su wwan0: 2264
+	MB in uscita su wwan0: 12015
+	Tempo di accensione: 54 giorni, 16 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 42.9°C
+	Dispositivi connessi alla rete Wifi:
+         - 1566042980 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566030780 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566012256 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566028111 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566032898 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566029527 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 04:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -83
+	MB in ingresso su wwan0: 2265
+	MB in uscita su wwan0: 12015
+	Tempo di accensione: 54 giorni, 17 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 42.6°C
+	Dispositivi connessi alla rete Wifi:
+         - 1566042980 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566030780 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566012256 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566049711 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566032898 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566029527 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 05:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 2265
+	MB in uscita su wwan0: 12015
+	Tempo di accensione: 54 giorni, 18 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 42.4°C
+	Dispositivi connessi alla rete Wifi:
+         - 1566042980 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566030780 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566012256 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566049711 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566032898 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566029527 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 06:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 2265
+	MB in uscita su wwan0: 12015
+	Tempo di accensione: 54 giorni, 19 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 42.1°C
+	Dispositivi connessi alla rete Wifi:
+         - 1566042980 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566030780 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566049711 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566032898 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566056198 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 07:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 2265
+	MB in uscita su wwan0: 12015
+	Tempo di accensione: 54 giorni, 20 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 41.9°C
+	Dispositivi connessi alla rete Wifi:
+         - 1566042980 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566030780 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566049711 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566032898 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566056198 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 08:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 2274
+	MB in uscita su wwan0: 12251
+	Tempo di accensione: 54 giorni, 21 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 42.6°C
+	Dispositivi connessi alla rete Wifi:
+         - 1566064580 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566064726 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566049711 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566063225 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566056198 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 09:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 2282
+	MB in uscita su wwan0: 12331
+	Tempo di accensione: 54 giorni, 22 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 42.6°C
+	Dispositivi connessi alla rete Wifi:
+         - 1566065247 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566064580 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566064726 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566049711 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566063225 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566056198 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 10:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 2284
+	MB in uscita su wwan0: 12348
+	Tempo di accensione: 54 giorni, 23 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 41.9°C
+	Dispositivi connessi alla rete Wifi:
+         - 1566065247 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566064580 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566068880 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566068640 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566063225 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566056198 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 10:25:58
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	IP:     inet 10.49.175.141/30 brd 10.49.175.143 scope global wwan0
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 2288
+	MB in uscita su wwan0: 12357
+	Tempo di accensione: 55 giorni, 0 ore, 7 minuti e 36 secondi
+	Temperatura della CPU: 41.7°C
+	Dispositivi connessi alla rete Wifi:
+         - 1566065247 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566064580 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566068880 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566068640 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566063225 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566056198 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 10:27:18
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 2288
+	MB in uscita su wwan0: 12357
+	Tempo di accensione: 55 giorni, 0 ore, 8 minuti e 56 secondi
+	Temperatura della CPU: 41.6°C
+	IP:     inet 10.49.175.141/30 brd 10.49.175.143 scope global wwan0
+	Dispositivi connessi alla rete Wifi:
+         - 1566065247 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566064580 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566068880 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566068640 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566063225 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566056198 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 11:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 2291
+	MB in uscita su wwan0: 12390
+	Tempo di accensione: 55 giorni, 0 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 41.3°C
+	IP:     inet 10.49.175.141/30 brd 10.49.175.143 scope global wwan0
+	Dispositivi connessi alla rete Wifi:
+         - 1566065247 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566074627 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566074299 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566068640 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566063225 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566074467 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 12:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 2293
+	MB in uscita su wwan0: 12401
+	Tempo di accensione: 55 giorni, 1 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 41.4°C
+	IP:     inet 10.49.175.141/30 brd 10.49.175.143 scope global wwan0
+	Dispositivi connessi alla rete Wifi:
+         - 1566077285 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566074627 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566077258 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566068640 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566077454 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566078306 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 13:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -83
+	MB in ingresso su wwan0: 2294
+	MB in uscita su wwan0: 12402
+	Tempo di accensione: 55 giorni, 2 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 42.2°C
+	IP:     inet 10.49.175.141/30 brd 10.49.175.143 scope global wwan0
+	Dispositivi connessi alla rete Wifi:
+         - 1566077285 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566074627 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566080288 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566068640 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566077454 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566081512 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 14:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -83
+	MB in ingresso su wwan0: 2295
+	MB in uscita su wwan0: 12407
+	Tempo di accensione: 55 giorni, 3 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 42.6°C
+	IP:     inet 10.49.175.141/30 brd 10.49.175.143 scope global wwan0
+	Dispositivi connessi alla rete Wifi:
+         - 1566077285 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566085727 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566080288 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566068640 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566077454 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566081512 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 15:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 2296
+	MB in uscita su wwan0: 12428
+	Tempo di accensione: 55 giorni, 4 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 42.0°C
+	IP:     inet 10.49.175.141/30 brd 10.49.175.143 scope global wwan0
+	Dispositivi connessi alla rete Wifi:
+         - 1566077285 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566085727 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566087343 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566068640 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566077454 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566081512 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 16:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 2296
+	MB in uscita su wwan0: 12428
+	Tempo di accensione: 55 giorni, 5 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 46.2°C
+	IP:     inet 10.49.175.141/30 brd 10.49.175.143 scope global wwan0
+	Dispositivi connessi alla rete Wifi:
+         - 1566077285 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566085727 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566087343 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566090241 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566077454 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566081512 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 17:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -83
+	MB in ingresso su wwan0: 2296
+	MB in uscita su wwan0: 12428
+	Tempo di accensione: 55 giorni, 6 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 46.7°C
+	IP:     inet 10.49.175.141/30 brd 10.49.175.143 scope global wwan0
+	Dispositivi connessi alla rete Wifi:
+         - 1566077285 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566085727 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566087343 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566090241 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566077454 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566081512 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 18:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -83
+	MB in ingresso su wwan0: 2296
+	MB in uscita su wwan0: 12428
+	Tempo di accensione: 55 giorni, 7 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 45.8°C
+	IP:     inet 10.49.175.141/30 brd 10.49.175.143 scope global wwan0
+	Dispositivi connessi alla rete Wifi:
+         - 1566077285 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566085727 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566087343 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566090241 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566077454 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566081512 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 19:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -83
+	MB in ingresso su wwan0: 2296
+	MB in uscita su wwan0: 12428
+	Tempo di accensione: 55 giorni, 8 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 45.1°C
+	IP:     inet 10.49.175.141/30 brd 10.49.175.143 scope global wwan0
+	Dispositivi connessi alla rete Wifi:
+         - 1566077285 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566085727 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566087343 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566090241 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566077454 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566081512 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 20:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -83
+	MB in ingresso su wwan0: 2297
+	MB in uscita su wwan0: 12430
+	Tempo di accensione: 55 giorni, 9 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 48.2°C
+	IP:     inet 10.49.175.141/30 brd 10.49.175.143 scope global wwan0
+	Dispositivi connessi alla rete Wifi:
+         - 1566077285 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566085727 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566087343 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566090241 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566077454 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566081512 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 21:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 2297
+	MB in uscita su wwan0: 12430
+	Tempo di accensione: 55 giorni, 10 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 49.9°C
+	IP:     inet 10.49.175.141/30 brd 10.49.175.143 scope global wwan0
+	Dispositivi connessi alla rete Wifi:
+         - 1566077285 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566085727 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566087343 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566090241 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566077454 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566081512 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 22:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -83
+	MB in ingresso su wwan0: 2297
+	MB in uscita su wwan0: 12430
+	Tempo di accensione: 55 giorni, 11 ore, 42 minuti e 38 secondi
+	Temperatura della CPU: 48.5°C
+	IP:     inet 10.49.175.141/30 brd 10.49.175.143 scope global wwan0
+	Dispositivi connessi alla rete Wifi:
+         - 1566077285 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566085727 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566087343 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566111841 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566077454 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566081512 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  17/Aug/2019
+ alle ore 23:01:00
+	Tipo di connessione: HSDPA+HSUPA
+	Operatore: I TIM
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 2297
+	MB in uscita su wwan0: 12430
+	Tempo di accensione: 55 giorni, 12 ore, 42 minuti e 39 secondi
+	Temperatura della CPU: 46.7°C
+	IP:     inet 10.49.175.141/30 brd 10.49.175.143 scope global wwan0
+	Dispositivi connessi alla rete Wifi:
+         - 1566077285 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+         - 1566085727 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+         - 1566087343 d8:5b:2a:c6:3f:2b 192.168.1.123 Galaxy-A5-Paolo 01:d8:5b:2a:c6:3f:2b
+         - 1566111841 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+         - 1566077454 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+         - 1566081512 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+

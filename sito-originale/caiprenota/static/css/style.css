@@ -1,0 +1,323 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+.mainpage {
+    overflow-x:hidden;
+    color: black;
+    background: white;
+}
+@media (max-width : 800px){
+    .mainpage {
+        font-size: 14px;
+        background: white;
+    }
+}
+
+
+
+.center{
+    text-align:center;
+}
+.border{
+    border: 2px solid red;
+}
+
+.control-label{
+    font-weight: normal;
+}
+
+
+.banner{
+    display: block;
+    width: 800px;
+    height: 255px;
+    margin:auto;
+    text-align: center;
+    color: black;
+    background: white;
+    }
+.banner img{
+    margin: auto;
+    padding: 0;
+}
+.banner h2 {
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.mobile-title{
+    display:none;
+}
+@media (max-width : 800px){
+    .mobile-title {
+        display: block;
+        text-align: center;
+        position: absolute;
+        color: green;
+        top: 0;
+        width: 100%;
+        background: white; /* #0091E1; */
+        height: 75px;
+        white-space: nowrap;
+        overflow: hidden;
+        padding-left: 10px;
+        padding-right: 115px;
+    }
+    .mobile-title h3{
+        display: block;
+        font-size: 28px;
+        font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .banner{
+        display:none;
+    }
+}
+.mobile-login{
+    display:none;
+}
+@media (max-width : 800px){
+    .mobile-login{
+        display:block;
+        height: 45px;
+        position: absolute;
+        right: 15px;
+        top: 15px;
+    }
+}
+.mobile-back{
+    display:none;
+}
+@media (max-width : 800px){
+    .mobile-back{
+        display:block;
+        height: 45px;
+        position: absolute;
+        right: 65px;
+        top: 15px;
+    }
+}
+
+#mobile-dropdown{
+    display: none; /* this will be handled via jQuery */
+    position: fixed;
+    right: 0;
+    top: 75px;
+    z-index: 20;
+}
+#mobile-dropdown ul{
+    display:none;
+}
+@media (max-width : 800px){
+    #mobile-dropdown{
+        display: none; /* this will be handled via jQuery */
+        position: fixed;
+        right: 0;
+        top: 75px;
+    }
+    #mobile-dropdown ul{
+        text-align:right;
+        display: block;
+        list-style: none;
+        background: white; /* #0091E1; */
+        border: 1px solid white; /* #0091E1; */
+        margin: 0;
+        padding: 10px;
+    }
+    #mobile-dropdown a li{
+        display: block;
+        width: 150px;
+        z-index: 20;
+        margin: 5px;
+    }
+    #mobile-dropdown a{
+        color: white;
+        text-decoration: none;   
+    }
+}
+
+
+
+.calendario-outer-box{
+    position: absolute;
+    bottom: 60px;
+    left: 10px;
+    right: 10px;
+    top: 255px;
+    max-width: 800px;
+    display: block;
+    margin:auto;
+}
+.calendario-outer-box tr{
+    height: 30px;
+}
+@media (max-width : 800px){
+    .calendario-outer-box{
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        top: 75px;
+        overflow-x: scroll;
+    }
+    .calendario-outer-box tr{
+        height: 30px;
+    }
+}
+
+.calendario{
+    background: #fff;
+    table-layout: fixed;
+    width: 100%;
+}
+.calendario td a{
+    margin: 0;
+    color: #000;
+}
+.calendario-inner-box{
+    position: absolute;
+    top: 30px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    border: 1px solid #fff;
+}
+.grid tr td{
+    text-align: center;
+    border: 1px solid #fff;
+}
+.grid tr td div{
+    white-space: nowrap;
+    overflow: hidden;
+}
+.scrollable{
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+@media (max-width : 800px){
+    .scrollable{
+        width: 800px;
+    }
+}
+
+
+
+
+.giorno{
+    width: 10%;
+    font-weight: bold;
+    text-align: center;
+    background: #fff;
+}
+.gestore{
+    width: 15%;
+    text-align: center;
+    background: #eee;
+}
+.letto{
+    background: #B3FFC3;
+}
+.brandina{
+    background: #FFFEB3;
+}
+.bivacco{
+    background: #D6E2FF;
+}
+.materasso{
+    background: #FFC8B3;
+}
+.nogestore{
+    background:#EFB8A3;
+}
+
+
+.modify-btn{
+    position: relative;
+    top: auto;
+    margin-right: auto; !important
+    margin-left: auto; !important
+    display: block;
+    max-width: 100px;
+}
+
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 50px;
+    background-color: white; /* #0041B1;  #f5f5f5; */
+    text-align: center;
+    padding: 5px;
+}
+@media (max-width : 800px){
+    footer{
+        display:none;
+    }
+}
+.btn{
+    margin-right:5px;
+    margin-left:5px;    
+}
+@media (max-width : 800px){
+    .btn{
+        margin-right:auto;
+        margin-left:auto;    
+    }
+}
+.btn-erasedb{
+  margin:10px;
+}
+
+
+
+
+
+
+@media print{
+    noprint {display:none;}
+}
+
+
+.shadow1{
+    /* For IE 5.5 - 7*/
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99222222, endColorstr=#99222222);
+    /* For IE 8*/
+    -ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99222222, endColorstr=#99222222);
+    z-index:15;
+  -moz-box-shadow:0px 0px 12px #222222;
+  -webkit-box-shadow:0px 0px 12px #222222;
+  box-shadow:0px 0px 12px #222222;
+
+/* Arguments:
+ * 1px: Horizontal offset of the effect. Positive numbers shift it right, negative left.
+ * 2px: Vertical offset of the effect. Positive numbers shift it down, negative up.
+ * 3px: The blur effect.  0 means no blur.
+ * color: The color of the shadow. */
+}
+
+.shadow2{
+    /* For IE 5.5 - 7*/
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99222222, endColorstr=#99222222);
+    /* For IE 8*/
+    -ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99222222, endColorstr=#99222222);
+    z-index:5;
+  -moz-box-shadow:0px 0px 10px #aaaaaa;
+  -webkit-box-shadow:0px 0px 10px #aaaaaa;
+  box-shadow:0px 0px 10px #aaaaaa;
+}
+
+.shadow3{
+    /* For IE 5.5 - 7*/
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99222222, endColorstr=#99222222);
+    /* For IE 8*/
+    -ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99222222, endColorstr=#99222222);
+    z-index:10;
+  -moz-box-shadow:0px 0px 10px #777777;
+  -webkit-box-shadow:0px 0px 10px #777777;
+  box-shadow:0px 0px 10px #777777;
+}

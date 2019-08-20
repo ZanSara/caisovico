@@ -1,0 +1,136 @@
+.calendario-outer-box{
+    position: absolute;
+    bottom: 60px;
+    left: 10px;
+    right: 10px;
+    top: 255px;
+    max-width: 800px;
+    display: block;
+    margin:auto;
+}
+.calendario-outer-box tr{
+    height: 30px;
+}
+@media (max-width : 800px){
+    .calendario-outer-box{
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        top: 75px;
+        overflow-x: scroll;
+    }
+    .calendario-outer-box tr{
+        height: 30px;
+    }
+}
+
+.calendario{
+    background: #fff;
+    table-layout: fixed;
+    width: 100%;
+}
+.calendario td a{
+    margin: 0;
+    color: #000;
+}
+.calendario-inner-box{
+    position: absolute;
+    top: 30px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    border: 1px solid #fff;
+}
+.grid tr td{
+    text-align: center;
+    border: 1px solid #fff;
+}
+.grid tr td div{
+    white-space: nowrap;
+    overflow: hidden;
+}
+.scrollable{
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+@media (max-width : 800px){
+    .scrollable{
+        width: 800px;
+    }
+}
+
+
+
+
+.giorno{
+    width: 10%;
+    font-weight: bold;
+    text-align: center;
+    background: #fff;
+}
+.gestore{
+    width: 20%;
+    text-align: center;
+    background: #eee;
+}
+.letto{
+    background: #B3FFC3;
+}
+.emergenza{
+    background: #FFC8B3;
+}
+.nogestore{
+    background:#EFB8A3;
+}
+
+
+.gestore-div{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 5px;
+}
+.booking-div{
+    font-weight: bold;
+    font-size: 10pt;
+}
+
+
+.shadow1{
+    /* For IE 5.5 - 7*/
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99222222, endColorstr=#99222222);
+    /* For IE 8*/
+    -ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99222222, endColorstr=#99222222);
+    z-index:15;
+  -moz-box-shadow:0px 0px 12px #222222;
+  -webkit-box-shadow:0px 0px 12px #222222;
+  box-shadow:0px 0px 12px #222222;
+
+/* Arguments:
+ * 1px: Horizontal offset of the effect. Positive numbers shift it right, negative left.
+ * 2px: Vertical offset of the effect. Positive numbers shift it down, negative up.
+ * 3px: The blur effect.  0 means no blur.
+ * color: The color of the shadow. */
+}
+
+.shadow2{
+    /* For IE 5.5 - 7*/
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99222222, endColorstr=#99222222);
+    /* For IE 8*/
+    -ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99222222, endColorstr=#99222222);
+    z-index:5;
+  -moz-box-shadow:0px 0px 10px #aaaaaa;
+  -webkit-box-shadow:0px 0px 10px #aaaaaa;
+  box-shadow:0px 0px 10px #aaaaaa;
+}
+
+.shadow3{
+    /* For IE 5.5 - 7*/
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99222222, endColorstr=#99222222);
+    /* For IE 8*/
+    -ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99222222, endColorstr=#99222222);
+    z-index:10;
+  -moz-box-shadow:0px 0px 10px #777777;
+  -webkit-box-shadow:0px 0px 10px #777777;
+  box-shadow:0px 0px 10px #777777;
+}

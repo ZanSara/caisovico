@@ -1,0 +1,45 @@
+=============== REPORT RUT230  ==============
+            Generato il 31/May/2019
+=============================================
+
+
+REPORT ORARIO  -  31/May/2019
+ alle ore 19:00:00
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 7535787
+	Bytes in uscita su wwan0: 58325140
+	Tempo di accensione:  19:00:00 up 1 day, 18 min,  load average: 0.32, 0.14, 0.12
+
+
+REPORT ORARIO  -  31/May/2019
+ alle ore 20:00:00
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 8248619
+	Bytes in uscita su wwan0: 60951977
+	Tempo di accensione:  20:00:00 up 1 day,  1:18,  load average: 0.07, 0.09, 0.08
+
+
+REPORT ORARIO  -  31/May/2019
+ alle ore 21:01:00
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 8597187
+	Bytes in uscita su wwan0: 61489921
+	Tempo di accensione:  21:01:00 up 1 day,  2:19,  load average: 0.13, 0.11, 0.09
+
+
+REPORT ORARIO  -  31/May/2019
+ alle ore 22:01:00
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 8656441
+	Bytes in uscita su wwan0: 61544105
+	Tempo di accensione:  22:01:00 up 1 day,  3:19,  load average: 0.04, 0.10, 0.08
+
+
+REPORT ORARIO  -  31/May/2019
+ alle ore 23:01:00
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 8714885
+	Bytes in uscita su wwan0: 61598256
+	Tempo di accensione:  23:01:00 up 1 day,  4:19,  load average: 0.14, 0.12, 0.09
+
+

@@ -1,0 +1,12 @@
+RewriteEngine on
+
+RewriteCond %{DOCUMENT_ROOT}/static/$1 -f
+RewriteRule ^(.*)$ /caiprenota/static/$1 [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /caiprenota/
+
+
+
+

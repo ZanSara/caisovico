@@ -1,0 +1,144 @@
+REPORT ORARIO  -  03/Jun/2019
+ alle ore 06:01:00
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 6010
+	Bytes in uscita su wwan0: 5860
+	Tempo di accensione:  06:01:00 up 2 min,  load average: 1.72, 0.95, 0.37
+
+
+REPORT ORARIO  -  03/Jun/2019
+ alle ore 07:01:00
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 10021
+	Bytes in uscita su wwan0: 10234
+	Tempo di accensione:  07:01:00 up 6 min,  load average: 0.32, 0.60, 0.39
+
+
+REPORT ORARIO  -  03/Jun/2019
+ alle ore 08:01:00
+	Livello del segnale (dBm): -77
+	Bytes in ingresso su wwan0: 169355
+	Bytes in uscita su wwan0: 594151
+	Tempo di accensione:  08:01:00 up 34 min,  load average: 0.12, 0.14, 0.16
+
+
+REPORT ORARIO  -  03/Jun/2019
+ alle ore 09:01:00
+	Livello del segnale (dBm): -77
+	Bytes in ingresso su wwan0: 221257
+	Bytes in uscita su wwan0: 637613
+	Tempo di accensione:  09:01:00 up  1:34,  load average: 0.12, 0.14, 0.10
+
+
+REPORT ORARIO  -  03/Jun/2019
+ alle ore 10:01:00
+	Livello del segnale (dBm): -79
+	Bytes in ingresso su wwan0: 273361
+	Bytes in uscita su wwan0: 681630
+	Tempo di accensione:  10:01:00 up  2:34,  load average: 0.17, 0.20, 0.13
+
+
+REPORT ORARIO  -  03/Jun/2019
+ alle ore 11:01:00
+	Livello del segnale (dBm): -79
+	Bytes in ingresso su wwan0: 325095
+	Bytes in uscita su wwan0: 724815
+	Tempo di accensione:  11:01:01 up  3:34,  load average: 0.31, 0.17, 0.11
+
+
+REPORT ORARIO  -  03/Jun/2019
+ alle ore 12:01:00
+	Livello del segnale (dBm): -81
+	Bytes in ingresso su wwan0: 1330883
+	Bytes in uscita su wwan0: 28007795
+	Tempo di accensione:  12:01:00 up  4:34,  load average: 0.20, 0.16, 0.10
+
+
+REPORT ORARIO  -  03/Jun/2019
+ alle ore 13:01:00
+	Livello del segnale (dBm): -79
+	Bytes in ingresso su wwan0: 1459738
+	Bytes in uscita su wwan0: 28572733
+	Tempo di accensione:  13:01:00 up  5:34,  load average: 0.05, 0.09, 0.08
+
+
+REPORT ORARIO  -  03/Jun/2019
+ alle ore 14:01:00
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 1722894
+	Bytes in uscita su wwan0: 28949298
+	Tempo di accensione:  14:01:00 up  6:34,  load average: 0.05, 0.11, 0.08
+
+
+REPORT ORARIO  -  03/Jun/2019
+ alle ore 15:01:00
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 1896344
+	Bytes in uscita su wwan0: 29182257
+	Tempo di accensione:  15:01:00 up  7:34,  load average: 0.11, 0.11, 0.09
+
+
+REPORT ORARIO  -  03/Jun/2019
+ alle ore 16:01:00
+	Livello del segnale (dBm): -79
+	Bytes in ingresso su wwan0: 1987240
+	Bytes in uscita su wwan0: 29259325
+	Tempo di accensione:  16:01:01 up  8:34,  load average: 0.19, 0.12, 0.09
+
+
+REPORT ORARIO  -  03/Jun/2019
+ alle ore 17:01:00
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 2732206
+	Bytes in uscita su wwan0: 33501011
+	Tempo di accensione:  17:01:01 up  9:34,  load average: 0.11, 0.12, 0.09
+
+
+REPORT ORARIO  -  03/Jun/2019
+ alle ore 18:01:00
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 2957864
+	Bytes in uscita su wwan0: 34276848
+	Tempo di accensione:  18:01:00 up 10:34,  load average: 0.09, 0.11, 0.08
+
+
+REPORT ORARIO  -  03/Jun/2019
+ alle ore 19:01:00
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 3013024
+	Bytes in uscita su wwan0: 34331720
+	Tempo di accensione:  19:01:00 up 11:34,  load average: 0.15, 0.12, 0.09
+
+
+REPORT ORARIO  -  03/Jun/2019
+ alle ore 20:01:00
+	Livello del segnale (dBm): -81
+	Bytes in ingresso su wwan0: 3065388
+	Bytes in uscita su wwan0: 34376082
+	Tempo di accensione:  20:01:00 up 12:34,  load average: 0.07, 0.10, 0.08
+
+
+REPORT ORARIO  -  03/Jun/2019
+ alle ore 21:01:00
+	Livello del segnale (dBm): -81
+	Bytes in ingresso su wwan0: 79522379
+	Bytes in uscita su wwan0: 35902905
+	Tempo di accensione:  21:01:00 up 13:34,  load average: 0.18, 0.13, 0.11
+
+
+REPORT ORARIO  -  03/Jun/2019
+ alle ore 22:01:00
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 79573963
+	Bytes in uscita su wwan0: 35947139
+	Tempo di accensione:  22:01:00 up 14:34,  load average: 0.12, 0.12, 0.09
+
+
+REPORT ORARIO  -  03/Jun/2019
+ alle ore 23:01:01
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 79625611
+	Bytes in uscita su wwan0: 35991045
+	Tempo di accensione:  23:01:01 up 15:34,  load average: 0.08, 0.10, 0.08
+
+

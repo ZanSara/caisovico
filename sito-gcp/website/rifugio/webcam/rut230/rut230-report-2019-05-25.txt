@@ -1,0 +1,22 @@
+##### REPORT RUT230 #####
+Generato Sat May 25 20:40:04 CEST 2019
+
+
+REPORT ORARIO  -  Sat May 25 21:00:00 CEST 2019
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 25775799
+	Bytes in uscita su wwan0: 152174688
+
+
+REPORT ORARIO  -  Sat May 25 22:00:00 CEST 2019
+	Livello del segnale (dBm): -89
+	Bytes in ingresso su wwan0: 25837943
+	Bytes in uscita su wwan0: 152228613
+
+
+REPORT ORARIO  -  Sat May 25 23:00:00 CEST 2019
+	Livello del segnale (dBm): -87
+	Bytes in ingresso su wwan0: 25898470
+	Bytes in uscita su wwan0: 152281876
+
+

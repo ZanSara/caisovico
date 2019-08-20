@@ -1,0 +1,114 @@
+body {
+  color: black;
+  background: #ddd;
+}
+
+
+.title{
+  text-align: center;
+  display: block;
+  margin: auto;
+  font-size: 5%;
+}
+
+.inner-box{
+  width: 90%;
+  margin: auto;
+  padding: 5%;
+}
+.white{
+  background: #fff;
+}
+.center{
+  text-align:center;
+}
+#data-box{
+  position: absolute;
+  top: 120px;
+  right: 5%;
+}
+
+#calendar-box{
+  background: #eee;
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  top: 120px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+#calendar-head{
+  text-align:center;
+  background: #eee;
+  position: absolute;
+  top: 115px;
+  height: 30px;
+  z-index: 10;
+}
+#calendar-head td{
+  border-bottom: 1px solid #aaa;
+  border-top: 1px solid #aaa;
+}
+
+.calendar{
+  background: #fff;
+  table-layout: fixed;
+}
+
+.calendar tr td{
+  padding: 0;
+  text-align: center;
+  border: 1px solid #aaa;
+}
+
+.calendar td a{
+  color: #000;
+}
+
+.booked {
+  background: #ddd;
+}
+
+.giorno{
+  width: 10%;
+  font-weight: bold;
+  text-align: center;
+  background: #fff;
+}
+.gestore{
+  width: 10%;
+  text-align: center;
+  background: #eee;
+}
+.letto{
+  background: #B3FFC3;
+}
+.brandina{
+  background: #FFFEB3;
+}
+.bivacco{
+  background: #B3FFC3;
+}
+.materasso{
+  background: #FFC8B3;
+}
+
+
+.full-no-bar{
+  width: 100%;
+}
+.two-third-no-bar{
+  width: 65%;
+}
+.two-third{
+  width: 66%;
+}
+.one-third{
+  width: 27%;
+}
+
+
+.border{
+    border: 2px solid red;
+}
+

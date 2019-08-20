@@ -1,0 +1,238 @@
+MobileWebCam Config
+// ??
+mobilewebcam_enabled:true
+//
+//**Activity*******************
+//
+// Cam Delay ms
+cam_openeddelay:1000
+// Refresh Duration
+cam_refresh:7200
+// Time Start
+activity_starttime:10:0
+// Time End
+activity_endtime:14:5
+// flashlight enabled
+cam_flash:false
+// Zoom Wait
+cam_zoomwait:false
+// send log
+log_upload:true
+// low battery pause
+lowbattery_pause:true
+// motion detection enabled
+motion_detect:false
+//??
+motion_change:15
+motion_keepalive_refresh:0
+motion_value:25
+// Skip Corrupted Upload
+skip_corrupted:false
+//
+//**Events*********************
+//
+// Time between events
+eventtrigger_pausetime:0
+// Triggered by Intent Broadcast
+//--cam_broadcast_activation:
+// email intent broadcast received
+email_android_broadcast:false
+// email photo action triggered
+email_external_trigger:false
+//
+//**Imprint********************
+//
+// download stamp picture
+//--imprint_picture_url:
+// how to show current location
+gps_imprint_location:NONE
+// stamp picture over photo
+imprint_picture:false
+// reload stamp picture
+imprint_picture_refresh:false
+// stretch stamp picture
+imprint_picture_stretch:false
+// GPS ??
+imprint_gps:false
+// stretch stamp picture
+imprint_picture_stretch:false
+// ??
+//--imprint_statusinfo:
+// Time date format
+imprint_datetimeformat:dd/MM/yyyy   HH:mm
+//
+//**Night***********************
+//
+// Zoom 0-100
+zoom_night:0
+// Brightness
+night_autobrightnessadd:64.0
+// Contrast
+night_autocontrastfactor:3.0
+// Exposure
+night_autoexposure:100
+// Exposure Compensation
+exposurecompensation_night:50
+// Green
+night_autogreenfactor:0.05
+// Night Start
+night_starttime:00:00
+// Night End
+night_endtime:00:00
+// Scenemode
+night_autoscenemode:night
+// Scene Mode
+scenemode_night:auto
+// Whitebalance
+night_autoswhitebalance:incandescent
+// White Balance
+whitebalance_night:auto
+// Effect
+coloreffect_night:none
+// automatic night detection
+night_auto_config:false
+// auto brightness for night pictures
+night_autobright:false
+// no dark/night picture upload.
+night_detect:false
+// recolor ir light pictures
+night_ir_light:false
+// Focus Mode
+focus_night:fixed
+// flashlight enabled
+cam_flash_night:false
+//
+//**Picture**************************
+//
+// Custom Picture Size Width
+picture_size_custom_w:3264
+// Custom Picture Size Height
+picture_size_custom_h:2448
+// Effect
+coloreffect:none
+// Exposure Compensation
+exposurecompensation:50
+// Focus Mode
+focus:infinity
+// Picture Size (0 Small 1Normal 2Medium 3Large 4Original 5Custom)
+picture_size_sel:5
+// Scene Mode
+scenemode:landscape
+// Title
+imprint_text:M.te Disgrazia dal Rif. del Grande Camerini SERVIZIO GLACIOLOGICO LOMBARDO
+// ---> ZP imprint_text:Test seconda WebCam
+// White Balance
+whitebalance:auto
+// Zoom 0-100
+zoom:0
+// use camera autofocus
+autofocus_operation:ON
+// flip picture
+picture_flip:false
+// rotate picture to portrait
+picture_rotate:false
+// Autorotation
+picture_autorotate:false
+// Quality compression ??
+picture_compression:100
+//
+//**Upload**************************
+//
+// http website post
+server_upload:false
+//??
+server_every:1
+//--------------------------
+// FTP reliable upload
+ftp_batchalways:false
+// upload to ftp
+ftpserver_upload:true
+// FTP Batch Upload
+ftp_batchupload:1
+// Skip picture ?
+ftp_every:1
+//Default Name
+ftpserver_defaultname:fotoghiacciaio.jpg
+//Rename old picture
+ftp_keepoldpics:0
+//SFTP
+use_sftp:false
+//Server address
+ftpserver_url:www.caisovico.it
+//Server Port
+ftp_port:21
+//ftp Directory
+ftp_dir:/webcam_ghi
+//FTP Login
+ftp_login:webcam@caisovico.it
+//FTP Password
+ftp_password:caiwebcam
+//FTP Passive ??
+cam_passiveftp:false
+// Keep connection
+ftp_keep_open:false
+//-------------------------
+// email picture
+cam_mailphoto:false
+//??
+mail_every:1
+email_host:smtp.gmail.com
+//--email_sender:
+email_ssl:false
+//--email_password:
+email_pausetime:300
+email_port:465
+//-----------------------
+//Upload to dropbox
+dropbox_upload:true
+// Dropbox Batch Upload
+dropbox_batchupload:1
+dropbox_datetime:true
+dropbox_filenames:false
+dropbox_every:1
+dropbox_keepoldpics:0
+dropbox_defaultname:current.jpg
+dropbox_dir:/test/
+//**********************************
+// store on SDCard
+sdcard_dir:/MobileWebCam/
+sdcard_keepoldpics:0
+store_every:1
+secondary_sd:false
+cam_storepictures:false
+//--cam_email:
+//--cam_login:
+cam_front:false
+cam_filenames:false
+cam_url:.
+cam_datetime:false
+cam_filename_datetime:false
+//--cam_emailsubject:
+cam_intents_repeat:1
+cam_password:x
+//??
+store_gps:false
+//??
+reboot:0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

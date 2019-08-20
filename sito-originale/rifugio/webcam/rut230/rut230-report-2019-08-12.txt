@@ -1,0 +1,308 @@
+=============== REPORT RUT230  ==============
+            Generato il 12/Aug/2019
+=============================================
+PS: SARA HA FATTO MODIFICHE OGGI, MANCA QUALCHE RIGA PER QUELLO
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 00:01:00
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 1319499903
+	Bytes in uscita su wwan0: 7313654862
+	Tempo di accensione:  00:01:00 up 49 days, 13:42,  load average: 0.06, 0.09, 0.08
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 01:01:00
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 1319678956
+	Bytes in uscita su wwan0: 7313778372
+	Tempo di accensione:  01:01:00 up 49 days, 14:42,  load average: 0.20, 0.13, 0.09
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 02:01:00
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 1319865949
+	Bytes in uscita su wwan0: 7313975339
+	Tempo di accensione:  02:01:00 up 49 days, 15:42,  load average: 0.08, 0.10, 0.08
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 03:01:00
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 1319970176
+	Bytes in uscita su wwan0: 7314063382
+	Tempo di accensione:  03:01:00 up 49 days, 16:42,  load average: 0.14, 0.13, 0.09
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 04:01:00
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 1320056643
+	Bytes in uscita su wwan0: 7314150974
+	Tempo di accensione:  04:01:01 up 49 days, 17:42,  load average: 0.05, 0.10, 0.08
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 05:01:00
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 1320118510
+	Bytes in uscita su wwan0: 7314193747
+	Tempo di accensione:  05:01:00 up 49 days, 18:42,  load average: 0.13, 0.12, 0.09
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 06:01:00
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 1321076910
+	Bytes in uscita su wwan0: 7314931402
+	Tempo di accensione:  06:01:00 up 49 days, 19:42,  load average: 0.09, 0.12, 0.09
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 07:01:00
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 1324871409
+	Bytes in uscita su wwan0: 7398678733
+	Tempo di accensione:  07:01:00 up 49 days, 20:42,  load average: 0.06, 0.11, 0.08
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 08:01:00
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 1326862738
+	Bytes in uscita su wwan0: 7454311915
+	Tempo di accensione:  08:01:00 up 49 days, 21:42,  load average: 0.16, 0.13, 0.09
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 09:01:00
+	Livello del segnale (dBm): -87
+	Bytes in ingresso su wwan0: 1327296165
+	Bytes in uscita su wwan0: 7457046339
+	Tempo di accensione:  09:01:00 up 49 days, 22:42,  load average: 0.15, 0.13, 0.09
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 10:01:00
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 1424336760
+	Bytes in uscita su wwan0: 7526717343
+	Tempo di accensione:  10:01:01 up 49 days, 23:42,  load average: 0.39, 0.20, 0.14
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 11:01:00
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 1429310329
+	Bytes in uscita su wwan0: 7574635639
+	Tempo di accensione:  11:01:00 up 50 days, 42 min,  load average: 0.10, 0.14, 0.19
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 12:01:00
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0:
+ 	MB in uscita su wwan0:
+ 	Tempo di accensione:  12:01:00 up 50 days,  1:42,  load average: 0.18, 0.26, 0.24
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 13:01:00
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 
+	MB in uscita su wwan0: 	
+	Tempo di accensione:  13:01:00 up 50 days,  2:42,  load average: 0.07, 0.12, 0.08
+	Operatore: I TIM
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 14:45:14
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 1385
+	MB in uscita su wwan0: 7472
+	Tempo di accensione:  14:45:14 up 50 days,  4:26,  load average: 0.20, 0.15, 0.10
+	Operatore: I TIM
+	Tipo di connessione: HSDPA+HSUPA
+	Dispositivi connessi alla rete Wifi:
+1565646547 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+1565645825 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+1565654249 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+1565653935 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 14:53:25
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 1385
+	MB in uscita su wwan0: 7472
+	Tempo di accensione:  14:53:25 up 50 days,  4:35,  load average: 0.11, 0.12, 0.09
+	Operatore: I TIM
+	Temperatura della CPU (in 0.1 °C): 401
+	Tipo di connessione: HSDPA+HSUPA
+	Dispositivi connessi alla rete Wifi:
+1565646547 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+1565645825 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+1565657326 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+1565653935 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 15:01:00
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 1385
+	MB in uscita su wwan0: 7472
+	Tempo di accensione:  15:01:00 up 50 days,  4:42,  load average: 0.07, 0.13, 0.09
+	Operatore: I TIM
+	Temperatura della CPU (in 0.1 °C): 401
+	Tipo di connessione: HSDPA+HSUPA
+	Dispositivi connessi alla rete Wifi:
+1565646547 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+1565645825 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+1565657326 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+1565653935 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 16:01:00
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 1385
+	MB in uscita su wwan0: 7473
+	Tempo di accensione:  16:01:00 up 50 days,  5:42,  load average: 0.06, 0.10, 0.08
+	Operatore: I TIM
+	Temperatura della CPU (in 0.1 °C): 399
+	Tipo di connessione: HSDPA+HSUPA
+	Dispositivi connessi alla rete Wifi:
+1565646547 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+1565645825 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+1565657326 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+1565653935 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 17:01:00
+	Livello del segnale (dBm): -87
+	MB in ingresso su wwan0: 1386
+	MB in uscita su wwan0: 7473
+	Tempo di accensione:  17:01:00 up 50 days,  6:42,  load average: 1.08, 0.77, 0.40
+	Operatore: I TIM
+	Temperatura della CPU (in 0.1 °C): 376
+	Tipo di connessione: HSDPA+HSUPA
+	Dispositivi connessi alla rete Wifi:
+1565664923 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+1565662262 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+1565645825 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+1565657326 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+1565665182 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 18:01:00
+	Livello del segnale (dBm): -85
+	MB in ingresso su wwan0: 1464
+	MB in uscita su wwan0: 7524
+	Tempo di accensione:  18:01:00 up 50 days,  7:42,  load average: 0.50, 0.72, 0.76
+	Operatore: I TIM
+	Temperatura della CPU (in 0.1 °C): 401
+	Tipo di connessione: HSDPA+HSUPA
+	Dispositivi connessi alla rete Wifi:
+1565667323 c4:88:e5:30:f6:3b 192.168.1.181 android-c1fa56c6fe409a5f 01:c4:88:e5:30:f6:3b
+1565664923 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+1565666126 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+1565667427 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+1565668688 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+1565665182 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 19:01:00
+	Livello del segnale (dBm): -87
+	MB in ingresso su wwan0: 1489
+	MB in uscita su wwan0: 7592
+	Tempo di accensione:  19:01:01 up 50 days,  8:42,  load average: 1.21, 1.09, 0.91
+	Operatore: I TIM
+	Temperatura della CPU (in 0.1 °C): 455
+	Tipo di connessione: HSDPA+HSUPA
+	Dispositivi connessi alla rete Wifi:
+1565667323 c4:88:e5:30:f6:3b 192.168.1.181 android-c1fa56c6fe409a5f 01:c4:88:e5:30:f6:3b
+1565664923 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+1565666126 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+1565667427 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+1565671521 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+1565665182 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 20:01:01
+	Livello del segnale (dBm): -87
+	MB in ingresso su wwan0: 1492
+	MB in uscita su wwan0: 7632
+	Tempo di accensione:  20:01:01 up 50 days,  9:42,  load average: 0.98, 0.83, 0.77
+	Operatore: I TIM
+	Temperatura della CPU (in 0.1 °C): 525
+	Tipo di connessione: HSDPA+HSUPA
+	Dispositivi connessi alla rete Wifi:
+1565667323 c4:88:e5:30:f6:3b 192.168.1.181 android-c1fa56c6fe409a5f 01:c4:88:e5:30:f6:3b
+1565664923 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+1565666126 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+1565667427 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+1565671521 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+1565665182 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 21:01:01
+	Livello del segnale (dBm): -87
+	MB in ingresso su wwan0: 1493
+	MB in uscita su wwan0: 7648
+	Tempo di accensione:  21:01:01 up 50 days, 10:42,  load average: 0.04, 0.09, 0.10
+	Operatore: I TIM
+	Temperatura della CPU (in 0.1 °C): 490
+	Tipo di connessione: HSDPA+HSUPA
+	Dispositivi connessi alla rete Wifi:
+1565667323 c4:88:e5:30:f6:3b 192.168.1.181 android-c1fa56c6fe409a5f 01:c4:88:e5:30:f6:3b
+1565664923 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+1565666126 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+1565667427 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+1565671521 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+1565678078 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 22:01:00
+	Livello del segnale (dBm): -87
+	MB in ingresso su wwan0: 1497
+	MB in uscita su wwan0: 7708
+	Tempo di accensione:  22:01:00 up 50 days, 11:42,  load average: 0.08, 0.14, 0.10
+	Operatore: I TIM
+	Temperatura della CPU (in 0.1 °C): 455
+	Tipo di connessione: HSDPA+HSUPA
+	Dispositivi connessi alla rete Wifi:
+1565667323 c4:88:e5:30:f6:3b 192.168.1.181 android-c1fa56c6fe409a5f 01:c4:88:e5:30:f6:3b
+1565681209 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+1565681428 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+1565667427 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+1565671521 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+1565678078 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+
+REPORT ORARIO  -  12/Aug/2019
+ alle ore 23:01:00
+	Livello del segnale (dBm): -81
+	MB in ingresso su wwan0: 1499
+	MB in uscita su wwan0: 7726
+	Tempo di accensione:  23:01:00 up 50 days, 12:42,  load average: 0.12, 0.13, 0.09
+	Operatore: I TIM
+	Temperatura della CPU (in 0.1 °C): 444
+	Tipo di connessione: HSDPA+HSUPA
+	Dispositivi connessi alla rete Wifi:
+1565667323 c4:88:e5:30:f6:3b 192.168.1.181 android-c1fa56c6fe409a5f 01:c4:88:e5:30:f6:3b
+1565681209 b0:a2:e7:16:73:45 192.168.1.207 android-926bbdafb06a09be 01:b0:a2:e7:16:73:45
+1565681428 a0:3e:6b:b0:13:f8 192.168.1.180 android-18f81cdc4bf2a46c *
+1565667427 a8:7d:12:0a:eb:c2 192.168.1.178 HUAWEI_MediaPad_T5-9896df 01:a8:7d:12:0a:eb:c2
+1565683430 f8:27:93:4d:94:88 192.168.1.217 iPhone-di-Alice 01:f8:27:93:4d:94:88
+1565678078 64:a2:f9:e9:f8:77 192.168.1.143 OnePlus_6T 01:64:a2:f9:e9:f8:77
+
+

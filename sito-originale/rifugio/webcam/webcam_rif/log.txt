@@ -1,0 +1,18 @@
+﻿MobileWebCam 3.13 (Rifugio M.Del Grande e R. Camerini   m2580slm  Valmalenco  CAI Sovico) SM-G350 4.2.2 JDQ39.G350XXU0ANG4
+
+Date and time: Mon Aug 19 21:02:20 CEST 2019
+Battery 100% 5,3℃
+
+Pictures: 1    Uploading: 1
+Orientation: 271
+Mode: Semi-Background (full cam features, wakeup)
+Focus: infinity, White Balance: auto, Color Effect: none, Scene Mode: landscape, Exposure Compensation: 50
+Memory used: 3,34 MB
+Used upload image size: 2560 x 1920 (from 2560 x 1920)
+
+Activity:
+Mon Aug 19 21:02:08 CEST 2019: Custom image size scaling: 1.0, 1.0
+Mon Aug 19 21:02:09 CEST 2019: Picture 1 taken ... uploading now!
+
+Errors:
+Mon Aug 19 21:02:06 CEST 2019: Autofocus not successful! Try fixed mode!

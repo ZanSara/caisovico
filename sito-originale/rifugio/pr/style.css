@@ -1,0 +1,196 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  color: black;
+  background: white;
+}
+
+
+.title{
+  text-align: center;
+  display: block;
+  position: absolute;
+  background:  #0091E1;
+  color: white;
+  top: 0;
+  height: 140px;
+  width: 100%;
+}
+.title p{
+  font-size: 12px;
+}
+
+.inner-box{
+  width: 90%;
+  margin: 5%;
+  padding: 5%;
+}
+.white{
+  background: #fff;
+}
+.center{
+  text-align:center;
+}
+#data-box{
+  position: absolute;
+  top: 160px;
+  bottom: 50px;
+  right: 3%;
+  overflow: auto;
+}
+
+
+.calendario-outer-box{
+  position: absolute;
+  bottom: 60px;
+  left: 10px;
+  right: 10px;
+  top: 160px;
+}
+.calendario-outer-box tr{
+  height: 40px;
+}
+.calendario-inner-box{
+  position: absolute;
+  top: 40px;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  border: 1px solid #fff;
+}
+.scrollable{
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.calendario{
+  background: #fff;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.grid tr td{
+  text-align: center;
+  border: 1px solid #fff;
+}
+
+.calendario td a{
+  margin: 0;
+  color: #000;
+}
+
+
+.giorno{
+  width: 10%;
+  font-weight: bold;
+  text-align: center;
+  background: #fff;
+}
+.gestore{
+  width: 10%;
+  text-align: center;
+  background: #eee;
+}
+.letto{
+  background: #B3FFC3;
+}
+.brandina{
+  background: #FFFEB3;
+}
+.bivacco{
+  background: #D6E2FF;
+}
+.materasso{
+  background: #FFC8B3;
+}
+
+
+
+.full-no-bar{
+  width: unset;
+}
+.two-third-no-bar{
+  width: 65%;
+}
+.two-third{
+  width: 66%;
+}
+.one-third{
+  width: 27%;
+  z-index: 20;
+}
+
+#new-booking{
+  display: none;
+  position: absolute;
+  text-align: center;
+  top: 20px;
+  width: 30%;
+  left: 35%;
+  z-index: 20;
+}
+#new-booking input{
+  width: 90%;
+  display:block;
+  margin: 20px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  height: 50px;
+  background-color: #0041B1; /* #f5f5f5; */
+}
+.footer-div{
+  position: absolute;
+  bottom: 0;
+  width: 99%;
+  text-align: center;
+  margin: 5px;
+  padding: auto;
+}
+
+
+
+
+.border{
+    border: 2px solid red;
+}
+
+
+
+
+
+
+.shadow1{
+    /* For IE 5.5 - 7*/
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99222222, endColorstr=#99222222);
+    /* For IE 8*/
+    -ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99222222, endColorstr=#99222222);
+    z-index:10;
+  -moz-box-shadow:0px 0px 12px #000000;
+  -webkit-box-shadow:0px 0px 12px #000000;
+  box-shadow:0px 0px 12px #000000;
+
+/* Arguments:
+ * 1px: Horizontal offset of the effect. Positive numbers shift it right, negative left.
+ * 2px: Vertical offset of the effect. Positive numbers shift it down, negative up.
+ * 3px: The blur effect.  0 means no blur.
+ * color: The color of the shadow. */
+}
+
+.shadow2{
+    /* For IE 5.5 - 7*/
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99222222, endColorstr=#99222222);
+    /* For IE 8*/
+    -ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99222222, endColorstr=#99222222);
+    z-index:10;
+  -moz-box-shadow:0px 0px 10px #aaaaaa;
+  -webkit-box-shadow:0px 0px 10px #aaaaaa;
+  box-shadow:0px 0px 10px #aaaaaa;
+}

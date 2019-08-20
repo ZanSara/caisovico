@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>Slide Show ZP</title>
+
+  <script type="text/javascript">
+<!--
+// (C) 2003 by CodeLifter.com
+// Free for all users, but leave in this header.
+
+// ==============================
+// Set the following variables...
+// ==============================
+
+// illustrato e spiegato su http://www.web-link.it
+
+// Set the duration of crossfade (in seconds)
+var CrossFadeDuration = 3;
+
+var Picture = new Array(); // don't change this
+var Caption = new Array(); // don't change this
+var showHot = false;       // don't change this
+
+// Specify the image files...
+// To add more images, just continue
+// the pattern, adding to the array below.
+// To use fewer images, remove lines
+// starting at the end of the Picture array.
+// Caution: The number of Pictures *must*
+// equal the number of Captions!
+
+Picture[1]  = 'f_rif_foto_vistaext.jpg';
+Picture[2]  = 'f_rif_foto_fronte.jpg';
+Picture[3]  = 'f_rif_foto_interno1.jpg';
+Picture[4]  = 'f_rif_foto_interno2.jpg';
+Picture[5]  = 'f_rif_foto_soppalco.jpg';
+Picture[6]  = 'f_rif_foto_interno3.jpg';
+Picture[7]  = 'f_rif_foto_cucina.jpg';
+Picture[8]  = 'f_rif_foto_panorama.jpg';
+Picture[9]  = 'f_rif_foto_stambecco.jpg';
+Picture[10]  = 'f_rif_foto_marmotta.jpg';
+Picture[11]  = 'f_rif_foto_extsera.jpg';
+
+
+
+// Specify the Captions...
+// To add more captions, just continue
+// the pattern, adding to the array below.
+// To use fewer captions, remove lines
+// starting at the end of the Caption array.
+// Caution: The number of Captions *must*
+// equal the number of Pictures!
+
+Caption[1]  = "1. Vista del rifugio con la parete nord del M.Disgrazia";
+Caption[2]  = "2. Vista frontale del rifugio con il nuovo bivacco";
+Caption[3]  = "3. Interno del Rifugio";
+Caption[4]  = "4. Sala da pranzo";
+Caption[5]  = "5. Il Soppalco con 4 comodi letti";
+Caption[6]  = "6. Interno a lume di candela";
+Caption[7]  = "7. La nuova cucina";
+Caption[8]  = "8. Colazione con vista sul M. Disgrazia";
+Caption[9]  = "9. Uno stambecco che da qualche anno visita il nostro rifugio";
+Caption[10]  = "10. Anche alcune marmotte si avvicinano alla balconata";
+Caption[11]  = "11. Esterno del rifugio di sera";
+
+
+
+// =====================================
+// Do not edit anything below this line!
+// =====================================
+
+var tss;
+var iss;
+var jss = 1;
+var pss = Picture.length-1;
+
+var preLoad = new Array();
+for (iss = 1; iss < pss+1; iss++){
+preLoad[iss] = new Image();
+preLoad[iss].src = Picture[iss];}
+
+function control(how){
+if (showHot){
+if (how=="H") jss = 1;
+if (how=="F") jss = jss + 1;
+if (how=="B") jss = jss - 1;
+if (jss > (pss)) jss=1;
+if (jss < 1) jss = pss;
+if (document.all){
+document.images.PictureBox.style.filter="blendTrans(duration=2)";
+document.images.PictureBox.style.filter="blendTrans(duration=CrossFadeDuration)";
+document.images.PictureBox.filters.blendTrans.Apply();}
+document.images.PictureBox.src = preLoad[jss].src;
+if (document.getElementById) document.getElementById("CaptionBox").innerHTML= Caption[jss];
+if (document.all) document.images.PictureBox.filters.blendTrans.Play();
+}}
+-->  
+  </script>
+</head>
+
+<body onload='showHot=true;self.focus();'  link="#006600" vlink="#006600" alink="#006600"> 
+
+<div align="center">
+<table style="font-family: Helvetica,Arial,sans-serif;" border=4 cellpadding=2 cellspacing=0>
+   
+<tr>
+       <!-- 
+       The next table cell holds the captions. This table cell must have id=CaptionBox and class=Caption in its tag.
+       The default caption shows whilst loading in all browsers; NS4 will show only the default caption, throughout.
+       //-->
+    <td id=CaptionBox class=Caption align=center width=720> <!-- Correggi se aggiungi il 3° bottone -->
+       Premi i pulsanti qui a fianco per scorrere le foto </td>
+       <!--
+       The following three cells contain the controls. Each of the control a href's must contain class=Controls, to attach the styles (see top of script).
+       To dress this up a bit, you can of course substitute <img src> images for the text in the links.
+       //-->    
+    <td align="center" width=30><a class=Controls href="#" onClick="javascript:control('B');" title="indietro"><b><<</b></a></td>
+<!--<td align="center" width=30><a class=Controls href="#" onClick="javascript:control('H');" title="inizio">1°</a></td> -->
+    <td align="center" width=30><a class=Controls href="#" onClick="javascript:control('F');" title="avanti"><b>>></b></a></td>
+</tr>    
+<tr>
+       <!--
+       The next table cell holds the images. Set cell and image width and height the same. The img src must have name=PictureBox in its tag.
+       Often, the first image in the Picture array in the script is used here; but you may also use a different,
+       introductory image as we have here, since this image is shown only on start-up.
+       //-->
+    <td width=800 height=600 colspan="4">
+    <img src=f_rif_foto_vistaext.jpg name=PictureBox width=800 height=600>
+    </td>
+  </tr>
+</table>
+</div>
+</body>
+</html>

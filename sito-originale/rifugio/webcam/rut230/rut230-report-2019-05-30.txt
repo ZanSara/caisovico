@@ -1,0 +1,169 @@
+##### REPORT RUT230 #####
+Generato Thu May 30 00:01:13 CEST 2019
+
+
+REPORT ORARIO  -  Thu May 30 01:00:00 CEST 2019
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 913800
+	Bytes in uscita su wwan0: 759245
+	Tempo di accensione:  01:00:00 up 17:25,  load average: 0.18, 0.12, 0.09
+
+
+REPORT ORARIO  -  Thu May 30 02:00:00 CEST 2019
+	Livello del segnale (dBm): -87
+	Bytes in ingresso su wwan0: 963873
+	Bytes in uscita su wwan0: 801784
+	Tempo di accensione:  02:00:00 up 18:25,  load average: 0.05, 0.10, 0.08
+
+
+REPORT ORARIO  -  Thu May 30 03:00:00 CEST 2019
+	Livello del segnale (dBm): -87
+	Bytes in ingresso su wwan0: 1013781
+	Bytes in uscita su wwan0: 844179
+	Tempo di accensione:  03:00:00 up 19:25,  load average: 0.12, 0.10, 0.09
+
+
+REPORT ORARIO  -  Thu May 30 04:00:00 CEST 2019
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 1063589
+	Bytes in uscita su wwan0: 886580
+	Tempo di accensione:  04:00:00 up 20:25,  load average: 0.05, 0.11, 0.08
+
+
+REPORT ORARIO  -  Thu May 30 05:00:00 CEST 2019
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 1113524
+	Bytes in uscita su wwan0: 929248
+	Tempo di accensione:  05:00:00 up 21:25,  load average: 0.11, 0.13, 0.09
+
+
+REPORT ORARIO  -  Thu May 30 06:00:00 CEST 2019
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 1163096
+	Bytes in uscita su wwan0: 971545
+	Tempo di accensione:  06:00:00 up 22:25,  load average: 0.06, 0.09, 0.08
+
+
+REPORT ORARIO  -  Thu May 30 07:00:00 CEST 2019
+	Livello del segnale (dBm): -91
+	Bytes in ingresso su wwan0: 1213226
+	Bytes in uscita su wwan0: 1013902
+	Tempo di accensione:  07:00:01 up 23:25,  load average: 0.26, 0.16, 0.10
+
+
+REPORT ORARIO  -  Thu May 30 08:00:00 CEST 2019
+	Livello del segnale (dBm): -87
+	Bytes in ingresso su wwan0: 1265088
+	Bytes in uscita su wwan0: 1057663
+	Tempo di accensione:  08:00:01 up 1 day, 25 min,  load average: 0.10, 0.11, 0.09
+
+
+REPORT ORARIO  -  Thu May 30 09:00:00 CEST 2019
+	Livello del segnale (dBm): -89
+	Bytes in ingresso su wwan0: 1317165
+	Bytes in uscita su wwan0: 1100699
+	Tempo di accensione:  09:00:00 up 1 day,  1:24,  load average: 0.12, 0.15, 0.10
+
+
+REPORT ORARIO  -  Thu May 30 10:00:00 CEST 2019
+	Livello del segnale (dBm): -87
+	Bytes in ingresso su wwan0: 1368940
+	Bytes in uscita su wwan0: 1144043
+	Tempo di accensione:  10:00:00 up 1 day,  2:24,  load average: 0.09, 0.11, 0.08
+
+
+REPORT ORARIO  -  Thu May 30 11:00:00 CEST 2019
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 1421082
+	Bytes in uscita su wwan0: 1188086
+	Tempo di accensione:  11:00:00 up 1 day,  3:24,  load average: 0.07, 0.09, 0.08
+
+
+REPORT ORARIO  -  Thu May 30 12:00:00 CEST 2019
+	Livello del segnale (dBm): -87
+	Bytes in ingresso su wwan0: 1472379
+	Bytes in uscita su wwan0: 1230897
+	Tempo di accensione:  12:00:00 up 1 day,  4:24,  load average: 0.12, 0.14, 0.11
+
+
+REPORT ORARIO  -  Thu May 30 13:00:00 CEST 2019
+	Livello del segnale (dBm): -91
+	Bytes in ingresso su wwan0: 1523904
+	Bytes in uscita su wwan0: 1274444
+	Tempo di accensione:  13:00:01 up 1 day,  5:25,  load average: 0.08, 0.13, 0.11
+
+
+REPORT ORARIO  -  Thu May 30 14:00:00 CEST 2019
+	Livello del segnale (dBm): -91
+	Bytes in ingresso su wwan0: 1575050
+	Bytes in uscita su wwan0: 1316404
+	Tempo di accensione:  14:00:01 up 1 day,  6:24,  load average: 0.08, 0.12, 0.08
+
+
+REPORT ORARIO  -  Thu May 30 15:00:01 CEST 2019
+	Livello del segnale (dBm): -93
+	Bytes in ingresso su wwan0: 1626912
+	Bytes in uscita su wwan0: 1359237
+	Tempo di accensione:  15:00:01 up 1 day,  7:25,  load average: 0.09, 0.13, 0.09
+
+
+REPORT ORARIO  -  Thu May 30 16:00:00 CEST 2019
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 1763928
+	Bytes in uscita su wwan0: 1504470
+	Tempo di accensione:  16:00:00 up 1 day,  8:24,  load average: 0.31, 0.18, 0.10
+
+
+REPORT ORARIO  -  Thu May 30 17:00:00 CEST 2019
+	Livello del segnale (dBm): -89
+	Bytes in ingresso su wwan0: 1813517
+	Bytes in uscita su wwan0: 1546549
+	Tempo di accensione:  17:00:00 up 1 day,  9:24,  load average: 0.05, 0.09, 0.08
+
+
+REPORT ORARIO  -  Thu May 30 18:00:00 CEST 2019
+	Livello del segnale (dBm): -89
+	Bytes in ingresso su wwan0: 1865102
+	Bytes in uscita su wwan0: 1589757
+	Tempo di accensione:  18:00:00 up 1 day, 10:24,  load average: 0.28, 0.18, 0.11
+
+
+REPORT ORARIO  -  Thu May 30 19:00:00 CEST 2019
+	Livello del segnale (dBm): -81
+	Bytes in ingresso su wwan0: 695792
+	Bytes in uscita su wwan0: 14429813
+	Tempo di accensione:  19:00:00 up 18 min,  load average: 1.08, 1.05, 0.76
+
+
+REPORT ORARIO  -  Thu May 30 20:00:00 CEST 2019
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 3238846
+	Bytes in uscita su wwan0: 33966397
+	Tempo di accensione:  20:00:00 up  1:18,  load average: 0.08, 0.13, 0.27
+
+
+REPORT ORARIO  -  Thu May 30 21:00:00 CEST 2019
+	Livello del segnale (dBm): -87
+	Bytes in ingresso su wwan0: 3847419
+	Bytes in uscita su wwan0: 39341847
+	Tempo di accensione:  21:00:00 up  2:18,  load average: 0.15, 0.16, 0.13
+
+
+REPORT ORARIO  -  30/May/2019
+ alle ore 
+22:00:01
+	Livello del segnale (dBm): -85
+	Bytes in ingresso su wwan0: 4206541
+	Bytes in uscita su wwan0: 41009696
+	Tempo di accensione:  22:00:01 up  3:18,  load average: 0.18, 0.13, 0.10
+
+
+REPORT ORARIO  -  30/May/2019
+ alle ore 
+23:00:00
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 4263695
+	Bytes in uscita su wwan0: 41059121
+	Tempo di accensione:  23:00:00 up  4:18,  load average: 0.08, 0.12, 0.09
+
+

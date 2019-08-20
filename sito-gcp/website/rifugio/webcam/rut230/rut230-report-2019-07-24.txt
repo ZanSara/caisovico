@@ -1,0 +1,197 @@
+=============== REPORT RUT230  ==============
+            Generato il 24/Jul/2019
+=============================================
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 00:01:00
+	Livello del segnale (dBm): -81
+	Bytes in ingresso su wwan0: 258373767
+	Bytes in uscita su wwan0: 3073441652
+	Tempo di accensione:  00:01:00 up 30 days, 13:42,  load average: 0.04, 0.08, 0.08
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 01:01:00
+	Livello del segnale (dBm): -81
+	Bytes in ingresso su wwan0: 258434598
+	Bytes in uscita su wwan0: 3073491398
+	Tempo di accensione:  01:01:00 up 30 days, 14:42,  load average: 0.16, 0.14, 0.10
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 02:01:00
+	Livello del segnale (dBm): -81
+	Bytes in ingresso su wwan0: 258492187
+	Bytes in uscita su wwan0: 3073534368
+	Tempo di accensione:  02:01:00 up 30 days, 15:42,  load average: 0.22, 0.28, 0.22
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 03:01:00
+	Livello del segnale (dBm): -81
+	Bytes in ingresso su wwan0: 259044088
+	Bytes in uscita su wwan0: 3073693945
+	Tempo di accensione:  03:01:00 up 30 days, 16:42,  load average: 0.04, 0.12, 0.09
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 04:01:00
+	Livello del segnale (dBm): -81
+	Bytes in ingresso su wwan0: 259126735
+	Bytes in uscita su wwan0: 3073814028
+	Tempo di accensione:  04:01:00 up 30 days, 17:42,  load average: 0.19, 0.15, 0.10
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 05:01:00
+	Livello del segnale (dBm): -81
+	Bytes in ingresso su wwan0: 259187817
+	Bytes in uscita su wwan0: 3073873814
+	Tempo di accensione:  05:01:00 up 30 days, 18:42,  load average: 0.11, 0.10, 0.08
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 06:01:00
+	Livello del segnale (dBm): -81
+	Bytes in ingresso su wwan0: 259242946
+	Bytes in uscita su wwan0: 3073909851
+	Tempo di accensione:  06:01:00 up 30 days, 19:42,  load average: 0.17, 0.10, 0.09
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 07:01:00
+	Livello del segnale (dBm): -81
+	Bytes in ingresso su wwan0: 259306165
+	Bytes in uscita su wwan0: 3073956414
+	Tempo di accensione:  07:01:00 up 30 days, 20:42,  load average: 0.09, 0.11, 0.09
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 08:01:00
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 259422069
+	Bytes in uscita su wwan0: 3074141338
+	Tempo di accensione:  08:01:00 up 30 days, 21:42,  load average: 0.10, 0.12, 0.09
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 09:01:00
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 259485827
+	Bytes in uscita su wwan0: 3074193455
+	Tempo di accensione:  09:01:00 up 30 days, 22:42,  load average: 0.26, 0.18, 0.11
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 10:01:00
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 259570304
+	Bytes in uscita su wwan0: 3074266621
+	Tempo di accensione:  10:01:00 up 30 days, 23:42,  load average: 0.23, 0.16, 0.10
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 11:01:00
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 259636142
+	Bytes in uscita su wwan0: 3074322835
+	Tempo di accensione:  11:01:00 up 31 days, 42 min,  load average: 0.18, 0.17, 0.11
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 12:01:00
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 259737691
+	Bytes in uscita su wwan0: 3074488124
+	Tempo di accensione:  12:01:00 up 31 days,  1:42,  load average: 0.06, 0.10, 0.08
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 13:01:00
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 259817893
+	Bytes in uscita su wwan0: 3074595848
+	Tempo di accensione:  13:01:00 up 31 days,  2:42,  load average: 0.09, 0.11, 0.09
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 14:01:00
+	Livello del segnale (dBm): -81
+	Bytes in ingresso su wwan0: 259911424
+	Bytes in uscita su wwan0: 3074732182
+	Tempo di accensione:  14:01:00 up 31 days,  3:42,  load average: 0.06, 0.13, 0.12
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 15:01:00
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 260016142
+	Bytes in uscita su wwan0: 3074868230
+	Tempo di accensione:  15:01:00 up 31 days,  4:42,  load average: 0.06, 0.10, 0.08
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 16:01:00
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 260075135
+	Bytes in uscita su wwan0: 3074911187
+	Tempo di accensione:  16:01:00 up 31 days,  5:42,  load average: 0.03, 0.06, 0.08
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 17:01:00
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 260744273
+	Bytes in uscita su wwan0: 3087149580
+	Tempo di accensione:  17:01:00 up 31 days,  6:42,  load average: 0.18, 0.13, 0.09
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 18:01:01
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 260915065
+	Bytes in uscita su wwan0: 3087467625
+	Tempo di accensione:  18:01:01 up 31 days,  7:42,  load average: 0.12, 0.13, 0.10
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 19:01:01
+	Livello del segnale (dBm): -83
+	Bytes in ingresso su wwan0: 261039975
+	Bytes in uscita su wwan0: 3087595654
+	Tempo di accensione:  19:01:01 up 31 days,  8:42,  load average: 0.26, 0.14, 0.10
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 20:01:00
+	Livello del segnale (dBm): -81
+	Bytes in ingresso su wwan0: 261105818
+	Bytes in uscita su wwan0: 3087642102
+	Tempo di accensione:  20:01:01 up 31 days,  9:42,  load average: 0.16, 0.16, 0.10
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 21:01:01
+	Livello del segnale (dBm): -81
+	Bytes in ingresso su wwan0: 261191353
+	Bytes in uscita su wwan0: 3087791434
+	Tempo di accensione:  21:01:01 up 31 days, 10:42,  load average: 0.29, 0.19, 0.12
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 22:01:00
+	Livello del segnale (dBm): -81
+	Bytes in ingresso su wwan0: 261265456
+	Bytes in uscita su wwan0: 3087870254
+	Tempo di accensione:  22:01:01 up 31 days, 11:42,  load average: 0.22, 0.14, 0.10
+
+
+REPORT ORARIO  -  24/Jul/2019
+ alle ore 23:01:00
+	Livello del segnale (dBm): -81
+	Bytes in ingresso su wwan0: 261343375
+	Bytes in uscita su wwan0: 3088019769
+	Tempo di accensione:  23:01:01 up 31 days, 12:42,  load average: 0.08, 0.11, 0.08
+
+

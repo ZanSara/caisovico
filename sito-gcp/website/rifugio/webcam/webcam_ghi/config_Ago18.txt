@@ -1,0 +1,168 @@
+dropbox_datetime:true
+// Zoom 0-100
+zoom:0
+motion_value:25
+ftp_dir:/webcam_ghi
+email_host:smtp.gmail.com
+// Triggered by Intent Broadcast
+cam_broadcast_activation:
+ftp_keep_open:false
+// use camera autofocus
+autofocus_operation:ON
+store_gps:false
+// Brightness
+night_autobrightnessadd:64.0
+// White Balance
+whitebalance:auto
+picture_autorotate:false
+// email photo action triggered
+email_external_trigger:false
+// Focus Mode
+focus:infinity
+// upload to ftp
+ftpserver_upload:true
+// Night Start
+night_starttime:00:00
+ftpserver_url:www.caisovico.it
+// Night End
+night_endtime:00:00
+// Zoom Wait
+cam_zoomwait:false
+// download stamp picture
+imprint_picture_url:
+// Scene Mode
+scenemode_night:auto
+cam_passiveftp:true
+// Dropbox Batch Upload
+dropbox_batchupload:1
+// Title
+imprint_text:M.te Disgrazia dal Rif. del Grande Camerini SERVIZIO GLACIOLOGICO LOMBARDO
+// rotate picture to portrait
+picture_rotate:false
+// FTP reliable upload
+ftp_batchalways:false
+// upload to dropbox
+dropbox_upload:false
+motion_change:15
+// Contrast
+night_autocontrastfactor:3.0
+imprint_gps:false
+// Custom Picture Size Width
+picture_size_custom_w:3264
+dropbox_filenames:false
+secondary_sd:false
+dropbox_every:1
+// Cam Delay ms
+cam_openeddelay:1000
+// no dark/night picture upload.
+night_detect:false
+// how to show current location
+gps_imprint_location:NONE
+cam_email:
+mobilewebcam_enabled:true
+// flashlight enabled
+cam_flash:false
+// stretch stamp picture
+imprint_picture_stretch:false
+email_pausetime:300
+cam_login:
+cam_front:false
+// Time End
+activity_endtime:22:5
+// Scenemode
+night_autoscenemode:night
+// Refresh Duration
+cam_refresh:7200
+dropbox_keepoldpics:0
+cam_filenames:false
+// Skip Corrupted Upload
+skip_corrupted:false
+// low battery pause
+lowbattery_pause:true
+// motion detection enabled
+motion_detect:false
+cam_url:.
+ftp_password:caiwebcam
+email_port:465
+// stamp picture over photo
+imprint_picture:false
+server_every:1
+// Effect
+coloreffect:none
+ftp_login:webcam@caisovico.it
+cam_datetime:false
+// Custom Picture Size Height
+picture_size_custom_h:2448
+reboot:0
+// FTP Batch Upload
+ftp_batchupload:1
+use_sftp:false
+cam_filename_datetime:false
+imprint_statusinfo:
+// Time Start
+activity_starttime:10:0
+// email intent broadcast received
+email_android_broadcast:false
+// Zoom 0-100
+zoom_night:0
+// recolor ir light pictures
+night_ir_light:false
+mail_every:1
+// Whitebalance
+night_autoswhitebalance:incandescent
+// Scene Mode
+scenemode:landscape
+cam_emailsubject:
+// Picture Size
+picture_size_sel:5
+store_every:1
+ftp_port:21
+cam_intents_repeat:1
+ftp_keepoldpics:0
+dropbox_defaultname:current.jpg
+picture_compression:100
+// Exposure Compensation
+exposurecompensation_night:50
+sdcard_dir:/MobileWebCam/
+// Green
+night_autogreenfactor:0.05
+// send log
+log_upload:true
+// White Balance
+whitebalance_night:auto
+sdcard_keepoldpics:0
+// http website post
+server_upload:false
+email_sender:
+dropbox_dir:/test/
+imprint_datetimeformat:dd/MM/yyyy   HH:mm
+// Time between events
+eventtrigger_pausetime:0
+// automatic night detection
+night_auto_config:false
+// flip picture
+picture_flip:false
+// Focus Mode
+focus_night:fixed
+// reload stamp picture
+imprint_picture_refresh:false
+email_ssl:false
+// email picture
+cam_mailphoto:false
+// Exposure
+night_autoexposure:100
+// Exposure Compensation
+exposurecompensation:50
+email_password:
+ftp_every:1
+// flashlight enabled
+cam_flash_night:false
+ftpserver_defaultname:fotoghiacciaio.jpg
+cam_password:x
+// auto brightness for night pictures
+night_autobright:false
+motion_keepalive_refresh:0
+// Effect
+coloreffect_night:none
+// store on SDCard
+cam_storepictures:false

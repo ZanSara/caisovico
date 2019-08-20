@@ -1,0 +1,14 @@
+
+.modify-btn{
+    position: relative;
+    top: auto;
+    margin-right: auto; !important
+    margin-left: auto; !important
+    display: block;
+    max-width: 100px;
+}
+
+.spinningWheel{
+    width:40%; 
+    margin:30%; 
+}

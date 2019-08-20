@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>Slide Show ZP</title>
+
+  <script type="text/javascript">
+<!--
+// (C) 2003 by CodeLifter.com
+// Free for all users, but leave in this header.
+
+// ==============================
+// Set the following variables...
+// ==============================
+
+// illustrato e spiegato su http://www.web-link.it
+
+// Set the duration of crossfade (in seconds)
+var CrossFadeDuration = 3;
+
+var Picture = new Array(); // don't change this
+var Caption = new Array(); // don't change this
+var showHot = false;       // don't change this
+
+// Specify the image files...
+// To add more images, just continue
+// the pattern, adding to the array below.
+// To use fewer images, remove lines
+// starting at the end of the Picture array.
+// Caution: The number of Pictures *must*
+// equal the number of Captions!
+
+Picture[1]  = 'f_rif_lav2_demolizioni.jpg';
+Picture[2]  = 'f_rif_lav2_elicemento.jpg';
+Picture[3]  = 'f_rif_lav2_soletta.jpg';
+Picture[4]  = 'f_rif_lav2_tetto.jpg';
+Picture[5]  = 'f_rif_lav2_quasifinito.jpg';
+Picture[6]  = 'f_rif_lav2_pavimento.jpg';
+Picture[7]  = 'f_rif_lav2_pannelli.jpg';
+Picture[8]  = 'f_rif_lav2_quadro.jpg';
+
+// Specify the Captions...
+// To add more captions, just continue
+// the pattern, adding to the array below.
+// To use fewer captions, remove lines
+// starting at the end of the Caption array.
+// Caution: The number of Captions *must*
+// equal the number of Pictures!
+
+Caption[1]  = "1. The excavations near the old building";
+Caption[2]  = "2. The helicopter bringing reinforced concrete up to the yard";
+Caption[3]  = "3. BUilding the floor of the new part of the hut";
+Caption[4]  = "4. Building the roof";
+Caption[5]  = "5. The building is almost finished, except for the internal works";
+Caption[6]  = "6. Realization of the new floor in the old hut";
+Caption[7]  = "7. The solar panels, which give electrical energy to the hut";
+Caption[8]  = "8. The main panel of the electrical system, which gives 220V 600W";
+
+
+// =====================================
+// Do not edit anything below this line!
+// =====================================
+
+var tss;
+var iss;
+var jss = 1;
+var pss = Picture.length-1;
+
+var preLoad = new Array();
+for (iss = 1; iss < pss+1; iss++){
+preLoad[iss] = new Image();
+preLoad[iss].src = Picture[iss];}
+
+function control(how){
+if (showHot){
+if (how=="H") jss = 1;
+if (how=="F") jss = jss + 1;
+if (how=="B") jss = jss - 1;
+if (jss > (pss)) jss=1;
+if (jss < 1) jss = pss;
+if (document.all){
+document.images.PictureBox.style.filter="blendTrans(duration=2)";
+document.images.PictureBox.style.filter="blendTrans(duration=CrossFadeDuration)";
+document.images.PictureBox.filters.blendTrans.Apply();}
+document.images.PictureBox.src = preLoad[jss].src;
+if (document.getElementById) document.getElementById("CaptionBox").innerHTML= Caption[jss];
+if (document.all) document.images.PictureBox.filters.blendTrans.Play();
+}}
+-->  
+  </script>
+</head>
+
+<body onload='showHot=true;self.focus();'  link="#006600" vlink="#006600" alink="#006600"> 
+
+<div align="center">
+<table style="font-family: Helvetica,Arial,sans-serif;" border=4 cellpadding=2 cellspacing=0>
+   
+<tr>
+       <!-- 
+       The next table cell holds the captions. This table cell must have id=CaptionBox and class=Caption in its tag.
+       The default caption shows whilst loading in all browsers; NS4 will show only the default caption, throughout.
+       //-->
+    <td id=CaptionBox class=Caption align=center width=475> <!-- Correggi se aggiungi il 3° bottone -->
+       Press the buttons on the right to see more photos</td>
+       <!--
+       The following three cells contain the controls. Each of the control a href's must contain class=Controls, to attach the styles (see top of script).
+       To dress this up a bit, you can of course substitute <img src> images for the text in the links.
+       //-->    
+    <td align="center" width=30><a class=Controls href="#" onClick="javascript:control('B');" title="indietro"><b><<</b></a></td>
+<!--<td align="center" width=30><a class=Controls href="#" onClick="javascript:control('H');" title="inizio">1°</a></td> -->
+    <td align="center" width=30><a class=Controls href="#" onClick="javascript:control('F');" title="avanti"><b>>></b></a></td>
+</tr>    
+<tr>
+       <!--
+       The next table cell holds the images. Set cell and image width and height the same. The img src must have name=PictureBox in its tag.
+       Often, the first image in the Picture array in the script is used here; but you may also use a different,
+       introductory image as we have here, since this image is shown only on start-up.
+       //-->
+    <td colspan="3" rowspan="1"width=580 height=435 colspan="0">
+    <img src=f_rif_lav2_demolizioni.jpg name=PictureBox width=580 height=435>
+    </td>
+  </tr>
+</table>
+</div>
+</body>
+</html>

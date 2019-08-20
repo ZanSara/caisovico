@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>Slide Show ZP</title>
+
+  <script type="text/javascript">
+
+// (C) 2003 by CodeLifter.com
+// Free for all users, but leave in this header.
+
+// ==============================
+// Set the following variables...
+// ==============================
+
+// illustrato e spiegato su http://www.web-link.it
+
+// Set the duration of crossfade (in seconds)
+var CrossFadeDuration = 3;
+
+var Picture = new Array(); // don't change this
+var Caption = new Array(); // don't change this
+//var showHot = false;       // don't change this
+
+// Specify the image files...
+// To add more images, just continue
+// the pattern, adding to the array below.
+// To use fewer images, remove lines
+// starting at the end of the Picture array.
+// Caution: The number of Pictures *must*
+// equal the number of Captions!
+
+Picture[1]  = 'webcam_rif/fotorifugio.jpg';
+Picture[2]  = 'webcam_rif/fotorifugio1.jpg';
+Picture[3]  = 'webcam_rif/fotorifugio2.jpg';
+
+
+// Specify the Captions...
+// To add more captions, just continue
+// the pattern, adding to the array below.
+// To use fewer captions, remove lines
+// starting at the end of the Caption array.
+// Caution: The number of Captions *must*
+// equal the number of Pictures!
+
+Caption[1]  = '<a style="text-decoration:none;" href="#" onClick="javascript:control(3);" title="foto-2 ore prima">Foto-2h</a>&nbsp;&nbsp;&nbsp;&nbsp; <a style="text-decoration:none;" href="#" onClick="javascript:control(2);" title="foto-1 ora prima">Foto-1h</a>&nbsp;&nbsp;&nbsp;&nbsp; <a style="text-decoration:none;" href="#" onClick="javascript:control(1);" title="ultima foto scattata"><b>Ultima foto</b></a>';
+Caption[2]  = '<a style="text-decoration:none;" href="#" onClick="javascript:control(3);" title="foto-2 ore prima">Foto-2h</a>&nbsp;&nbsp;&nbsp;&nbsp; <a style="text-decoration:none;" href="#" onClick="javascript:control(2);" title="foto-1 ora prima"><b>Foto-1h</b></a>&nbsp;&nbsp;&nbsp;&nbsp; <a style="text-decoration:none;" href="#" onClick="javascript:control(1);" title="ultima foto scattata">Ultima foto</a>';
+Caption[3]  = '<a style="text-decoration:none;" href="#" onClick="javascript:control(3);" title="foto-2 ore prima"><b>Foto-2h</b></a>&nbsp;&nbsp;&nbsp;&nbsp; <a style="text-decoration:none;" href="#" onClick="javascript:control(2);" title="foto-1 ora prima">Foto-1h</a>&nbsp;&nbsp;&nbsp;&nbsp; <a style="text-decoration:none;" href="#" onClick="javascript:control(1);" title="ultima foto scattata">Ultima foto</a>';
+
+
+// =====================================
+// Do not edit anything below this line!
+// =====================================
+
+var tss;
+var iss;
+var jss = 1;
+var pss = Picture.length-1;
+
+var preLoad = new Array();
+for (iss = 1; iss < pss+1; iss++){
+preLoad[iss] = new Image();
+preLoad[iss].src = Picture[iss];}
+
+function control(index){
+jss=index;
+document.images.PictureBox.src = preLoad[jss].src;
+if (document.getElementById) document.getElementById("CaptionBox").innerHTML= Caption[jss];
+}
+-->  
+  </script>
+</head>
+
+<body onload='showHot=true;self.focus();'  link="#006600" vlink="#006600" alink="#006600"> 
+
+<div align="center">
+<table style="font-family: Helvetica,Arial,sans-serif;font-decoration:none;" border=0> <!-- cellpadding=1 > <!--cellspacing=0> -->
+   
+<tr> 
+       <td width=200 height=30> <!-- Nessuna scritta nella prima cella -->   </td>
+       <td style="text-align: right;" width=300 height=30>Puoi vedere fino a 2 foto precedenti  </td>
+       <!-- 
+       The next table cell holds the captions. This table cell must have id=CaptionBox and class=Caption in its tag.
+       The default caption shows whilst loading in all browsers; NS4 will show only the default caption, throughout.
+       //-->
+    <td id=CaptionBox class=Caption align=center width=300 height=30> 
+       <a style="text-decoration:none;" href="#" onClick="javascript:control(3);" title="foto-2 ore prima">Foto-2h</a>&nbsp;&nbsp;&nbsp;&nbsp;
+	   <a style="text-decoration:none;" href="#" onClick="javascript:control(2);" title="foto-1 ora prima">Foto-1h</a>&nbsp;&nbsp;&nbsp;&nbsp; 
+	   <a style="text-decoration:none;" href="#" onClick="javascript:control(1);" title="ultima foto scattata"><b>Ultima foto</b></a>
+	</td>
+</tr>    
+<tr>
+       <!--
+       The next table cell holds the images. Set cell and image width and height the same. The img src must have name=PictureBox in its tag.
+       Often, the first image in the Picture array in the script is used here; but you may also use a different,
+       introductory image as we have here, since this image is shown only on start-up.
+       //-->
+    <td width=800 height=600 colspan="3">
+    <img src=webcam_rif/fotorifugio.jpg name=PictureBox width=800 height=600>
+    </td>
+  </tr>
+</table>
+</div>
+</body>
+</html>
